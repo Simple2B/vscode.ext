@@ -1,0 +1,25 @@
+{
+    "name": "basico",
+    "displayName": "BASICO",
+    "description": "BASICO language extension for vscode",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.44.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "basico",
+            "aliases": ["BASICO", "basico"],
+            "extensions": [".cal"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "basico",
+            "scopeName": "source.cal",
+            "path": "./syntaxes/basico.tmLanguage.json"
+        }]
+    }
+}

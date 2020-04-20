@@ -1,0 +1,569 @@
+|FICHEROS;
+    agifa041 #1;
+    agifa066 #2; ||*
+||    agifa040 #3;
+    agifa184 #4;
+    agifa177 #5;
+    agifa091 #6;
+    agifa025 #7;
+    agifa324 #8;
+    agifa128 #9;
+    agifm001 #10;
+    agifm002 #11;
+    agifm003 #12;
+    dsm00020 #13;
+    agifa553 #14;
+    agifa060 #15;
+    agifa120 #16;
+    agi00063 #17;
+    agifa038 #18;
+    agifa129 #19;
+    agifa142 #20;
+    agifa007 #21;
+    agifa321 #22;
+
+    dsm00116 #116;
+||    dsm00225 #225;
+    dsm00233 #233;
+    dsm00238 #238;
+    dsm00239 #239;
+    dsm00240 #240;
+    dsm00241 #241;
+
+    agifa280 #280;
+    agifa282 #282,MANTE;       ||Lineal Medio Pago (FacturaE)
+
+    Ref0001@ #1000;
+|FIN;
+
+|VARIABLES;
+     nPanta = 0;
+     nBotonSeries = 0;
+     aPara = "";
+     aEjecuta = "";
+
+     aIban = "";
+     nTipo = 0;
+    aParam = "";
+    nSalida = 0;
+    nArchi = 0;
+    aAlfa = "";
+    nHandle = 0;
+
+    aMensaje = "";
+    quedir  = "";
+    informe = "agifa041";
+    alfa1 = "";
+    alfa2 = "";
+    alfa3 = "";
+    alfa4 = "";
+    nume0 = 0;
+    direc = "";
+
+    aOrigen = ""; aDestino = ""; Comodin = ""; System = "";
+
+    nLong      = 0;
+    nEstoy     = 0;
+    nCarac     = 0;
+    nPos       = 0;
+
+    aLong      = "";
+    aCodPos    = "";
+    aPobla     = "";
+    aCarac     = "";
+
+     enSw = 0;
+     aAlfa1 = "";
+     aAlfa2 = "";
+     &eaEmpresa = "";
+|FIN;
+
+|PROCESO Version; |TIPO 7;
+     enSw = 0;
+     |VERSIONRTME aAlfa1;
+     aAlfa2 = aAlfa1 % 101;
+     |SI aAlfa2 = "8";                       || diagram8
+          enSw = 1;
+     |FINSI;
+     |SI aAlfa2 = "9";|Y aAlfa1 < "9.09V";   || diagram9 inferior a 9.09V-1
+          enSw = 1;
+     |FINSI;
+     |SI enSw = 1;
+         |MENAV "      Version de Basico inferior a la requerida (9.09V-1)";
+     |FINSI;
+|FPRC;
+
+|CALCULO Tipo20; |TIPO 20;
+     aAlfa1 = FSalida;
+     |SI aAlfa1 = "OPCION";
+          FSalida = "Datos FacturaE";
+          |ACABA;
+     |FINSI;
+
+     |LEE 101#1=;
+     |SI FSalida ! 0;  |ACABA;  |FINSI;
+
+     |HAZ DatosFacturaE;
+|FCAL;
+
+|PROCESO Min;
+     #agifa282#0 = "  ";
+|FPRC;
+
+|PROCESO Max;
+     #agifa282#0 = "zz";
+|FPRC;
+
+|PROCESO BtnSeries;
+     ||ARA
+     |PUSHV 0501 2380;
+     aPara = #agifa280#0;
+     |QBF aPara;
+     aEjecuta = "agifa284;" + aPara;
+     |SUB_EJECUTA_NP aEjecuta;
+     |POPV;
+|FPRC;
+
+|PROCESO DatosFacturaE;
+     ||Mirar si tengo dsarchi y si tengo activo la FacturaE.
+     nArchi = 0;
+     |HAZ EsArchi;
+     |SI FSalida = 0;
+        |DBASS aAlfa; |QBF aAlfa;
+        aAlfa = aAlfa + "dsarchi/def/dsarm001.mas";
+        |CARGA_DEF aAlfa, Ref0001@;
+        |SI FSalida = 0;
+           |DBASS aAlfa; |QBF aAlfa;
+           aAlfa = aAlfa + "dsarchi/fich/"; |PATH_DAT #1000 aAlfa;
+           |ABRE #Ref0001@;
+           |DDEFECTO #Ref0001@;
+           |LEE 000#Ref0001@.p;
+           |SI FSalida ! 0; |DDEFECTO #Ref0001@; |FINSI;
+
+           |SI #Ref0001@#31 = "S";
+              nArchi = 1;
+           |FINSI;
+           |CIERRA #Ref0001@; |DESCARGA_DEF #Ref0001@;
+        |FINSI;
+     |SINO;
+          aMensaje = "0000Para usar la Factura Electronica, se necesita el DSARCHI";
+          |MENAV aMensaje;
+          |ACABA;
+     |FINSI;
+
+     |SI nArchi = 0;
+          aMensaje = "0000No esta conectada en el DSARCHI la FacturaE con la dscomer9";
+          |MENAV aMensaje;
+          |ACABA;
+     |FINSI;
+
+     |ABRE #agifa280;
+
+     |PUSHV 0501 2380;
+     |BLANCO 0501 2380;
+     |CUADRO 0501 2380;
+
+     |DDEFECTO #agifa280;
+     #agifa280#0 = #agifa041#0;
+     |LEE 101#agifa280.=;
+     nSalida = FSalida;
+
+     |PINPA #0#agifa280;
+     nPanta = FSalida;
+     |PINDA #0#agifa280;
+
+     |CONTROL_SIMPLE nPanta, "BOTON,Configuraci¢n por Series", 0560, 0580, BtnSeries;
+     nBotonSeries = FSalida;
+
+     |ENDATOS #2#agifa280;
+     |SI FSalida = 0;
+          |SI nSalida = 0;
+               |GRABA 020#agifa280.a;
+          |SINO;
+               |GRABA 020#agifa280.n;
+          |FINSI;
+
+          |SI #agifa280#28 = "S";
+               |FIN_CONTROL_WINDOWS nBotonSeries;
+               alfa3 = #agifa280#0; alfa3 = "00000" + alfa3; alfa3 = alfa3 % -105;
+               |DBASE quedir;
+               quedir = quedir + "fich/"+ alfa3 + "/";
+               |PATH_DAT #6  quedir;
+               |PATH_DAT #282  quedir;
+               |ABRE #agifa282;
+               |PINPA #0#agifa282;
+               |ENTLINEAL #1#282, -1, 1, 20, 0, Min, Max;
+               |CIERRA #agifa282;
+          |FINSI;
+     |FINSI;
+     |LIBERA #agifa280;
+     |FIN_CONTROL_WINDOWS nBotonSeries;
+
+     |POPV;
+     |CIERRA #agifa280;
+|FPRC;
+
+|CALCULO imprem; |TIPO 4;
+     |IMPRE 1;
+     |SI 0 = FSalida;
+       |INFOR informe;
+       |SI 0 = FSalida;
+          |PRINT;
+          |PIEINF;
+          |FININF;
+       |FINSI;
+       |FINIMP;
+     |FINSI;
+|FCAL;
+
+|PROCESO PonPoblacion;
+     aAlfa   = #agifa041#3;  |QBF aAlfa;
+     aLong   = aAlfa % 0;
+     nLong   = aLong;
+     aCodPos = "";
+     aPobla  = "";
+     nEstoy  = 0;
+     |PARA nCarac = 1;  |SI nCarac [ nLong;  |HACIENDO nCarac = nCarac + 1;
+           nPos = (nCarac * 100) + 1;
+
+           aCarac = aAlfa % nPos;
+
+           |SI nEstoy = 0;
+               |SI aCarac ] "0";  |Y aCarac [ "9";
+                   aCodPos = aCodPos + aCarac;
+               |SINO;
+                   nEstoy = 1;
+               |FINSI;
+           |FINSI;
+
+           |SI nEstoy = 1;
+               |SI aCarac ! " ";  |Y aCarac ! "-";
+                   nEstoy = 2;
+               |FINSI;
+           |FINSI;
+
+           |SI nEstoy = 2;
+               aPobla = aPobla + aCarac;
+           |FINSI;
+     |SIGUE;
+
+     #agifa280#13 = aCodPos;
+     #agifa280#14 = aPobla;
+|FPRC;
+
+
+|CALCULO mkdir; |TIPO 30;
+    nume0 = FEntrada / 100;  nume0 = nume0 ! 0;  || alta
+    |SI nume0 = 1;
+          |DFICE alfa2;
+          alfa3 = #1#0; alfa3 = "00000" + alfa3; alfa3 = alfa3 % -105;
+          alfa1 = alfa2 + alfa3;
+          |MKDIR alfa1;
+          |HAZ altaauxiliares;
+     |FINSI;
+
+     |HAZ EsOTP;
+     |SI FSalida = 0;
+         |ABRE #agifa280;
+         #agifa280#0 = #agifa041#0;
+         |LEE 101#agifa280.=;
+         |SI FSalida ! 0;
+             |DDEFECTO #agifa280;
+             #agifa280#0 = #agifa041#0;
+             |GRABA 020#agifa280.b;
+         |FINSI;
+
+         #agifa280#1  = #agifa041#5;
+         #agifa280#6  = #agifa041#1;
+         #agifa280#7  = #agifa041#1;
+         aAlfa        = #agifa041#6;  |QBT aAlfa;
+         #agifa280#8  = aAlfa;
+         aAlfa        = #agifa041#7;  |QBT aAlfa;
+         #agifa280#9  = aAlfa;
+         #agifa280#10 = #agifa041#20;
+         #agifa280#11 = #agifa041#21;
+         #agifa280#12 = #agifa041#2;
+         #agifa280#15 = #agifa041#4;
+
+         |HAZ PonPoblacion;
+
+         |GRABA 020#agifa280.a;
+         |LIBERA #agifa280;
+
+         |CIERRA #agifa280;
+     |FINSI;
+|FCAL;
+
+|CALCULO rmdir; |TIPO 2;
+    nume0 = FEntrada / 100;  nume0 = nume0 ! 0;  || baja
+    |SI nume0 = 3;
+    |DFICE alfa2;
+          alfa3 = #1#0; alfa3 = "00000" + alfa3;  alfa3 = alfa3 % -105;
+          direc = ""; |DIRECTORIO direc; |QBF direc;
+          alfa1 = direc + "bin/agirm -r " + alfa2 + alfa3;
+          |SYSTEM alfa1;
+     |FINSI;
+|FCAL;
+
+|PROCESO altaauxiliares;
+     |DBASE quedir;
+     quedir = quedir + "fich/"+ alfa3 + "/";
+     |PATH_DAT #2  quedir;
+||     |PATH_DAT #3  quedir;       esta en patrones
+     |PATH_DAT #4  quedir;
+     |PATH_DAT #5  quedir;
+     |PATH_DAT #6  quedir;
+     |PATH_DAT #7  quedir;
+     |PATH_DAT #8  quedir;
+     |PATH_DAT #9  quedir;
+     |PATH_DAT #10 quedir;
+     |PATH_DAT #11 quedir;
+     |PATH_DAT #12 quedir;
+     |PATH_DAT #13 quedir;
+     |PATH_DAT #14 quedir;
+     |PATH_DAT #15 quedir;
+     |PATH_DAT #16 quedir;
+     |PATH_DAT #17 quedir;
+     |PATH_DAT #18 quedir;
+     |PATH_DAT #19 quedir;
+     |PATH_DAT #20 quedir;
+     |PATH_DAT #21 quedir;
+     |PATH_DAT #116 quedir;
+||     |PATH_DAT #225 quedir;      esta en patrones
+     |PATH_DAT #233 quedir;
+     |PATH_DAT #238 quedir;
+     |PATH_DAT #239 quedir;
+     |PATH_DAT #240 quedir;
+     |PATH_DAT #241 quedir;
+
+     |ABRE #116;
+     |DDEFECTO #116;
+     |GRABA 000#116n;
+     |CIERRA #116;
+/*
+     |ABRE #225;
+     |DDEFECTO #225;
+     |GRABA 000#225n;
+     |CIERRA #225;
+*/
+     |ABRE #233;
+     |DDEFECTO #233;
+     |GRABA 000#233n;
+     |CIERRA #233;
+
+     |ABRE #239;
+     |DDEFECTO #239;
+     |GRABA 000#239n;
+     |CIERRA #239;
+
+     |ABRE #240;
+     |DDEFECTO #240;
+     |GRABA 000#240n;
+     |CIERRA #240;
+
+     |ABRE #241;
+     |DDEFECTO #241;
+     |GRABA 000#241n;
+     |CIERRA #241;
+
+     |ABRE #238;
+     |DDEFECTO #238;
+     |GRABA 000#238n;
+     |CIERRA #238;
+
+     |ABRE #2;
+     |DDEFECTO #2;
+     |GRABA 000#2n;
+     #2#0 = 2; #2#1 = "IVA al 16%"; #2#2 = 16; #2#4 = "01.01.2000";
+     |GRABA 000#2n;
+     #2#0 = 2; #2#1 = "IVA al 18%"; #2#2 = 18; #2#4 = "01.07.2010";
+     |GRABA 000#2n;
+     |CIERRA #2;
+/*
+     |ABRE #3;
+     |DDEFECTO #3;
+     |GRABA 000#3n;
+     |CIERRA #3;
+*/
+     |ABRE #4;
+     |DDEFECTO #4;
+     #4#0 = 0;
+     |GRABA 000#4n;
+     |CIERRA #4;
+
+     |ABRE #5;
+     |DDEFECTO #5;
+     |GRABA 000#5n;
+     |CIERRA #5;
+
+     |ABRE #6;
+     |DDEFECTO #6;
+     |GRABA 000#6n;
+     |CIERRA #6;
+
+     |ABRE #7;
+     |DDEFECTO #7;
+     |GRABA 000#7n;
+     |LIBERA #7;
+     |DDEFECTO #7;
+     #7#0 = "00";
+     |GRABA 000#7n;
+     |CIERRA #7;
+
+     |ABRE #8;
+     |DDEFECTO #8;
+     |GRABA 000#8n;
+     |LIBERA #8;
+     |DDEFECTO #8;
+     #8#0 = "ESP";
+     #8#1 = "PESETA";
+     #8#2 = 166.386;
+     #8#3 = 166.386;
+     #8#7 = 0;
+     #8#9 = 0;
+     |GRABA 000#8n;
+     |LIBERA #8;
+     |DDEFECTO #8;
+     #8#0 = "EUR";
+     #8#1 = "EURO";
+     #8#7 = 2;
+     #8#9 = 2;
+     |GRABA 000#8n;
+     |CIERRA #8;
+
+     |ABRE #9;
+     |DDEFECTO #9;
+     |GRABA 000#9n;
+     |CIERRA #9;
+
+     |ABRE #10;
+     |DDEFECTO #10;
+     |GRABA 000#10n;
+     |CIERRA #10;
+
+     |ABRE #11;
+     |DDEFECTO #11;
+     |GRABA 000#11n;
+     |CIERRA #11;
+
+     |ABRE #12;
+     |DDEFECTO #12;
+     |GRABA 000#12n;
+     |CIERRA #12;
+
+     |ABRE #13;
+     |DDEFECTO #13;
+     #13#0 = 0;
+     |GRABA 000#13n;
+     |CIERRA #13;
+
+     |ABRE #14;
+     |DDEFECTO #14;
+     |GRABA 000#14n;
+     |CIERRA #14;
+
+     |ABRE #15;
+     |DDEFECTO #15;
+     |GRABA 000#15n;
+     |CIERRA #15;
+
+     |ABRE #16;
+     |DDEFECTO #16;
+     |GRABA 000#16n;
+     |CIERRA #16;
+
+     |ABRE #17;
+     |DDEFECTO #17;
+     |GRABA 000#17n;
+     |CIERRA #17;
+
+     |ABRE #18;
+     |DDEFECTO #18;
+     |GRABA 000#18n;
+     |CIERRA #18;
+
+     |ABRE #19;
+     |DDEFECTO #19;
+     |GRABA 000#19n;
+     |CIERRA #19;
+
+     |ABRE #20;
+     |DDEFECTO #20;
+     |GRABA 000#20n;
+     |CIERRA #20;
+
+     |ABRE #21;
+     |DDEFECTO #21;
+     |GRABA 000#21n;
+     #21#26 = "zzzzz";
+     |GRABA 000#21n;
+     |CIERRA #21;
+
+     |ABRE #22;
+     |DDEFECTO #22;
+     |GRABA 000#22n;
+     |CIERRA #22;
+
+     |DBASE aOrigen;  |QBF aOrigen;  aOrigen = aOrigen + "fich/patrones/*.*";
+     |_PDIR aOrigen;
+     |PARA; |SI FSalida = 0; |HACIENDO;
+          Comodin = aOrigen % -112;
+          Comodin = Comodin - "ddd"; |SI FSalida ! 0; Comodin = Comodin + "dat"; |FINSI;
+          Comodin = Comodin - "iii"; |SI FSalida ! 0; Comodin = Comodin + "ixx"; |FINSI;
+          Comodin = Comodin - "zzz"; |SI FSalida ! 0; Comodin = Comodin + "ddx"; |FINSI;
+          |SI aParam = "";
+               |DFICE aDestino; |QBF aDestino;
+               aDestino = aDestino + (("00000"+#agifa041#0)%-105) + "/" + Comodin;
+          |SINO;
+               |DBASE aDestino;
+               aDestino = aDestino + "fich/" + alfa3 + "/" + Comodin;
+          |FINSI;
+          |XABRE "E", aDestino, 0;
+          |SI FSalida ! 0;
+               |COPIA_FICHERO aOrigen, aDestino;
+          |FINSI;
+          |_SDIR aOrigen;
+     |SIGUE;
+|FPRC;
+
+|PROCESO Tipo0C1agifa282; |TIPO 0;
+     ||Realmente cuando es 04, es obligatorio el introducir el IBAN
+     ||pero si utilizan alguna otra, pueden o no meter el IBAN.
+/*
+     nTipo = #agifa282#1;
+     |SI nTipo = 4;
+          |C_M #agifa282#2, 1, "S";
+     |SINO;
+          |C_M #agifa282#2, 1, "N";
+     |FINSI;
+     |PINTA #agifa282#2;
+*/
+|FPRC;
+
+|PROCESO Tipo0C2agifa282; |TIPO 0;
+     nTipo = #agifa282#1;
+     aIban = #agifa282#2;
+     |QBF aIban;
+     |SI nTipo = 4; |Y aIban = "";
+          aMensaje = "0000Por favor, introduzca el IBAN de la cuenta de Abono";
+          |MENAV aMensaje;
+          |ERROR;
+     |SINO;
+          |SI nTipo = 2; |Y aIban = "";
+               aMensaje = "0000Por favor, introduzca el IBAN de la cuenta de Cargo";
+               |MENAV aMensaje;
+               |ERROR;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+
+|PROGRAMA;
+     aParam = PARAMETRO;
+     |SI PARAMETRO = "";
+         |MANTE #1;
+     |SINO;
+         alfa3 = eaEmpresa;
+         |HAZ altaauxiliares;
+     |FINSI;
+|FPRO;
