@@ -1,0 +1,3438 @@
+|FICHEROS;
+     agifa019 #0;        || Este def.
+     agifa017 #1;        || Stock por almacenes.
+     agifa142 #4;        || Parametros generales.
+     dsw00034 #6;        || Auxiliar Art/Prov.
+     agifa112 #8;        || Proveedores.
+     agifa060 #9;
+     agifa120 #10;
+     agi00016 #80,MANTE; || Texto Familias.
+     agi00014 #99;       || Defectos de articulos, por proveedor.
+     agipan00 #11;       || Pantalla tallas
+     agifa324 #12;       || Divisas
+     agifa321 #13;       || Parametros divisas
+     agitp001 #14;       || Tarifas Proveerdor
+     dsl00001 #50;       || Codigos de barras multiples
+     agica001 #60;       || Alternativos
+     agif0041 #41;
+     agifa205 #205;
+     agifa219 #219;
+     agifa220 #220;
+     dsm00015 #915;
+     dsm00010 #910;
+     dsm00019 #919;
+     dsm00004 #904;
+     marhup08@ #30;
+     dsm00238 #238;
+     dsm00239 #239;
+     dsm00240 #240;
+     dsm00241 #241;
+     dsw00044 #100,MANTE;
+     dsm00081 #81;
+     dsm00082 #82;
+     dsm00211 #211;
+     dsm00212 #212;
+     agifa553 #553;
+     agifa065 #65;
+     agi00063 #63;
+     dsm00116 #116;
+
+     referen@;
+     referen1@;
+
+/*
+     agifa019@ #1100;
+     CtrlGen@  #2000;
+     ArticCom@ #2001;
+     ArticGer@ #2002;
+     tecam002@ #2003;
+*/
+|FIN;
+
+|CAMPOS;
+     #0#18 pvp11;
+     #0#19 pvp22;
+     #0#20 pvp33;
+     #0#147 pvp44;
+     #0#148 pvp55;
+     #0#149 pvp66;
+     #0#109 redo;
+|FIN;
+
+|INCLUYE i_varart;
+
+|VARIABLES;
+     &eaFergaFam = "";
+     &eaFergaSub = "";
+     &eaMarca = "";
+     &eaFamilia = "";
+     nSwExtintor = 0;
+     aEmp = "";
+     &enModoAlma = 4;
+     nSwAparecida = 0;
+     aModi = "";
+     aMensaje = "";
+
+     &eaArtWeb = "";
+     &enPVP1 = 0;
+     &enPVP2 = 0;
+     &enPVP3 = 0;
+     &enPVP4 = 0;
+     &enPVP5 = 0;
+     &enPVP6 = 0;
+
+     aDesAlma = "";
+     j = 0;
+     nPos1 = 0;
+     nPos2 = 0;
+     nCamDes = 0;
+     nCamLon = 0;
+     nPosArt = 0;
+     nPosDes = 0;
+     nLon2 = 0;
+     nLon1 = 0;
+     nPos = 0;
+     aDes = "";
+     nPorce = 0;
+     nMargen = 0;
+     nPCEGBtn1 = -1;
+     nPCEGBtn2 = -1;
+     nBotonAux = -1;
+     nBotonAdi = -1;
+     nBotonApa = -1;
+     &enBtnModoApa = 4;
+     aArti = "";
+     nSalida = 0;
+     nNume1 = 0;
+     nNume2 = 0;
+     &enSwAltaArt = 0; || Para la replica segun el control de empresas
+     nSwPin = 0;
+     nCalc = 0;
+     nCont = 0;
+
+     nFactor = 0;
+     nForma = 0;
+     nCampo = 0;
+     &eaParCod = "";
+     &eaParSec = "";
+     &eaParFam = "";
+     &eaParSub = "";
+     &eaParCap = "";
+
+     aCodAnt   = "";
+     aDesAnt   = "";
+     nGuarda   = 0;
+     nBoton    = 0;
+     nBoton1    = 0;
+     nBotonA   = 0;
+     aDef      = "";
+     &eaConte1 = "";
+     &eaConte2 = "";
+     aConte = "";
+     &enSwIber = 0;
+     &enSwCtrlUsu  = 0;
+     &Tempo    = "";
+     aTempo6   = "";
+     aPro      = "";
+     aSer      = "";
+     nDoc      = 0;
+     nLdo      = 0;
+     aArt      = "";
+     fFec      = @;
+     nCan      = 0;
+     nPre      = 0;
+     nSw       = 0;
+     aFich     = "";
+     aAlfa1    = "";
+     nSal      = 0;
+     swCar1    = 0;
+     aAlfa33   = "";
+     swImp     = 0;
+
+     aGrCli    = "";
+     aPath     = "";
+     fHastaF   = @;
+     nPVP1     = 0;
+
+     aTx11      = "";
+     aTx12      = "";
+     aTx1       = "";
+     aTx2       = "";
+     aTx3       = "";
+     aTx4       = "";
+     aTx5       = "";
+     aTx6       = "";
+     aTx7       = "";
+     aTx8       = "";
+     aTx9       = "";
+     aTx0       = "";
+
+     aProg      = "";
+     nModo      = 0;
+     &eAlfaC    = "";
+
+     &nDeci_PreBaseMx = 0;
+     &nDeci_PreDiv  = 0;
+     &nDeci_Base = 0;
+     &nDeci_PreBase = 0;
+     &precio_base = 0;
+     aAlfa = "";
+     aParametro = "";
+     aprograma      = "";
+     precio    = 0;
+     &Marca    = "";
+     aConfir   = "";
+     codant    = "";
+     codart    = 0;
+     &pasa     = "";
+     salida    = "";
+     &orden    = "";
+     mensaje1  = "0000Valor minimo 0.01    Valor maximo 999999";
+     &mes      = 0;
+     i         = 0;
+     tot       = 0;
+     informe   = "agifa019";
+     informe2  = "agifal19";
+     m1        = 0;
+     m2        = 0;
+     m3        = 0;
+     m4        = 0;
+     m5        = 0;
+     m6        = 0;
+
+     aOrig     = "";
+     aDest     = "";
+
+     &modo     = 0;
+     &codigo   = "";
+     desde     = "                    ";
+     hasta     = "zzzzzzzzzzzzzzzzzzzz";
+     codigo1   = "";
+     cam_pos   = 0;
+     cam_vis   = "";
+     cam_mod   = "";
+     vis       = 0;
+     &sw1      = 0;
+     &registro = "";
+     i1        = "";
+     i2        = "";
+     i3        = "";
+     i4        = "";
+     i5        = "";
+     i6        = "";
+     p1        = "";
+     p2        = "";
+     p3        = "";
+     p4        = "";
+     p5        = "";
+     p6        = "";
+     calcodb   = "";
+     sumai     = 0;
+     sumap     = 0;
+     base      = 0;
+     resto     = 0;
+     total     = 0;
+     digito    = 0;
+     xx        = "";
+     ind       = 0;
+     nombrep   = "";
+     fFecha    = @;
+     nSwAlbero = 0;
+
+     &Cascada    = "";
+     &CodEnvase1 = "";
+     &CodEnvase2 = "";
+     &CodEnvase3 = "";
+     &CodEnvase4 = "";
+     &CodEnvase5 = "";
+     &CodEnvase6 = "";
+     &FacEnvase1 = 0;
+     &FacEnvase2 = 0;
+     &FacEnvase3 = 0;
+     &FacEnvase4 = 0;
+     &FacEnvase5 = 0;
+     &FacEnvase6 = 0;
+
+     calpre = 0;
+     aTallas = "";
+     cambio_div = 0;
+     cambio_base = 0;
+     factordec = 0;
+     tpcontro  = 0;  ||Controla si se han modificado los campos que afectan a tarifas-proveedor
+     nContador = 0;
+     aCodigo = "";
+     &pvp1       = 0;
+     &pvp2       = 0;
+     &pvp3       = 0;
+     &pvp4       = 0;
+     &pvp5       = 0;
+     &pvp6       = 0;
+ {-1}aDato  = "";
+     aDato1 = "2400";
+     aDato2 = "1";
+     aDato3 = "Impresion  de : ";
+     aDato4 = "FR";
+     aDato5 = "    Ficha     ";
+     aDato6 = "   Relacion   ";
+ {-1}aUtil  = "";
+     aUtil1 = "2400";
+     aUtil2 = "1";
+     aUtil3 = "";
+     aUtil4 = "IPAVCGEB";           ||| OJO que se modifica el valor
+     aUtil5 = "Imprimir";
+     aUtil6 = "Proveedor";
+     aUtil7 = "Alter.(tpv)";
+     aUtil8 = "DA.Vta";
+     aUtil9 = "DA.Com";
+     aUtil10 = "Grafico";
+     aUtil11 = "Equiva.";
+     aUtil12 = "Bultos";
+     aUtil13 = "";
+
+ {-1}aEquiva  = "";
+     aEquiva1 = "2400";
+     aEquiva2 = "1";
+     aEquiva3 = "Equivalencias : ";
+     aEquiva4 = "ER";
+     aEquiva5 = " Consulta/Alta ";
+     aEquiva6 = " Generar ";
+
+     &eaMensaCad = "";
+     &enErrorCad = 0;
+     &eaFam      = "";
+     &eaSubFam   = "";
+     &eaDesArt   = "";
+|FIN;
+
+|INCLUYE buscaart;
+
+|PROCESO dsl00001Ver;
+     #100#0 = #50#3;
+     #100#1 = #50#6;
+     |GRABA 020#100n;
+|FPRC;
+
+|DEFBUCLE dsl00001Ver;
+     #50#3;
+     ;
+     #0#0, "             ";
+     #0#0, "zzzzzzzzzzzzz";
+     ;
+     NULL, dsl00001Ver;
+|FIN;
+
+|PROCESO Min100;
+     #100#0 = " " * 13;
+|FPRC;
+
+|PROCESO Max100;
+     #100#0 = "z" * 13;
+|FPRC;
+
+|PROCESO DefMedida; |TIPO 0;
+     nModo = (FEntrada / 100) ! 0;
+     |SI nModo = 1;
+          #0#205 = #0#5; |PINTA #0#205;
+          #0#206 = #0#5; |PINTA #0#206;
+          #0#207 = #0#5; |PINTA #0#207;
+     |FINSI;
+|FPRC;
+
+|PROCESO DecDesglose; |TIPO 7;
+     |SI #0#178 = "P";
+          |C_M #0#187, 1, "N";
+          #0#187 = 0; |PINTA #0#187;
+     |SINO;
+          |C_M #0#187, 1, "S";
+     |FINSI;
+|FPRC;
+
+|PROCESO entra194; |TIPO 7;
+     |SI Campo = 194;
+          aAlfa = "0000Facturar para ventas:  <1> " + #238#3 + "  <2> " + #238#2;
+          |MENSA aAlfa;
+     |FINSI;
+     |SI Campo = 196;
+          aAlfa = "0000Facturar para compras:  <1> " + #238#3 + "  <2> " + #238#2;
+          |MENSA aAlfa;
+     |FINSI;
+|FPRC;
+
+|PROCESO sal194; |TIPO 0;
+     |MENSA "0000 ";
+|FPRC;
+
+|PROCESO DivStock; |TIPO 7;
+     |SI #0#179 = "S"; |Y #0#188 > 0;
+          |C_M #0#192, 1, "S";
+     |SINO;
+          |C_M #0#192, 1, "N"; #0#192 = 1; |PINTA #0#192;
+     |FINSI;
+|FPRC;
+
+|PROCESO PartiArti7; |TIPO 7;
+     aAlfa = #4#118;
+     |C_M #0#180, 1, aAlfa;
+|FPRC;
+
+|PROCESO DobleStockArti7; |TIPO 7;
+     aAlfa = #4#117;
+     |C_M #0#179, 1, aAlfa;
+|FPRC;
+
+|PROCESO DobleStockArti; |TIPO 0;
+     aAlfa = #0#179;
+     |C_M #0#201, 1, aAlfa;
+     |SI #0#179 = "S";
+          #0#204 = "N"; |PINTA #0#204;
+     |FINSI;
+|FPRC;
+
+|PROCESO upc;
+     #0#133 = #0#28 < #0#29;
+     #0#133 = #0#133 < #0#129;
+     #0#133 = #0#133 < #0#209;
+     #0#164 = #0#163 < #0#29; ||upc div
+     #0#164 = #0#164 < #0#129; ||upc div
+     #0#164 = #0#164 < #0#209; ||upc div
+     |PINTA #0#133;
+     |PINTA #0#164;
+|FPRC;
+
+|PROCESO DesAm12; |TIPO 12;
+|FPRC;
+
+|PROCESO DesApliArt;
+     |PUSHV 0101 2380;
+     |CLS;
+     #219#1 = #0#1;
+     |ABRE #219;
+     #219#0 = #0#0;
+     |LEE 101#219=;
+     |SI FSalida ! 0; |GRABA 020#219b; |FINSI;
+     |PINPA #0#219;
+     |PINDA #0#219;
+     |ENDATOS #2#219;
+     |GRABA 020#219a;
+     ||ENTLINEAL #1#220, -2, 2, 21, 0, Min220, Max220;
+     |POPV;
+     |HAZ CompruDesAmpli;
+     |CIERRA #219;
+|FPRC;
+
+|PROCESO DesApliArtCom;
+     |PUSHV 0101 2380;
+     |CLS;
+     aAlfa = #0#195; |QBF aAlfa;
+     |SI aAlfa = "";
+          #81#1 = #0#1;
+     |SINO;
+          #81#1 = #0#195;
+     |FINSI;
+     |ABRE #81;
+     #81#0 = #0#0;
+     |LEE 101#81=;
+     |SI FSalida ! 0; |GRABA 020#81b; |FINSI;
+     |PINPA #0#81;
+     |PINDA #0#81;
+     |ENDATOS #2#81;
+     |GRABA 020#81a;
+     ||ENTLINEAL #1#82, -2, 2, 21, 0, Min82, Max82;
+     |POPV;
+     |HAZ CompruDesAmpliCom;
+     |CIERRA #81;
+|FPRC;
+
+|PROCESO impc; |TIPO 20;
+     aAlfa1 = FSalida;
+
+     |ESTADO_CONTROL nBoton, "DISABLE";
+
+     |HAZ EsTaller;
+     |SI FSalida ! 0;
+          || la estandar
+          |ESTADO_CONTROL nBoton1, "DISABLE";
+     |FINSI;
+
+     |SI nBotonAux ! -1; |ESTADO_CONTROL nBotonAux, "DISABLE"; |FINSI;
+     |SI nBotonAdi ! -1; |ESTADO_CONTROL nBotonAdi, "DISABLE"; |FINSI;
+     enBtnModoApa = 4;
+
+     |SI aAlfa1 = "OPCION";
+         FSalida = "Opciones";
+         |ACABA;
+     |FINSI;
+     |ABRE #4; |LEE 000#4p; |CIERRA #4;
+
+     |HAZ EsAparecida; nSwAparecida = FSalida;
+     |HAZ EsExtintor;  nSwExtintor  = FSalida;
+
+                      aUtil4 = "IPAVCGEB";
+     |SI #4#72 = "N"; aUtil4 = "IPAVCGAE"; |FINSI;
+
+     |SI nSwAparecida = 0;
+          aUtil4 = "IPAVCRAE";
+          aUtil10 = "Precios";
+     |FINSI;
+
+     |SI nSwExtintor = 0;
+          aUtil7 = "Auxiliar";
+     |FINSI;
+
+     |PARA; |SI; |HACIENDO;
+          |MENU aUtil;
+          |SI FSalida [ 0; |SAL; |FINSI;
+          aUtil2 = FSalida;
+          |SI aUtil2 = "1"; |HAZ imparticu; |FINSI;
+          |SI aUtil2 = "2"; |HAZ verlospro; |FINSI;
+          |SI aUtil2 = "3";
+               |SI nSwExtintor = 0;
+                    eaArticulo = #0#0;
+                    |SUB_EJECUTA_NP "extm0001";
+               |SINO;    || la estandar
+                    |ABRE #60;
+                    |SELECT #2#60;
+                    #60#2 = #0#0;
+                    |LEE 000#60=;
+                    |SI FSalida = 0;
+                         |CONSULTA_F_CLAVE #2#60, inf60, sup60;
+                    |SINO;
+                         |MENAV "0000No tiene codigo alternativo...";
+                    |FINSI;
+                    |CIERRA #60;
+               |FINSI;
+          |FINSI;
+          |SI aUtil2 = "4";      || Des. Ampliada
+               |HAZ DesApliArt;
+               |ERROR;
+          |FINSI;
+          |SI aUtil2 = "5";      || Des. Ampliada
+               |HAZ DesApliArtCom;
+               |ERROR;
+          |FINSI;
+          |SI aUtil2 = "6"; |Y nSwAparecida ! 0;   || BMP
+               orden = #0#0;
+               pasa = "A";
+               |SUB_EJECUTA_NP "agi00009.tab";
+               orden = "";
+          |FINSI;
+          |SI aUtil2 = "6"; |Y nSwAparecida = 0;   || BMP
+               enBtnModoApa = 2;
+               |HAZ BotonApa;
+          |FINSI;
+          |SI aUtil2 = "7"; |HAZ Equivale; |FINSI;
+          |SI aUtil2 = "8"; |HAZ Envase; |FINSI;
+     |SIGUE;
+
+     |ESTADO_CONTROL nBoton, "ENABLE";
+     |ESTADO_CONTROL nBoton1, "ENABLE";
+     |SI nBotonAux ! -1; |ESTADO_CONTROL nBotonAux, "ENABLE"; |FINSI;
+     |SI nBotonAdi ! -1; |ESTADO_CONTROL nBotonAdi, "ENABLE"; |FINSI;
+
+     enBtnModoApa = 2;
+|FPRC;
+
+|PROCESO imparticu; || ---------- |TIPO 4;
+     |PARA;  |SI;  |HACIENDO;
+          |MENU aDato;
+          aDato2 = FSalida;
+          |SI aDato2 = "1";  |HAZ imprefic; |FINSI;
+          |SI aDato2 = "2";  |HAZ imprerel; |FINSI;
+          |SI aDato2 < "1"; |O aDato2 > "2";  |SAL;  |FINSI;
+     |SIGUE;
+|FPRC;
+
+|PROCESO imprefic;
+     eaSerLog = "";
+     eaNumLog = #0#0;
+     eaTipLog = "AR";
+     |HAZ ImprimeLog;
+
+     |IMPRE 1;
+     |SI 0 = FSalida;
+          |INFOR informe;
+          |SI 0 = FSalida;
+               |ABRE #1;
+               #1#0 = #0#0;
+               #1#1 = 0;
+               |LEE 001#1];
+               |PARA ; |SI FSalida = 0; |Y #1#0 = #0#0; |HACIENDO ;
+                    |PRINT;
+                    |LEE 001#1s;
+               |SIGUE;
+               |CIERRA #1;
+               |PIEINF; |FININF;
+          |FINSI;
+          |FINIMP;
+     |FINSI;
+|FPRC;
+
+|PROCESO impreart;
+     swImp = 1;
+     |PRINT;
+|FPRC;
+
+|DEFBUCLE impreart;
+     #0#1;
+     ;
+     INICIO;
+     FINAL;
+     ;
+     NULL,impreart;
+|FIN;
+
+|PROCESO imprerel;
+     swImp = 0;
+     |IMPRE 1;
+     |SI 0 = FSalida;
+          |INFOR informe2;
+          |SI 0 = FSalida;
+               |BUCLE impreart;
+               |SI swImp = 1;
+                    |PIEINF;
+               |FINSI;
+               |FININF;
+          |FINSI;
+          |FINIMP;
+     |FINSI;
+|FPRC;
+
+|PROCESO totalart; |TIPO 0;
+     mes = Campo - 34;
+     i = mes $ 5;
+     |SI i = 0; #0Campo = #0Campo ! #4#8; |FINSI;
+     mes = Campo - 32;
+     i = mes $ 5;
+     |SI i = 0; #0Campo = #0Campo ! #4#8; |FINSI;
+     tot = 92 + i;
+     #0tot = #0tot - Contenido + #0Campo;
+     |PINTA #0tot;
+|FPRC;
+
+|PROCESO PvpCeroNo;
+     pvp1 = #0#18;
+     pvp2 = #0#19;
+     pvp3 = #0#20;
+     pvp4 = #0#147;
+     pvp5 = #0#148;
+     pvp6 = #0#149;
+     |SI #0#108 = "S";
+          |SI #0#105 ! 0; pvp1 = precio > #0#105; |FINSI;
+          |SI #0#106 ! 0; pvp2 = precio > #0#106; |FINSI;
+          |SI #0#107 ! 0; pvp3 = precio > #0#107; |FINSI;
+          |SI #0#156 ! 0; pvp4 = precio > #0#156; |FINSI;
+          |SI #0#157 ! 0; pvp5 = precio > #0#157; |FINSI;
+          |SI #0#158 ! 0; pvp6 = precio > #0#158; |FINSI;
+     |SINO;
+          |SI #0#105 ! 0; pvp1 = (precio * 100) / (100 - #0#105); |FINSI;
+          |SI #0#106 ! 0; pvp2 = (precio * 100) / (100 - #0#106); |FINSI;
+          |SI #0#107 ! 0; pvp3 = (precio * 100) / (100 - #0#107); |FINSI;
+          |SI #0#156 ! 0; pvp4 = (precio * 100) / (100 - #0#156); |FINSI;
+          |SI #0#157 ! 0; pvp5 = (precio * 100) / (100 - #0#157); |FINSI;
+          |SI #0#158 ! 0; pvp6 = (precio * 100) / (100 - #0#158); |FINSI;
+     |FINSI;
+
+     enTiva = #0#30;
+     eaPrv = "";
+     efFiva = ~;
+     |HAZ IVAPrv;
+
+     |SI #0#130 = "S"; |Y #0#105 ! 0; pvp1 = pvp1 > enIva; |FINSI;
+     |SI #0#131 = "S"; |Y #0#106 ! 0; pvp2 = pvp2 > enIva; |FINSI;
+     |SI #0#132 = "S"; |Y #0#107 ! 0; pvp3 = pvp3 > enIva; |FINSI;
+     |SI #0#153 = "S"; |Y #0#156 ! 0; pvp4 = pvp4 > enIva; |FINSI;
+     |SI #0#154 = "S"; |Y #0#157 ! 0; pvp5 = pvp5 > enIva; |FINSI;
+     |SI #0#155 = "S"; |Y #0#158 ! 0; pvp6 = pvp6 > enIva; |FINSI;
+|FPRC;
+
+|PROCESO PvpCeroSi;
+     |SI #0#108 = "S";
+          pvp1 = precio > #0#105;
+          pvp2 = precio > #0#106;
+          pvp3 = precio > #0#107;
+          pvp4 = precio > #0#156;
+          pvp5 = precio > #0#157;
+          pvp6 = precio > #0#158;
+     |SINO;
+          pvp1 = (precio * 100) / (100 - #0#105);
+          pvp2 = (precio * 100) / (100 - #0#106);
+          pvp3 = (precio * 100) / (100 - #0#107);
+          pvp4 = (precio * 100) / (100 - #0#156);
+          pvp5 = (precio * 100) / (100 - #0#157);
+          pvp6 = (precio * 100) / (100 - #0#158);
+     |FINSI;
+
+     enTiva = #0#30;
+     eaPrv = "";
+     |HAZ IVAPrv;
+
+     |SI #0#130 = "S"; pvp1 = pvp1 > enIva; |FINSI;
+     |SI #0#131 = "S"; pvp2 = pvp2 > enIva; |FINSI;
+     |SI #0#132 = "S"; pvp3 = pvp3 > enIva; |FINSI;
+     |SI #0#153 = "S"; pvp4 = pvp4 > enIva; |FINSI;
+     |SI #0#154 = "S"; pvp5 = pvp5 > enIva; |FINSI;
+     |SI #0#155 = "S"; pvp6 = pvp6 > enIva; |FINSI;
+|FPRC;
+
+|PROCESO pvps1;|TIPO 0;
+     |SI #0#108 =  "S";|O #0#108 = "G";
+          |HAZ CalPre019;
+     |FINSI;
+|FPRC;
+
+|PROCESO pre;|TIPO 0;
+     |SI #0Campo ! Contenido;
+          |SI Campo = 108; |O Campo = 109; |O Campo = 105; |O Campo = 106;
+                    |O Campo = 107; |O Campo = 156; |O Campo = 157; |O Campo = 158;
+               |HAZ pvps1; |ACABA;
+          |FINSI;
+
+          |SI #4#60 = 1;
+               |SI Campo = 9;
+                    |HAZ pvps1;
+               |FINSI;
+          |FINSI;
+          |SI #4#60 = 2;
+               |SI Campo = 28; |O Campo = 163;
+                    |HAZ pvps1;
+               |FINSI;
+          |FINSI;
+          |SI #4#60 = 3;
+               |SI Campo = 133; |O Campo = 164; |O Campo = 28; |O Campo = 163;
+                         |O Campo = 29; |O Campo = 129;
+                    |HAZ pvps1;
+               |FINSI;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO altmacen; |TIPO 3;
+     eaFergaFam = #0#2;
+     eaFergaSub = #0#3;
+
+     |SI aModi = "S";
+          |HAZ EsWeb;
+          |SI FSalida = 0;
+              enPVP1 = #agifa019#18;
+              enPVP2 = #agifa019#19;
+              enPVP3 = #agifa019#20;
+              enPVP4 = #agifa019#147;
+              enPVP5 = #agifa019#148;
+              enPVP6 = #agifa019#149;
+              eaArtWeb = #agifa019#0;
+              |||HAZ ActualizaPreciosWeb;
+              |SUB_EJECUTA_NP "dsz99web";
+          |FINSI;
+     |FINSI;
+     aModi = "";
+
+     |MODULO nombrep;
+     |HAZ verlinea;
+     |HAZ verfamili;
+     |HAZ versubfam;
+     |SI nombrep = "iberz002"; nombrep = "agifa019";  |FINSI;
+     modo = (FEntrada / 100) ! 0;
+     nModo = modo;
+     |SI modo = 2;
+          |ABRE #219;                 || abre descip. ampliada
+          #219#0 = #0#0;
+          |LEE 110#219=;              || busca el articulo
+          |SI FSalida = 0;
+               |SI #219 ! #0#1;       || si ha cambiado la descripcion
+                    #219#1 = #0#1;
+                    |GRABA 020#219a;  || la actualiza
+               |FINSI;
+          |FINSI;
+          |LIBERA #219;
+          |CIERRA #219;
+     |FINSI;
+     |SI modo = 1; |Y nombrep = "agifa019";
+          |ABRE #1;
+          #1#0  = #0#0;
+          #1#1  = 1;
+          |LEE 010#1=;
+          |SI FSalida ! 0;
+               |DDEFECTO #1;
+               #1#0  = #0#0;
+               #1#1  = 1;
+               #1#40 = #0#1;
+               |HAZ DesAlma;
+               #1#41 = aDesAlma;
+               |GRABA 020#1n;
+          |FINSI;
+          |CIERRA #1;
+     |FINSI;
+     #0#123 = "N";            ||Como es tipo 3 es en modificacion
+     #0#124 = "00.00.0000";
+
+     |MODULO aprograma;
+     |SI tpcontro = 1;|Y aprograma ! "agitp001";
+          |SI #agifa142#210 = "S";
+               |ABRE #14;
+               #14#0 = #0#27;
+               #14#1 = #0#0;
+               |LEE 101#14=;
+               |SI FSalida ! 0; |GRABA 020#14b; |FINSI;
+               #14#2 = #0#134;
+               #14#3 = #0#163; ||Upc en divisa
+               #14#8 = #0#165; ||Divisa de upc
+               #14#9 = #0#28;  ||Upc en base
+               #14#4 = #0#29;  ||Dto 1
+               #14#5 = #0#129; ||Dto 2
+               #14#10 = #0#209; || Dto 3
+               |GRABA 001#14a;
+               |CIERRA #14;
+          |FINSI;
+     |FINSI;
+
+     |SI enModoArt = 1;  |Y #910#2 = 4;
+         |ABRE #919;
+         #919#0 = eAlfaC;
+         #919#1 = #0#0;
+         #919#2 = #0#1;
+         |GRABA 020#919n;
+         |CIERRA #919;
+     |FINSI;
+     ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+     |HAZ EsVigor;
+     |SI FSalida = 0;
+          eaArticulo = #0#0;
+          |SUB_EJECUTA_NP "vigm0001;SINOEXISTE";
+     |FINSI;
+     |HAZ EsGuillen;
+     |SI FSalida = 0;
+          eaArticulo = #0#0;
+          |SUB_EJECUTA_NP "guillm01;SINOEXISTE";
+     |FINSI;
+     |HAZ EsQDClor;
+     |SI FSalida = 0;
+          eaArticulo = #0#0;
+          |SUB_EJECUTA_NP "qdclor01;SINOEXISTE";
+     |FINSI;
+     |HAZ EsAparecida;
+     |SI FSalida = 0;
+          |SI enBtnModoApa ! 4;
+               |GRABA 000#0a;
+               |SI FSalida ! 0; |GRABA 020#0n; |FINSI;
+               |LIBERA #4;
+          |FINSI;
+          enTiva = #0#30;
+          eaArticulo = #0#0;
+          pvp1 = #0#18;
+          pvp2 = #0#19;
+          pvp3 = #0#20;
+          pvp4 = #0#147;
+          pvp5 = #0#148;
+          pvp6 = #0#149;
+          |SUB_EJECUTA_NP "aparm009;AUTO";
+          |SI enBtnModoApa = 4;
+               |LEE 020#0=;
+          |SINO;
+               |LEE 121#0=;
+          |FINSI;
+     |FINSI;
+     |HAZ EsExtintor;
+     |SI FSalida = 0;
+          eaArticulo = #0#0;
+          |SUB_EJECUTA_NP "extm0001;SINOEXISTE";
+     |FINSI;
+     |HAZ EsCoimasa;
+     |SI FSalida = 0;
+          eaArticulo = #0#0;
+          |SUB_EJECUTA_NP "coima060;SINOEXISTE";
+     |FINSI;
+     |SI nModo = 1; |O nModo = 2;
+          |HAZ EsJamaica;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               eaAlfa = #0#1;
+               eaFamilia = #0#2;
+               eaMarca = #0#126;
+               enPrecio = #0#18;
+               enTiva = #0#30;
+               enModo = nModo;
+               |SUB_EJECUTA_NP "cafe0026;ALTAART";
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO bajmacen; |TIPO 1;
+     modo = (FEntrada / 100) ! 0;
+     |SI modo = 3;
+          |ABRE #1; |ABRE #904;
+          #1#0 = #0#0;
+          #1#1 = 0;
+          |LEE 101#1];
+          |PARA ; |SI FSalida = 0;|Y #1#0 = #0#0; |HACIENDO ;
+               #904#0 = #1#0;
+               #904#1 = #1#1;
+               #904#2 = "";
+               |LEE 101#904];
+               |PARA; |SI FSalida = 0; |Y #904#0 = #1#0; |Y #904#1 = #1#1; |HACIENDO;
+                    |BORRA 020#904a;
+                    |LEE 101#904s;
+               |SIGUE;
+               |BORRA 020#1a;
+               |LEE 101#1s;
+          |SIGUE;
+          |CIERRA #1; |CIERRA #904;
+     |FINSI;
+|FPRC;
+
+|PROCESO defec4; |TIPO 0;
+     nSal = FSalida;
+     modo = (FEntrada / 100) ! 0;
+     |ABRE #4; |LEE 000#4p; |CIERRA #4;
+
+     |SI Campo = 1;
+          eaDocu = "agifa019";
+          |HAZ ControlUsu;
+          |SI enSwCtrlUsu ! 0;
+               |ERROR; |ACABA;
+          |FINSI;
+     |FINSI;
+
+     |HAZ div13;
+
+     |SI modo = 1; |Y Campo = 0;
+         |ABRE #agifa321;
+         |LEE 001#agifa321.p;
+         |CIERRA #agifa321;
+         #agifa019#165 = #agifa321#9; ||Primera vez moneda div = moneda base
+     |FINSI;
+
+     |SI modo = 1;
+          |HAZ EsMalpesa;
+          |SI FSalida = 0;
+               #0#180 = "S";
+          |FINSI;
+     |FINSI;
+
+     ||------------Pone Ult. Proveedor
+     aConfir = #4#76;
+     calpre  = #4#60;
+
+     |HAZ UltProv;
+     FSalida = nSal;
+|FPRC;
+
+|PROCESO tex1; |TIPO 14;
+     #0#122 = &178 * 4;
+     |CAMPO_MODIFICA #0#122 , 1 , "S";
+     |CAMPO_VISUAL #0#122 , 1 , "S";
+|FPRC;
+
+|PROCESO nomodi;
+     |CAMPO_MODIFICA #0#110 , 1 , "N"; |CAMPO_VISUAL #0#110 , 1 , "N";
+|FPRC;
+
+|PROCESO decs; |TIPO 0;
+     #0Campo = #0Campo ! #4#8;
+     |PINTA #0Campo;
+|FPRC;
+
+|PROCESO ValoraAlma;
+/*
+     #1#3 = #1#5 - #1#4;
+     |SI #1#3 > 0;
+          #1#3 = #1#3 * #0#9;
+     |SINO;
+          #1#3 = 0;
+     |FINSI;
+
+     #1#50 = #1#42 + #1#6 - #1#43 - #1#39; || necesidades
+     #1#50 = #1#50 - #1#4 - #1#9 - #1#8;
+     |SI #1#50 < 0; #1#50 = 0; |FINSI;
+*/
+     |HAZ ValoraStock;
+     #1#40 = #0#1;       || Descripcion
+     |GRABA 020#1a;
+|FPRC;
+
+|DEFBUCLE ValoraAlma;
+     #1#1;
+     ;
+     #0#0, 00001;
+     #0#0, 99999;
+     be;
+     NULL, ValoraAlma;
+|FIN;
+
+|PROCESO ModiDesAlma;
+     #referen@#40 = #0#1;       || Descripcion
+     |GRABA 020#referen@.a;
+|FPRC;
+
+|DEFBUCLE ModiDesAlma;
+     #referen@#1002;
+     ;
+     #0#0, 00001;
+     #0#0, 99999;
+     be;
+     NULL, ModiDesAlma;
+|FIN;
+
+|PROCESO dsl00001_1;
+     |BORRA 020#dsl00001.a;
+     |LIBERA #dsl00001;
+|FPRC;
+
+|DEFBUCLE dsl00001;
+     #dsl00001#3;
+     ;
+     #agifa019#0, "             ";
+     #agifa019#0, "zzzzzzzzzzzzz";
+     be;
+     NULL, dsl00001_1;
+|FIN;
+
+|PROCESO copia2; |TIPO 2;
+     enSwAltaArt = (FEntrada/100) ! 0;  || Para el control de empresas
+
+     nForma = 0 +. 1;
+     nModo = (FEntrada / 100) ! 0;
+
+     eaDocu = "agifa019";
+     |HAZ ControlUsu;
+     |SI enSwCtrlUsu ! 0;
+          |ERROR; |ACABA;
+     |FINSI;
+
+     |SI nModo = 3;
+          |ABRE #65;
+          |DDEFECTO #65;
+          #65#0 = #0#0;
+          #65#1 = "01.01.0000";
+          |LEE 000#65];
+          |SI FSalida = 0; |Y #65#0 = #0#0;
+               |CONFI "0000NExisten movimientos de esta ficha. Continuar con la baja?";
+               |SI FSalida ! 0;
+                    |ERROR; |ACABA;
+               |FINSI;
+          |FINSI;
+          |CIERRA #65;
+     |FINSI;
+
+     aAlfa = #0#195; |QBF aAlfa;
+     |SI aAlfa = ""; #0#195 = aAlfa; |FINSI;
+
+     |SI enModoArt = 3;|Y #910#2 = 4;
+         |ABRE #919;
+         #919#0 = eAlfaC;
+         |BORRA 020#919c;
+         |CIERRA #919;
+     |FINSI;
+
+     |SI nModo = 3;
+         |BUCLE dsl00001;
+     |FINSI;
+
+     #0#10 = #0#6 - #0#17;              || Valor Stock
+     |SI #0#10 > 0;
+          #0#10 = #0#10 * #0#9;
+     |SINO;
+          #0#10 = 0;
+     |FINSI;
+
+     |MODULO aProg;
+    || |SI aProg = "agifa019";  |O aProg = "iberz002";
+     |SI aProg ! "agifa017";
+          |BUCLE ValoraAlma;
+     |SINO;
+          |DDEF aAlfa;
+          aAlfa = aAlfa + "agifa017";
+          |CARGA_DEF aAlfa, referen@;
+          |SI FSalida = 0;
+               |BUCLE ModiDesAlma;
+               |DESCARGA_DEF #referen@;
+          |FINSI;
+     |FINSI;
+
+     |HAZ EsMalpesa;
+     |SI FSalida = 0;
+          |HAZ MalpeArti;
+     |FINSI;
+
+     |HAZ EsTagloma;
+     |SI FSalida = 0;
+          |HAZ TagFactorConver;
+     |FINSI;
+
+     |HAZ defec4;
+
+     |SI nModo = 1; |Y swCar1 = 1;
+          |PUSHV 0501 2380;
+          |ABRE #30;
+          #30#0 = #0#0;
+          |LEE 101#30=;
+          nSal = FSalida;
+        |ET eVic;
+          |PINPA #0#30;
+          #30#0 = #0#0;
+          #30#2 = #0#1;
+          |PINDA #0#30;
+          |ENDATOS #1#30;
+          |SI FSalida ! 0;
+               |VETE eVic;
+          |SINO;
+               |SI nSal = 0; |GRABA 020#30a; |FINSI;
+               |SI nSal ! 0; |GRABA 020#30n; |FINSI;
+          |FINSI;
+          |LIBERA #30;
+          |CIERRA #30;
+          |POPV;
+     |FINSI;
+
+
+     #0#194 = 1; ||Factu Venta
+     #0#196 = 1; ||Factu Comp
+     |SI #0#179 = "S";
+          |ABRE #238;
+          #238#0 = #0#201;
+          |LEE 000#238=;
+          |SI FSalida = 0;
+               #0#188 = #238#8; ||Tipo
+               #0#192 = #238#13;||Divisor
+               #0#194 = #238#6; ||Factu Venta
+               #0#196 = #238#7; ||Factu Comp
+               #0#197 = #238#12; ||Pedir medidas
+          |FINSI;
+          |CIERRA #238;
+     |FINSI;
+
+     |HAZ EsAlbadis;
+     |SI FSalida = 0;
+          #0#196 = 2;
+     |FINSI;
+
+     |SI nModo = 3;
+          |HAZ EsAlbadis;
+          |SI FSalida = 0;
+               |HAZ AlbaBorArt;
+          |FINSI;
+          |HAZ EsGrupoSolar;
+          |SI FSalida = 0;
+               |HAZ GrSolBorArt;
+          |FINSI;
+          |HAZ EsMecanogra;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "mecam001;BAJA";
+          |FINSI;
+          |HAZ EsVigor;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "vigm0001;BORRA";
+          |FINSI;
+          |HAZ EsGuillen;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "guillm01;BORRA";
+          |FINSI;
+          |HAZ EsQDClor;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "qdclor01;BAJA";
+          |FINSI;
+          |HAZ EsPCEGroup;
+          |SI FSalida = 0;
+               |HAZ BorraAuxPCEG;
+          |FINSI;
+          |HAZ EsAparecida;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "aparm009;BAJA";
+          |FINSI;
+          |HAZ EsExtintor;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "extm0001;BAJA";
+          |FINSI;
+          |HAZ EsGesineed;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "psioaz03;BAJA";
+          |FINSI;
+          |HAZ EsRocai;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "rocaim01;BAJA";
+          |FINSI;
+          |HAZ EsCoimasa;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "coima060;BAJA";
+          |FINSI;
+     |FINSI;
+
+     |HAZ EsTpv;
+     |SI FSalida = 0;
+          |HAZ CreaArtTactil;
+     |FINSI;
+
+     |HAZ EsAparecida;
+     |SI FSalida = 0;
+          |SI nModo = 1;
+               aAlfa = "aparm009;ALTA";
+               |HAZ PreAparecida;
+          |FINSI;
+          |MODULO aAlfa;
+          |SI aAlfa = "dsz99895"; |Y nModo = 2; |Y nForma = 1;
+               aAlfa = "aparm009";
+               |HAZ PreAparecida;
+          |FINSI;
+     |FINSI;
+
+     |HAZ EsGesenvia;
+     |SI FSalida = 0;
+          |HAZ GesenviaCop19;
+     |FINSI;
+     |SI nForma = 1;
+          |HAZ EsGestral;
+          |SI FSalida = 0;
+               aAlfa = "gestrw03;" + #0#125 + #0#0;
+               |SUB_EJECUTA aAlfa;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO salta_exa; |TIPO 7;
+     modo = (FEntrada / 100) ! 0;
+     |SI modo = 1; |O modo = 2;
+          |CAMPO_MODIFICA #0#123 , 1 , "N";
+          |CAMPO_MODIFICA #0#124 , 1 , "N";
+     |FINSI;
+|FPRC;
+
+|PROCESO salta_exa1; |TIPO 0;
+     |SI modo = 1; |O modo = 2;
+          |CAMPO_MODIFICA #0#123 , 1 , "S";
+          |CAMPO_MODIFICA #0#124 , 1 , "S";
+     |FINSI;
+|FPRC;
+
+
+|PROCESO UltProv;
+     modo = (FEntrada / 100) ! 0;
+
+     |SI #4#43 = "S"; |Y #4#44 > 0; |Y modo = 1;
+          ||DESGLOSA EL CODIGO DEL ARTICULO, Y SACA EL CODIGO DEL PROVEEDOR.
+          i = 100 + #4#44;
+          xx = (#0#0 % i);
+          xx = "000000" + xx; |QBF xx;
+          xx = (xx % -106);
+          #0#27 = xx;
+
+          || LEE LA FICHA DE DEFECTOS POR PROVEEDOR, Y RELLENA LOS DEFECTOS.
+          |ABRE #99;
+          #99#0 = #0#27;
+          |LEE 000#99=;
+          |SI FSalida = 0;
+               #0#109 = #99#2;     || PTS.REDONDEO.
+               #0#108 = #99#3;     || CONFIRMA AUMENTOS.
+               #0#105 = #99#4;     || % INCREMENTO 1.
+               #0#106 = #99#5;     || % INCREMENTO 2.
+               #0#107 = #99#6;     || % INCREMENTO 3;
+               #0#156 = #99#7;     || % INCREMENTO 4.
+               #0#157 = #99#8;     || % INCREMENTO 5.
+               #0#158 = #99#9;     || % INCREMENTO 6;
+          |FINSI;
+          |CIERRA #99;
+     |FINSI;
+|FPRC;
+
+|RUTINA inf60;
+     #60#2 = #0#0;
+|FRUT;
+
+|RUTINA sup60;
+     #60#2 = #0#0;
+|FRUT;
+
+|RUTINA Min220;
+     #220#0 = #0#0;
+     #220#1 = 1;
+|FRUT;
+
+|RUTINA Max220;
+     #220#0 = #0#0;
+     #220#1 = 999;
+|FRUT;
+
+|RUTINA Min82;
+     #82#0 = #0#0;
+     #82#1 = 1;
+|FRUT;
+
+|RUTINA Max82;
+     #82#0 = #0#0;
+     #82#1 = 999;
+|FRUT;
+
+|PROCESO CompruDesAmpli;
+     |ABRE #220;
+     #220#0 = #0#0;
+     #220#1 = 1;
+     |LEE 000#220];
+     |SI FSalida = 0; |Y #220#0 = #0#0;
+          #219#0 = #0#0;
+          |LEE 000#219=;
+          |SI FSalida ! 0;
+               |GRABA 020#219n;
+          |FINSI;
+     |SINO;
+          #219#0 = #0#0;
+          |BORRA 000#219c;
+     |FINSI;
+     |CIERRA #220;
+|FPRC;
+
+|PROCESO CompruDesAmpliCom;
+     |ABRE #82;
+     #82#0 = #0#0;
+     #82#1 = 1;
+     |LEE 000#82];
+     |SI FSalida = 0; |Y #82#0 = #0#0;
+          #81#0 = #0#0;
+          |LEE 000#81=;
+          |SI FSalida ! 0;
+               |GRABA 020#81n;
+          |FINSI;
+     |SINO;
+          #81#0 = #0#0;
+          |BORRA 000#81c;
+     |FINSI;
+     |CIERRA #82;
+|FPRC;
+
+|PROCESO sal6; |TIPO 6;
+     |SI #0#1 ! Contenido;
+          eaConte1 = Contenido;
+     |FINSI;
+     nModo = (FEntrada / 100) ! 0;
+     enModoAlma = nModo;
+     salida = FSalida;
+     |MODULO aProg;
+
+     |SI nModo = 1; |Y Campo = 0;
+          #0#30 = #4#239;
+          #0#128 = #0#0;
+     |FINSI;
+
+     |SI nModo = 1; |Y aProg ! "agica001";
+          |ABRE #60;
+          #60#0 = #0#0;
+          |LEE 000#60=;
+          |SI FSalida = 0;
+               |MENAV "0000Codigo existente en Codigos Alternativos...";
+               |ERROR; |ACABA;
+          |FINSI;
+          |CIERRA #60;
+     |FINSI;
+
+     |SI Campo = 1;
+          |HAZ EsAlbadis;
+          |SI FSalida = 0;
+               |HAZ AlbaPideArt;
+          |FINSI;
+
+     |FINSI;
+||--
+     |C_M #0#175, 1, "S";
+     |C_M #0#176, 1, "S";
+
+     |SI #910#1  = "N";  |C_M #0#175, 1, "N";  |FINSI;
+     |SI #910#19 = "N";  |C_M #0#176, 1, "N";  |FINSI;
+
+     |SI Campo = 0;
+          enAlta = 1;
+          eaArticulo = #0Campo;
+          |HAZ LlenaArticulo;
+          |SI FSalida = 0;
+               #0Campo = eaArticulo;
+               |SI aProg = "agifa019"; |PINTA #0Campo; |FINSI;
+          |SINO;
+               |ERROR; |ACABA;
+          |FINSI;
+     |FINSI;
+||--
+     |SI aCodAnt = #0#0;|Y aDesAnt ! #0#1; |Y Campo = 1; |Y salida = 0;
+          |SI nModo ! 2;
+               FSalida = 0;
+          |SINO;
+               |CONFI "0000SCambiar descripcion proveedor?";
+          |FINSI;
+          |SI FSalida = 0; #0#195 = #0#1; |FINSI;
+          |PINTA #0#195;
+          aCodAnt = #0#0;
+          aDesAnt = #0#1;
+     |FINSI;
+
+     FSalida = salida;
+|FPRC;
+
+________________________/ TEXTO LINEAS.......................................
+|RUTINA mini_f;
+     #80#0 = #0#2;
+     #80#1 = 001;
+|FRUT;
+
+|RUTINA maxi_f;
+     #80#0 = #0#2;
+     #80#1 = 200;
+|FRUT;
+
+|PROCESO texto_fam; TIPO 0;
+     |SI FSalida = 10;
+          |ABRET #80;
+          |PUSHV 0501 2380;
+          |PINPA #0#80;
+          |PARA ind = 1; |SI ind [ 200; |HACIENDO ind = ind + 1;
+               #80#0 = #0#2;
+               #80#1 = ind;
+               |LEE 141#80=;
+               |SI FSalida ! 0;
+                    #80#2 = "";
+                    |GRABA 021#80n;
+               |FINSI;
+               |LIBERA #80;
+          |SIGUE;
+          |MENSA "0000< ESC > SALIR.";
+          |ENTLINEAL #1#80,1,4,21,1,mini_f,maxi_f;
+          |PARA ind = 200; |SI ind ] 1; |HACIENDO ind = ind - 1;
+               #80#0 = #0#2;
+               #80#1 = ind;
+               |LEE 141#80=;
+               |SI FSalida = 0;
+                    aAlfa = #80#2;
+                    |QBF aAlfa;
+                    |SI aAlfa ! ""; |SAL; |FINSI;
+                    |BORRA 021#80a;
+               |FINSI;
+               |LIBERA #80;
+          |SIGUE;
+          |POPV;
+          |CIERRAT #80;
+          |ERROR;
+     |FINSI;
+|FPRC;
+
+|PROCESO verfamili; |TIPO 0;
+     |SI #4#156 = "N";
+          aAlfa33 = #0#2;
+          |QBF aAlfa33;
+          |SI aAlfa33 = "";
+               |MENAV "0000Atencion Cod.Familia en Blanco";
+               |ERROR;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO PonArtiCoima;
+     aAlfa = #agifa019#1;  |QBF aAlfa;
+     |SI aAlfa ! "";  |ACABA;  |FINSI;
+
+     eaArticulo = #agifa019#0;
+     eaFam      = #agifa019#2;
+     eaSubFam   = #agifa019#3;
+     |SUB_EJECUTA "coimz040;PONDES";
+
+     #agifa019#1 = eaDesArt;
+     |PINTA #agifa019#1;
+|FPRC;
+
+|PROCESO versubfam; |TIPO 0;
+     |SI #4#158 = "N";
+          aAlfa33 = #0#3;
+          |QBF aAlfa33;
+          |SI aAlfa33 = "";
+               |MENAV "0000Atencion Cod.SubFamilia en Blanco";
+               |ERROR;
+          |FINSI;
+     |FINSI;
+
+     |SI Campo = 3;
+         |SI FSalida = 0;  |O  FSalida = 1;  |O  FSalida = 3;
+              |HAZ EsCoimasa;
+              |SI FSalida = 0;
+                  eaArticulo = #0#0;
+                  |SUB_EJECUTA_NP "coima060";
+
+                  |HAZ PinCoima;
+                  |HAZ PonArtiCoima;
+              |FINSI;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO MenLinea; |TIPO 7;
+     |HAZ EsQDClor;
+     |SI FSalida = 0;
+          |MENSA "0000<A>Cont.Numerados, <E>Envases, <C>Cisternas, <N>Cont.NO Numerados";
+     |FINSI;
+|FPRC;
+
+|PROCESO verlinea; |TIPO 0;
+     |SI #4#157 = "N";
+          aAlfa33 = #0#125;
+          |QBF aAlfa33;
+          |SI aAlfa33 = "";
+               |MENAV "0000Atencion Cod.Linea en Blanco";
+               |ERROR;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO Envase;
+     |SI #4#72 = "N";
+          |MENAV "0000Bultos no activo en parametros generales";
+          |ACABA;
+     |FINSI;
+
+     nModo = (FEntrada / 100) ! 0;
+     |SI nModo = 1;
+          FSalida = 0;
+     |SINO;
+          |LEE 101#0=;
+     |FINSI;
+     |SI FSalida = 0;
+          Cascada    = #0#138;
+          CodEnvase1 = #0#139;
+          FacEnvase1 = #0#4;
+          CodEnvase2 = #0#141;
+          FacEnvase2 = #0#142;
+          CodEnvase3 = #0#143;
+          FacEnvase3 = #0#144;
+          CodEnvase4 = #0#145;
+          FacEnvase4 = #0#146;
+          CodEnvase5 = #0#216;
+          FacEnvase5 = #0#217;
+          CodEnvase6 = #0#218;
+          FacEnvase6 = #0#219;
+          |SUB_EJECUTA_NP "agiw0003";
+          #0#4   = FacEnvase1;
+          #0#138 = Cascada;
+          #0#139 = CodEnvase1;
+          #0#140 = FacEnvase1;
+          #0#141 = CodEnvase2;
+          #0#142 = FacEnvase2;
+          #0#143 = CodEnvase3;
+          #0#144 = FacEnvase3;
+          #0#145 = CodEnvase4;
+          #0#146 = FacEnvase4;
+          #0#216 = CodEnvase5;
+          #0#217 = FacEnvase5;
+          #0#218 = CodEnvase6;
+          #0#219 = FacEnvase6;
+          |GRABA 020#0a;
+    |FINSI;
+|FPRC;
+
+|PROCESO Decimales19;
+     |ABRE #agifa324;
+     #agifa324#0 = #agifa019#165;
+     |LEE 001#agifa324.=;
+     nDeci_PreDiv = #agifa324#9;
+     cambio_div = #agifa324#3;
+     |ABRE #agifa321;
+     |LEE 001#agifa321.p;
+     #agifa324#0 = #agifa321#9; ||Igualo a moneda base
+     |LEE 001#agifa324.=;
+     nDeci_Base = #agifa324#7;  ||Decimales moneda base
+     nDeci_PreBase = #agifa324#9;  ||Decimales precio de moneda base
+     cambio_base = #agifa324#3;
+     |CIERRA #agifa321;
+     |CIERRA #agifa324;
+|FPRC;
+
+|PROCESO decdiv; |TIPO 0;
+     |SI #0Campo ! Contenido; ||Aqui porque debe leer al entrar en articulo
+          |HAZ Decimales19;
+          |SI Campo = 165;|O Campo = 28;  ||Estoy en campo divisa de UPC o UPC Base
+               #0#163 = #0#28 / cambio_base * cambio_div; ||U.P.C Div
+               #0#164 = #0#133 / cambio_base * cambio_div; ||U.P.C Div con Dto
+          |FINSI;
+          |SI Campo = 163; ||Estoy en UPC Divisa
+               #0#28 = #0#163 / cambio_div * cambio_base;  ||U.P.C
+               #0#164 = #0#163 < #agifa019#29;
+               #0#164 = #0#164 < #agifa019#129;
+               #0#133 = #0#164 / cambio_div * cambio_base; ||U.P.C con Dto
+          |FINSI;
+          |SI Campo = 164; ||Estoy en UPC Div con Dto
+               #0#133 = #0#164 / cambio_div * cambio_base;  ||U.P.C con Dto
+          |FINSI;
+          |SI Campo = 133; ||Estoy en UPC con Dto
+              #0#164 = #0#133 / cambio_div * cambio_base; ||U.P.C Div con Dto
+          |FINSI;
+
+          |PINTA #0#163;
+          |PINTA #0#164;
+          |PINTA #0#28;
+          |PINTA #0#133;
+     |FINSI;
+|FPRC;
+
+|PROCESO div13; |TIPO 13; ||Miro parametros de divisas y decimales divisas
+     |ABRE #4; |LEE 000#4p; |CIERRA #4;
+
+     modo = (FEntrada / 100) ! 0;
+
+
+     |MODULO aprograma;
+     |HAZ Decimales19;
+
+     nSwPin = 1;
+     |HAZ EsTecatel;
+     |SI FSalida = 0; |Y #4#138 = "S";
+          |HAZ TecaUsuPre;
+          nSwPin = FSalida;
+     |FINSI;
+
+     |SI #4#138 = "S"; |Y nSwPin ! 0;
+          |C_V #0#9, 1, "N";
+          |C_V #0#28, 1, "N";
+          |C_V #0#133, 1, "N";
+          |C_V #0#163, 1, "N";
+          |C_V #0#164, 1, "N";
+     |FINSI;
+     |SI #4#9 = "S";     ||Precios Arti/Alma
+          |PARA i = 18; |SI i [ 23; |HACIENDO i = i + 1; |C_M #0i, 1, "N"; |SIGUE;
+          |C_M #0#130,1, "N";
+          |C_M #0#131,1, "N";
+          |C_M #0#132,1, "N";
+          |PARA i = 147; |SI i [ 158; |HACIENDO i = i + 1; |C_M #0i, 1, "N"; |SIGUE;
+          |C_M #0#9,1, "N";
+          |PARA i = 105; |SI i [ 109; |HACIENDO i = i + 1; |C_M #0i, 1, "N"; |SIGUE;
+     |FINSI;
+     |SI #4#30 = "N";
+          |C_M #0#9, 1, "N";
+     |FINSI;
+|FPRC;
+
+|PROCESO Pant3_14; |TIPO 14;
+     |HAZ EsGrupoSolar;
+     |SI FSalida = 0;
+          |HAZ GrSolPinArt;
+     |FINSI;
+     |HAZ EsMecanogra;
+     |SI FSalida = 0;
+          |HAZ MecanograPinArt;
+     |FINSI;
+|FPRC;
+
+|PROCESO CodigoUnidades; |TIPO 0;
+     nModo = (FEntrada / 100) ! 0;
+     |SI #0Campo ! Contenido; |O nModo = 1;
+          |SI #0#179 = "S";
+               |HAZ EsTagloma;
+               |SI FSalida = 0;
+                    |ABRE #238;
+                    #238#0 = #0#201;
+                    |LEE 000#238=;
+                    |SI FSalida = 0;
+                         #0#189 = #238#9; ||Med1
+                         #0#190 = #238#10;||Med2
+                         #0#191 = #238#11;||Med3
+                    |FINSI;
+                    |CIERRA #238;
+               |FINSI;
+          |FINSI;
+     |FINSI;
+
+     |HAZ EsGrupoSolar;
+     |SI FSalida = 0;
+          |HAZ GrSolEntArt;
+     |FINSI;
+|FPRC;
+
+|PROCESO ControlPro; |TIPO 7;
+     nModo = (FEntrada / 100) ! 0;
+     |SI nModo = 4;
+          |C_M #0#27, 1 , "N";
+     |SINO;
+          |C_M #0#27, 1 , "S";
+     |FINSI;
+|FPRC;
+
+|PROCESO tpcont;|TIPO 0;
+  |SI #0Campo ! Contenido;
+     tpcontro = 1;
+  |FINSI;
+|FPRC;
+
+|PROCESO Tabla7; |TIPO7;
+     |C_M #0#177, 1, "S";
+     |SI #0#176 = "N";
+         |C_M #0#177, 1, "N";
+         #0#177 = "";  |PINTA #0#177;
+         |ACABA;
+     |FINSI;
+
+     |ABRE #910;
+     |LEE 040#910p;
+     |SI FSalida ! 0;  |DDEFECTO #910;  |FINSI;
+     |CIERRA #910;
+
+     |C_M #0#177, 1, "N";
+     |SI #910#44 = "T";  |C_M #0#177, 1, "S";  |FINSI;
+|FPRC;
+
+|PROCESO Tabla0; |TIPO 0;
+     |C_M #0#177, 0, aAlfa;
+     |SI aAlfa = "N";  |ACABA;  |FINSI;
+
+     |ABRE #915;
+     #915#0 = #0#177;
+     #915#1 = "";
+     #915#2 = "";
+     #915#5 = "";
+     |LEE 040#915=;
+     |SI FSalida ! 0;
+         |MENAV "       Tabla inexistente";
+         |ERROR;
+     |FINSI;
+     |CIERRA #915;
+|FPRC;
+
+|PROCESO CodBarra;  |TIPO 7;
+     aConte = #0#1;
+     |ABRE #910; |LEE 000#910p; |CIERRA #910;
+
+     |C_M #0#175, 1, "S";
+     |C_M #0#176, 1, "S";
+
+     |SI #910#1  = "N";  |C_M #0#175, 1, "N";  |FINSI;
+     |SI #910#19 = "N";  |C_M #0#176, 1, "N";  |FINSI;
+
+     |SI #910#1  ! "S";  |ACABA;  |FINSI;
+
+     |SI #0#128 = "                    ";
+         |SI #910#33 = "S";
+             eAlfa = #0#0;
+             |SUB_EJECUTA_NP "dsz99990;B";
+             #0#128 = eAlfa;
+         |SINO;
+             #0#128 = #0#0;
+         |FINSI;
+         |PINTA #0#128;
+     |FINSI;
+|FPRC;
+
+|PROCESO PideArt;  |TIPO 7;
+     nModo = (FEntrada / 100) ! 0;
+
+     |SI nModo = 4;
+          |SI #0#176 = "S";
+               |MENSA "0000<F2> Busqueda avanzada por código proveedor   <F3> Stock Elementos";
+          |SINO;
+               |MENSA "0000<F2> Busqueda avanzada por código proveedor";
+          |FINSI;
+     |SINO;
+          |MENSA "0000Código de artículo";
+     |FINSI;
+
+     eaDocu = "agifa019";
+     |HAZ ControlUsu;
+     |SI enSwCtrlUsu ! 0;
+          |ERROR; |ACABA;
+     |FINSI;
+
+     |HAZ EsConstru;
+     |SI FSalida = 0; |Y PARAMETRO = "000con";
+          |C_M #0#2,   1, "S";
+          |C_M #0#3,   1, "S";
+          |C_M #0#125, 1, "S";
+          |C_M #0#127, 1, "S";
+          |SI nModo = 1;
+               eaParCod = " ";          ||OJO UN ESPACIO si retorna el espacio
+               |SUB_EJECUTA "goartic0"; ||es que no esta activo en 'goparame'
+               #0#0 = eaParCod;
+               #0#125 = eaParSec;
+               #0#2 = eaParFam;
+               #0#3 = eaParSub;
+               #0#127 = eaParCap;
+               |SI eaParCod = ""; |O eaParCod = " ";
+                    |SI eaParCod = ""; |ERROR; |FINSI;
+                    |||| SI ES UN ESPACIO LO DEJAMOS CONTINUAR
+               |SINO;
+                    |C_M #0#2,   1, "N";
+                    |C_M #0#3,   1, "N";
+                    |C_M #0#125, 1, "N";
+                    |C_M #0#127, 1, "N";
+                    |PTEC 802;
+                    |PINTA #0#0;
+                    |PINTA #0#125;
+                    |PINTA #0#2;
+                    |PINTA #0#3;
+                    |PINTA #0#127;
+               |FINSI;
+          |FINSI;
+          |ACABA;
+     |FINSI;
+     ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+     |ABRE #910; |LEE 040#910p; |CIERRA #910;
+     |SI #910#2 < 3;  |ACABA;  |FINSI;
+
+     enModoArt = (FEntrada / 100) ! 0;
+     eAlfa     = #0Campo;
+     |SUB_EJECUTA_NP "dsz99990";                 || Por Pantalla
+
+     |SI eAlfa = "-1";  |PTEC 807;  |ACABA;  |FINSI;
+     |SI eAlfa = "-2";              |ACABA;  |FINSI;
+
+     eaArticulo = eAlfa;      || 700000-4215
+
+     #0Campo = eAlfa;
+     |PINTA #0Campo;
+     |PTEC 802;
+
+     |SI #0#128 = "                    ";
+         eAlfa = #0#0;
+         |SUB_EJECUTA_NP "dsz99990;B";
+     |FINSI;
+|FPRC;
+
+|PROCESO PintaFam;
+     |ABRE #9;
+     #9#0 = #0#2;
+     |LEE 000#9=;
+     |SI FSalida ! 0; |DDEFECTO #9; |FINSI;
+     |CIERRA #9;
+     |ABRE #10;
+     #10#0 = #0#3;
+     |LEE 000#10=;
+     |SI FSalida ! 0; |DDEFECTO #10; |FINSI;
+     |CIERRA #10;
+     |PINTA 2145, #9#1;
+     |PINTA 2245, #10#1;
+|FPRC;
+
+|PROCESO PintaT; |TIPO 14;
+     |SI #0#179 = "S";
+          |ABRE #238;
+          #238#0 = #0#201;
+          |LEE 000#238=;
+          |CIERRA #238;
+     |FINSI;
+
+     |ATRI I;
+     |SI #0#179 = "S"; |Y #238#8 > 0; |Y #4#117 = "S";
+          |PINTA 2203, "Medidas:         x         x         ";
+          |PINTA 2212, #238#9;
+          |PINTA 2222, #238#10;
+          |PINTA 2232, #238#11;
+          |HAZ EsTagloma;
+          |SI FSalida = 0;
+               |HAZ TagCliCompra;
+          |FINSI;
+     |SINO;
+          |PINTA 2203, "                                     ";
+     |FINSI;
+
+     |HAZ EsTagloma;
+     |SI FSalida = 0;
+          |HAZ TagArtVarios; || no esta en el plb por problemas con MANTE
+     |FINSI;
+     |ATRI 0;
+
+     ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+     |ATRI N;
+     |SI #0#179 = "S";
+          aTx1 = "P.Servir  " + #238#5 + ":";
+          aTx2 = "P.Servir  " + #238#4 + ":";
+          aTx3 = "P.Recibir " + #238#5 + ":";
+          aTx4 = "P.Recibir " + #238#4 + ":";
+          aTx5 = "Depo.Vta." + #238#5 + ":";
+          aTx6 = "Depo.Vta." + #238#4 + ":";
+          aTx7 = "Total " + #238#5 + ":";
+          aTx8 = "Total " + #238#4 + ":";
+          aTx9 = "Dispo " + #238#5 + ":";
+          aTx0 = "Dispo " + #238#4 + ":";
+          aTx11 = "Depo.Com." + #238#5 + ":";
+          aTx12 = "Depo.Com." + #238#4 + ":";
+
+          |C_V #0#182, 1, "S";
+          |C_V #0#183, 1, "S";
+          |C_V #0#184, 1, "S";
+          |C_V #0#185, 1, "S";
+          |C_V #0#193, 1, "S";
+          |C_V #0#211, 1, "S";
+     |SINO;
+          aAlfa = " " * 11;
+          aTx1 = "P.Servir.....:";
+          aTx2 = "              " + aAlfa;
+          aTx3 = "P.Recibir....:";
+          aTx4 = "              " + aAlfa;
+          aTx5 = "Depo.Vta....:";
+          aTx6 = "             " + aAlfa;
+          aTx7 = "Total....:";
+          aTx8 = "          " + aAlfa;
+          aTx9 = "Dispo....:";
+          aTx0 = "          " + aAlfa;
+          aTx11 = "Depo.Com....:";
+          aTx12 = "             " + aAlfa;
+          |C_V #0#182, 1, "N";
+          |C_V #0#183, 1, "N";
+          |C_V #0#184, 1, "N";
+          |C_V #0#185, 1, "N";
+          |C_V #0#193, 1, "N";
+          |C_V #0#211, 1, "N";
+     |FINSI;
+
+     |PINTA 1503, aTx1;
+     |PINTA 1603, aTx2;
+     |PINTA 1703, aTx3;
+     |PINTA 1803, aTx4;
+     |PINTA 1529, aTx5;
+     |PINTA 1629, aTx6;
+     |PINTA 1754, aTx7;
+     |PINTA 1854, aTx8;
+     |PINTA 1954, aTx9;
+     |PINTA 2054, aTx0;
+     |PINTA 1729, aTx11;
+     |PINTA 1829, aTx12;
+     |ATRI I;
+
+     ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ Modulo 003026
+     |HAZ EsAlbero;
+     |SI FSalida = 0;
+          |HAZ AlberoPintaArt;
+     |FINSI;
+     ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+     |HAZ EsAlbadis;
+     |SI FSalida = 0;
+          |HAZ AlbaPinArt;
+     |FINSI;
+     ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ Modulo 000323
+     |HAZ EsTecatel;
+     |SI FSalida = 0;
+          |HAZ TecaPinFec;
+          eaArticulo = #0#0;
+          enAlmacen = 0;
+          |HAZ TecaPinTienda;
+     |FINSI;
+     ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+     |HAZ EsMalpesa;
+     |SI FSalida = 0;
+          |HAZ MalpePinArt0;
+     |FINSI;
+     ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+     |HAZ EsPCEGroup;
+     |SI FSalida = 0;
+          |HAZ PinPceArt;
+     |FINSI;
+     |HAZ EsBerria;
+     |SI FSalida = 0;
+          |HAZ PinBerria;
+          |ATRI I;
+     |FINSI;
+     |HAZ EsGestral;
+     |SI FSalida = 0;
+          |HAZ PinGestral19;
+     |FINSI;
+     ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+     |ABRE #910;
+     |LEE 040#910p;
+     |SI FSalida ! 0;  |DDEFECTO #910;  |FINSI;
+     |CIERRA #910;
+
+     ||SI #910#33 = "S";
+     |SI #910#1 = "S";
+         eAlfa = #0#0;
+         |SUB_EJECUTA_NP "dsz99990;V";
+     |SINO;
+         eAlfa1 = "";
+         eAlfa2 = "";
+         eAlfa3 = "";
+         eAlfa4 = "";
+         eAlfa  = "";
+     |FINSI;
+
+     |SI #910#2 = 4;
+         |ABRE #919;
+         |SELECT #3#919;
+         #919#1 = #0#0;
+         |LEE 040#919=;
+         |SI FSalida ! 0;  |DDEFECTO #919;  |FINSI;
+         |CIERRA #919;
+
+         |PINPA #0#agipan00;
+         |PINTA 2202, #919#0;
+     |SINO;
+          |SI #910#8 = 0;  |Y #910#12 = 0;  |Y #910#16 = 0;
+               |HAZ PintaFam;
+          |SINO;
+               |PINPA #0#agipan00;
+
+               eAlfa4 = eAlfa4 %  115;
+
+               |SI #0#175 = "S";
+                    |HAZ EsAparecida;
+                    |SI FSalida = 0;
+                         |HAZ PintaAparecida;
+                    |SINO;              || Division vertical estandar
+                         |ATRI I;
+                         |SI #910#48 = "S";
+                              aDef = "dsm00071"; |HAZ LeeDivi1; |PINTA 2202, aAlfa;
+                              eAlfa1 = eAlfa2;
+                              aDef = "dsm00072"; |HAZ LeeDivi1; |PINTA 2223, aAlfa;
+                              eAlfa1 = eAlfa3;
+                              aDef = "dsm00073"; |HAZ LeeDivi1; |PINTA 2244, aAlfa;
+                              eAlfa1 = eAlfa4;
+                              aDef = "dsm00074"; |HAZ LeeDivi1; |PINTA 2265, aAlfa;
+                         |SINO;
+                              aDef = "dsm00011"; |HAZ LeeDivi; |PINTA 2202, aAlfa;
+                              aDef = "dsm00012"; |HAZ LeeDivi; |PINTA 2223, aAlfa;
+                              aDef = "dsm00013"; |HAZ LeeDivi; |PINTA 2244, aAlfa;
+                              aDef = "dsm00027"; |HAZ LeeDivi; |PINTA 2265, aAlfa;
+                         |FINSI;
+                         |ATRI i;
+                         |ATRI R;
+                         |PINTA 2102, #910#3;
+                         |PINTA 2123, #910#7;
+                         |PINTA 2144, #910#11;
+                         |PINTA 2165, #910#15;
+                         |ATRI r;
+                    |FINSI;
+               |FINSI;
+               |ATRI I;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+CODIGO DE BARRAS ANTIGUO
+
+|PROCESO calcodb;|TIPO 0;
+     i1 = #0#128 % 101;
+     i2 = #0#128 % 301;
+     i3 = #0#128 % 501;
+     i4 = #0#128 % 701;
+     i5 = #0#128 % 901;
+     i6 = #0#128 % 1101;
+     p1 = #0#128 % 201;
+     p2 = #0#128 % 401;
+     p3 = #0#128 % 601;
+     p4 = #0#128 % 801;
+     p5 = #0#128 % 1001;
+     p6 = #0#128 % 1201;
+     sumai = i1 + i2 + i3 + i4 + i5 + i6;
+     sumap = p1 + p2 + p3 + p4 + p5 + p6;
+     sumap = sumap * 3;
+     total = sumai + sumap;
+     base = total / 10;
+     resto = total $ 10;
+     |SI resto ! 0;
+          resto = resto / 10;
+          base = (base - resto) + 1;
+          base = base * 10;
+     |SINO;
+          base = base * 10;
+     |FINSI;
+     digito = base - total;
+     calcodb = #0#128;
+     |QBF calcodb;
+     calcodb = calcodb + "000000000000000";
+     calcodb = calcodb % 0112;
+     calcodb = calcodb + digito;
+     |QBF calcodb;
+     #0#128 = calcodb;
+     |PINTA #0#128;
+|FPRC;
+
+|PROCESO BuscaCB;
+     |ABRE #50;
+     |SELECT #2#50;
+     #50#3 = #0#128;
+     |LEE 000#50=;
+     |SI FSalida = 0;
+          |SELECT #1#0;
+          #0#0 = #50#1;
+          |LEE 000#0=;
+     |FINSI;
+     |CIERRA #0;
+|FPRC;
+
+|PROCESO MasCodB; |TIPO 0;
+     nModo = (FEntrada / 100) ! 0;
+
+     |SI nModo = 4; |Y FSalida ! 13;
+          |SI #0Campo ! Contenido;
+               |HAZ BuscaCB;
+          |FINSI;
+          |ACABA;
+     |FINSI;
+
+     |SI FSalida = 13;
+          |HAZ CreaTempo; |NOME_DAT #100 Tempo; |DELINDEX #100;
+          |DELINDEX #100; |ABRE #100;
+          |BUCLE dsl00001Ver;
+          |PUSHV 0501 2380;
+          |BLANCO 814 2350;
+          |ENTLINEAL #1#100, -1, 2, 21, 1, Min100, Max100;
+          |POPV;
+          |CIERRA #100; |DELINDEX #100; |HAZ BoraTempo;
+          |ERROR; |ACABA;
+     |FINSI;
+
+     |SI #910#33 = "S";  |ACABA;  |FINSI;
+
+     |SI FSalida = 9;    ||F1
+          |HAZ calcodb;
+          |ERROR; |ACABA;
+     |FINSI;
+
+     |SI Contenido ! #agifa019#128; |O nModo = 1;
+          aAlfa = #agifa019#128; |QBF aAlfa;
+          |SI nModo = 1; |Y aAlfa = ""; |ACABA; |FINSI;
+
+          |HAZ EsFergalsan;
+          |SI FSalida = 0;
+               FSalida = 0;
+          |SINO;    /* la estandar */
+               |CONFI "0000NActualizar Codigo Barras:";
+          |FINSI;
+          |SI FSalida ! 0;
+               #agifa019#128 = Contenido;
+               |SI nModo = 1; #agifa019#128 = ""; |FINSI;
+               |PINTA #agifa019#128;
+               |ACABA;
+          |SINO;
+               |ABRE #dsl00001;
+               |SELECT #2#dsl00001;
+
+               #dsl00001#3 = Contenido;      || borra el anterior (si existe)
+               |LEE 101#dsl00001.=;
+               |SI FSalida = 0;
+                    |BORRA 020#dsl00001.a;
+               |FINSI;
+               |LIBERA #dsl00001;
+
+               #dsl00001#3 = #agifa019#128;  || graba o actualiza el nuevo
+               |LEE 000#dsl00001.=;
+               |SI FSalida ! 0;
+                    |SI aAlfa ! "";
+                         |SELECT #1#dsl00001;
+                         |LEE 000#dsl00001.u;
+                         |SI FSalida = 0;
+                              nContador = #dsl00001#0 + 1;
+                         |SINO;
+                              nContador = 1;
+                         |FINSI;
+                         |DDEFECTO #dsl00001;
+                         #dsl00001#0 = nContador;
+                         #dsl00001#1 = #agifa019#0;
+                         #dsl00001#2 = #agifa019#1;
+                         #dsl00001#3 = #agifa019#128;
+                         |GRABA 020#dsl00001.n;        || graba si no existe
+                    |FINSI;
+               |SINO;
+                    |SI #dsl00001#1 ! #agifa019#0;
+                         aAlfa = "0000Codigo de Barras " + &13 + &10 + "asignado a [" + #dsl00001#1 + "].";
+                         |MENAV aAlfa;
+                         |ERROR;
+                    |FINSI;
+               |FINSI;
+               |CIERRA #dsl00001;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO Pulsab; |TIPO 6;
+     |SI Campo = 128; |Y FSalida ! 12;
+          || El codigo de barras tiene otras funciones !!!
+          |ACABA;
+     |FINSI;
+     nModo = (FEntrada / 100) ! 0;
+     nSal = FSalida;
+     enModoAlma = nModo;
+
+     |MODULO aAlfa;
+     |SI aAlfa ! "agifa019"; |ACABA; |FINSI; || por problemas con relaciones
+
+     |SI Campo = 0;
+          |HAZ EsTallerSC;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "talle004;EXISTE";
+          |FINSI;
+     |FINSI;
+
+     |SI nSal = 14;
+          |HAZ impc;
+          |ERROR;
+     |FINSI;
+     |SI nSal = 13;
+          |SI nModo = 1;
+               |MENAV "0000Opcion no disponible en alta...";
+          |SINO;
+               eaArticulo = #0#0;
+               |LIBERA #0;
+               |SI nModo ! 4;
+                    |GRABA 020#0a;
+               |FINSI;
+               |PUSHV 0501 2380;
+               |HAZ EsTaller;
+               |SI FSalida = 0;
+                    |SUB_EJECUTA_NP "dsz00118";
+               |SINO;
+                    || la estandar
+                    |SUB_EJECUTA_NP "dsz00081";
+               |FINSI;
+               |POPV;
+               |SI nModo ! 4;
+                    |LEE 101#0=;
+               |SINO;
+                    |LEE 000#0=;
+               |FINSI;
+          |FINSI;
+          |ERROR;
+     |FINSI;
+     |SI nSal = 10; |Y Campo = 0;
+          |HAZ CodiPrv;
+     |FINSI;
+     |SI nSal = 11; |Y Campo = 0;
+          eaArticulo = #0#0;
+          |SUB_EJECUTA_NP "dsz00132";
+          |ERROR;
+     |FINSI;
+
+     |SI nSal = 12; ||F4;
+          |HAZ EsVigor;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "vigm0001";
+               |ERROR;
+               nSal = 0;
+          |FINSI;
+
+          |HAZ EsGuillen;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "guillm01";
+               |ERROR;
+               nSal = 0;
+          |FINSI;
+
+          |HAZ EsQDClor;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "qdclor01";
+               |ERROR;
+               nSal = 0;
+          |FINSI;
+
+          |HAZ EsTallerSC;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "talle004";
+               |ERROR;
+               nSal = 0;
+          |FINSI;
+
+          |HAZ EsGesineed;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "psioaz03";
+               |ERROR;
+               nSal = 0;
+          |FINSI;
+
+          |HAZ EsRocai;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "rocaim01";
+               |ERROR;
+               nSal = 0;
+          |FINSI;
+
+          |HAZ EsChampiEmar;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "champi15";
+               |ERROR;
+               nSal = 0;
+          |FINSI;
+
+          |HAZ EsCoimasa;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "coima060";
+               |ERROR;
+               nSal = 0;
+          |FINSI;
+     |FINSI;
+
+     FSalida = nSal;
+|FPRC;
+
+|PROCESO PulsaF6;
+     |PTEC 828;
+|FPRC;
+
+|PROCESO PulsaF5;
+     |PTEC 827;
+|FPRC;
+
+|PROCESO PulsaF4;
+     |PTEC 826;
+|FPRC;
+
+|PROCESO PulsaF3;
+     |PTEC 825;
+|FPRC;
+
+|PROCESO T88; |TIPO 88;
+|| lo he quitado del campo 0, martes, 31 de agosto de 2010, 08:35:10 CEST
+|FPRC;
+
+|PROCESO BtnAlmacen;
+     eaArticulo = #0#0;
+     |GRABA 000#0a;
+     |LIBERA #0;
+     |PUSHV 0501 2380;
+     |SUB_EJECUTA_NP "dsz00118";
+     |POPV;
+     |SI nModo = 1; |O nModo = 2;
+          |LEE 101#0=;
+     |SINO;
+          |LEE 000#0=;
+     |FINSI;
+|FPRC;
+
+|PROCESO t81; |TIPO 8;
+     eaMensaCad = "9";
+     |HAZ ControlCaducidad;
+     |SI enErrorCad = 1;
+         |PTEC 807;
+         |ACABA;
+     |FINSI;
+
+     enModoAlma = 4;
+     |ABRE #4; |LEE 000#4p; |CIERRA #4;
+
+     |HAZ EsMarhuenda;
+     |SI FSalida = 0;
+          |CARGA_DEF aAlfa, marhup08@;
+          |SI FSalida = 0; swCar1 = 1; |FINSI;
+     |FINSI;
+
+     |MODULO aAlfa;
+     |HAZ EsConstru;
+     |SI FSalida = 0; |Y aAlfa = "agifa019";
+          |HAZ PideAlmaCompra;
+     |FINSI;
+
+     |CONTROL_SIMPLE 0, "BOTON,F6.- Opciones", 0561, 0573, PulsaF6;
+     nBoton = FSalida;
+     |ESTADO_CONTROL nBoton, "DISABLE";
+
+     |HAZ EsTaller;
+     |SI FSalida = 0;
+          |CONTROL_SIMPLE 0, "BOTON,F5.- Almacen", 0546, 0558, BtnAlmacen;
+          nBoton1 = FSalida;
+     |SINO;
+          || la estandar
+          |CONTROL_SIMPLE 0, "BOTON,F5.- Almacen", 0546, 0558, PulsaF5;
+          nBoton1 = FSalida;
+          |ESTADO_CONTROL nBoton1, "DISABLE";
+     |FINSI;
+
+     |HAZ EsVigor;
+     |SI FSalida = 0;
+          |CONTROL_SIMPLE 0, "BOTON,F4.- Auxiliar", 0531, 0543, PulsaF4;
+          nBotonAux = FSalida
+     |FINSI;
+
+     |HAZ EsGuillen;
+     |SI FSalida = 0;
+          |CONTROL_SIMPLE 0, "BOTON,F4.- Auxiliar", 0531, 0543, PulsaF4;
+          nBotonAux = FSalida
+     |FINSI;
+
+     |HAZ EsQDClor;
+     |SI FSalida = 0;
+          |CONTROL_SIMPLE 0, "BOTON,F4.- Auxiliar", 0531, 0543, PulsaF4;
+          nBotonAux = FSalida
+     |FINSI;
+
+     |HAZ EsTallerSC;
+     |SI FSalida = 0;
+          |CONTROL_SIMPLE 0, "BOTON,F4.- Observa.", 0531, 0543, PulsaF4;
+          nBotonAux = FSalida
+     |FINSI;
+
+     |HAZ EsCoimasa;
+     |SI FSalida = 0;
+          |CONTROL_SIMPLE 0, "BOTON,F4.- Datos adicionales", 0531, 0543, PulsaF4;
+          nBotonAdi = FSalida
+     |FINSI;
+
+     |HAZ EsAparecida;
+     |SI FSalida = 0;
+          |CONTROL_SIMPLE 0, "BOTON,Precios", 0531, 0543, BotonApa;
+          nBotonApa = FSalida
+     |FINSI;
+
+     |MODULO aAlfa;
+     |SI aAlfa = "agifa019";
+          |HAZ EsPCEGroup;
+          |SI FSalida = 0;
+               |CONTROL_SIMPLE 0, "BOTON,Ver Pedidos", 0531, 0543, PCEGVerPedido;
+               nPCEGBtn1 = FSalida;
+
+               |CONTROL_SIMPLE 0, "BOTON,Accesorios", 0516, 0528, PCEGAccesorio;
+               nPCEGBtn2 = FSalida;
+          |FINSI;
+     |FINSI;
+
+     |HAZ EsGesineed;
+     |SI FSalida = 0;
+          |CONTROL_SIMPLE 0, "BOTON,F4.- Ampliada", 0531, 0543, PulsaF4;
+          nBotonAux = FSalida
+     |FINSI;
+
+     |HAZ EsRocai;
+     |SI FSalida = 0;
+          |CONTROL_SIMPLE 0, "BOTON,F4.- Comisiones", 0531, 0543, PulsaF4;
+          nBotonAux = FSalida
+     |FINSI;
+
+     |HAZ EsChampiEmar;
+     |SI FSalida = 0;
+          |CONTROL_SIMPLE 0, "BOTON,F4.- Etiqueta", 0531, 0543, PulsaF4;
+          nBotonAux = FSalida
+     |FINSI;
+|FPRC;
+
+|PROCESO t91; |TIPO 9;
+     |SI swCar1 = 1; |DESCARGA_DEF #marhup08@; |FINSI;
+
+     |FIN_CONTROL_WINDOWS nBoton;
+     |FIN_CONTROL_WINDOWS nBoton1;
+
+     |SI nBotonApa ! -1; |FIN_CONTROL_WINDOWS nBotonApa; |FINSI;
+     |SI nBotonAux ! -1; |FIN_CONTROL_WINDOWS nBotonAux; |FINSI;
+     |SI nBotonAdi ! -1; |FIN_CONTROL_WINDOWS nBotonAdi; |FINSI;
+     |SI nPCEGBtn1 ! -1; |FIN_CONTROL_WINDOWS nPCEGBtn1; |FINSI;
+     |SI nPCEGBtn2 ! -1; |FIN_CONTROL_WINDOWS nPCEGBtn2; |FINSI;
+
+     |PULSATECLA;
+|FPRC;
+
+|PROCESO GrabaLin2;
+     |DDEFECTO #8;
+     #8#0 = aPro;
+     |LEE 000#8=;
+     |DDEFECTO #6;
+     #6#0 = aPro;
+     |LEE 000#6=;
+     nSal = FSalida;
+     #6#1 = #8#1;
+     #6#2 = fFec;
+     #6#3 = nCan;
+     #6#4 = nPre;
+     #6#5 = aSer;
+     #6#6 = nDoc;
+     #6#7 = nLdo;
+     |SI nSal ! 0; |GRABA 020#6n; |FINSI;
+     |SI nSal = 0; |GRABA 020#6a; |FINSI;
+|FPRC;
+
+|PROCESO aagifa065;
+     |SI nSw = 0;
+          aPro = #65#10;
+          nSw  = 1;
+     |FINSI;
+     |SI aPro ! #65#10;
+          |HAZ GrabaLin2;
+          aPro = #65#10;
+     |FINSI;
+     fFec = #65#1;
+     nCan = #65#6;
+     nPre = #65#14;
+     aSer = #65#11;
+     nDoc = #65#3;
+     nLdo = #65#4;
+|FPRC;
+
+|DEFBUCLE aagifa065;
+     #65#1;
+     ;
+     #0#0,"00.00.0000","AC",000000,00000,"     ";
+     #0#0,"31.12.9999","AC",999999,99999,"zzzzz";
+     ;
+     NULL,aagifa065;
+|FIN;
+
+|PROCESO PedidoCompra;
+     fFecha = ~;
+     aParametro = #6#0 + #0#0 + "00000";
+     aParametro = aParametro + "000000000000000";
+     aParametro = aParametro + fFecha;
+     aParametro = aParametro + "          ";
+     aAlfa      = "|albz0008;" + aParametro;
+     |SUB_EJECUTA_NP aAlfa;
+|FPRC;
+
+|PROCESO verlospro;
+     |HAZ CreaTempo; aTempo6 = Tempo;
+     |NOME_DAT #6 aTempo6; |DELINDEX #6;
+     |ABRE #6;
+     |ABRE #8;
+     nSw = 0;
+     nDeci_PreBaseMx = nDeci_PreBase;
+     |BUCLE aagifa065;
+     |SI nSw = 1;
+          |HAZ GrabaLin2;
+     |FINSI;
+     |CIERRA #8;
+     |CIERRA #6;
+
+     |PUSHV 0501 2380;
+
+     |PINPA #0#6;
+
+     |HAZ EsAlbero;
+     nSwAlbero = FSalida;
+
+     |SI nSwAlbero = 0;
+          |CONTROL_SIMPLE 0, "BOTON, Crear Pedido Compra", 1125, 1140, PedidoCompra;
+          nBotonA = FSalida;
+
+          |SI nSw = 1;
+              |ESTADO_CONTROL nBotonA, "ENABLE";
+          |SINO;
+              |ESTADO_CONTROL nBotonA, "DISABLE";
+          |FINSI;
+     |FINSI;
+
+     |ENTLINEAL #1#6 , -1 , 4 , 22 , 0 , inf322 , sup322;
+
+     |SI nSwAlbero = 0;
+         |FIN_CONTROL_WINDOWS nBotonA;
+         |PULSATECLA;
+     |FINSI;
+
+     |POPV;
+
+     |DELINDEX #6; Tempo = aTempo6; |HAZ BoraTempo;
+|FPRC;
+
+|RUTINA inf322;
+     #6#0 = "      ";
+|FRUT;
+
+|RUTINA sup322;
+     #6#0 = "zzzzzz";
+|FRUT;
+
+|PROCESO CmpMulti; |TIPO 0;
+     nSal = FSalida;
+     |SI FSalida = 10;
+          |HAZ MultiF2;
+          |ACABA;
+     |FINSI;
+     |SI FSalida = 2; |ACABA; |FINSI;
+     |SI #0#204 = "S"; |Y #0#5 ! #0Campo;
+          |ABRE #241;
+          |SELECT #2#241;
+          #241#0 = #0#5;
+          #241#2 = #0Campo;
+          |LEE 000#241=;
+          |SI FSalida ! 0;
+               |MENAV "0000Codigo no definido...";
+               |ERROR;
+          |FINSI;
+          |CIERRA #241;
+     |FINSI;
+     FSalida = nSal
+|FPRC;
+
+|PROCESO UniMulti_0; |TIPO 0;
+     nSal = FSalida;
+     aAlfa = #0#204;
+     |C_M #0#205, 1, aAlfa;
+     |C_M #0#206, 1, aAlfa;
+     |C_M #0#207, 1, aAlfa;
+     |SI #0#204 = "S";
+          #0#179 = "N"; |PINTA #0#179;
+     |SINO;
+          #0#205 = #0#5; |PINTA #0#205;
+          #0#206 = #0#5; |PINTA #0#206;
+          #0#207 = #0#5; |PINTA #0#207;
+     |FINSI;
+     FSalida = nSal;
+|FPRC;
+
+|PROCESO UniMulti_7; |TIPO 7;
+     aAlfa = #4#163;
+     |C_M #0#204, 1, aAlfa;
+|FPRC;
+
+|PROCESO MinMulti;
+     #241#0 = #0#5;
+     #241#1 = 1;
+|FPRC;
+
+|PROCESO MaxMulti;
+     #241#0 = #0#5;
+     #241#1 = 999;
+|FPRC;
+
+|PROCESO MultiF2; |TIPO 0;
+     |SI FSalida ! 10; |ACABA; |FINSI;
+     |ABRE #241;
+     |ABRE #240;
+     #240#0 = #0#5;
+     |LEE 000#240=;
+     |SI FSalida ! 0;
+          |ABRE #239;
+          #239#0 = #0#5;
+          |LEE 000#239=;
+          |CIERRA #239;
+
+          #240#1 = #239#1;
+          |GRABA 020#240n;
+
+          #241#0 = #240#0;
+          #241#1 = 1;
+          #241#2 = #241#0;
+          #241#3 = #239#2;
+          #241#4 = #239#1;
+          #241#5 = 1;
+          #241#6 = "D";
+          |GRABA 020#241n;
+     |FINSI;
+     |CIERRA #240;
+     |CIERRA #241;
+     |PUSHV 0101 2380;
+     |PINPA #0#240;
+     |PINDA #0#241;
+     |PINDA #0#240;
+     |ENDATOS #2#240;
+     |POPV;
+     |ERROR;
+|FPRC;
+
+|PROCESO MultiF11; |TIPO 66;
+     |ABRE #241;
+     |CONSULTA_F_CLAVE #1#241, MinMulti, MaxMulti;
+     |SI FSalida = 0;
+          #0Campo = #241#2; |PINTA #0Campo
+     |SINO;
+          |ERROR;
+     |FINSI;
+     |CIERRA #241;
+|FPRC;
+
+|PROCESO T30; |TIPO 30;
+     |MODULO aprograma;
+     ||ÄÄÄÄÄÄÄÄÄÄÄÄModulo 000con
+     |HAZ EsConstru;
+     |SI FSalida = 0;
+          |MODULO aAlfa;
+          |SI aAlfa ! "agifa017";
+              |HAZ ObraAltaAlm;
+          |FINSI;
+     ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+     |SINO;
+          |SI aConte ! #0#1;
+               eaArti = #0#0;
+               |SUB_EJECUTA "dsz00044"; || Modifica Descripciones;
+
+               ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ Modulo 003026
+               |HAZ EsAlbero;
+               |SI FSalida = 0;
+                   |SUB_EJECUTA_NP "albz0019;DESCRI";
+               |FINSI;
+          |FINSI;
+     |FINSI;
+     |SI aprograma ! "gestr005";
+          |HAZ EsGestral;
+          |SI FSalida = 0;
+               aAlfa = "gestrz06;" + #0#0;
+               |SUB_EJECUTA aAlfa;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO T66; |TIPO 66;
+     |CONSULTA_CLAVE #1#agifa019;
+|FPRC;
+
+|PROCESO TecaPrecio; |TIPO 14;
+     |HAZ EsTecatel;
+     |SI FSalida = 0;
+          |HAZ TecaUsuPre;
+          |SI #4#138 = "N"; |O FSalida = 0;
+               |HAZ TecaPinPre;
+          |FINSI;
+     |FINSI;
+
+     |HAZ EsMalpesa;
+     |SI FSalida = 0;
+          |HAZ MalpePinArt1;
+     |FINSI;
+
+     |HAZ EsInforAlba;
+     |SI FSalida = 0;
+          |ATRI 0; |PINTA 958, "Matricula S/N:"; |ATRI I;
+          |PINTA 968, "S"; |PINTA 970, "N";
+          |C_V #0#174, 1, "S";
+     |FINSI;
+     |HAZ EsGesisat;
+     |SI FSalida = 0;
+          |ATRI 0; |PINTA 958, "  Maquina S/N:"; |ATRI I;
+          |PINTA 968, "S"; |PINTA 970, "N";
+          |C_V #0#174, 1, "S";
+     |FINSI;
+|FPRC;
+
+|PROCESO PintaBoton; |TIPO 7;
+     enModoAlma = (FEntrada / 100) ! 0;
+     aCodAnt = #0#0;
+     aDesAnt = #0#1;
+     |ESTADO_CONTROL nBoton, "ENABLE";
+     |SI enModoAlma = 1;
+          |ESTADO_CONTROL nBoton1, "DISABLE";
+     |SINO;
+          |ESTADO_CONTROL nBoton1, "ENABLE";
+     |FINSI;
+     |SI nBotonAux ! -1; |ESTADO_CONTROL nBotonAux, "ENABLE"; |FINSI;
+     |SI nBotonAdi ! -1; |ESTADO_CONTROL nBotonAdi, "ENABLE"; |FINSI;
+     enBtnModoApa = 2;
+
+     nModo = (FEntrada / 100) ! 0;
+     |SI nModo = 1;
+          |HAZ EsAparecida;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "aparm009;BAJA";
+          |FINSI;
+
+          |HAZ EsFergalsan;
+          |SI FSalida = 0;
+               |SI eaFergaFam ! ""; #0#2 = eaFergaFam; |PINTA #0#2; |FINSI;
+               |SI eaFergaSub ! ""; #0#3 = eaFergaSub; |PINTA #0#3; |FINSI;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO TipoArt19_0; |TIPO 0;
+     |SI FSalida ! 2;
+          |HAZ EsMalpesa;
+          |SI FSalida = 0;
+               |HAZ MalpeEnArt;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO VaStock; |TIPO 0;
+     |HAZ EsMalpesa;
+     |SI FSalida = 0;
+          |HAZ MalpeEntAr0;
+     |FINSI;
+|FPRC;
+
+|PROCESO llena;
+|FPRC;
+
+|PROCESO TagFactorConver;
+     nFactor = 1;
+     |SI #0#179 ! "N";
+          |ABRE #238;
+          #238#0 = #0#201;
+          |LEE 000#238=;
+          |SI FSalida = 0;
+               |SI #238#6 = 2;
+                    |SI #238#8 = 1; nFactor = #238#9; |FINSI;
+                    |SI #238#8 = 2; nFactor = #238#9*#238#10; |FINSI;
+                    |SI #238#8 = 3; nFactor = #238#9*#238#10*#238#11; |FINSI;
+                    |SI nFactor = 0; nFactor = 1; |FINSI;
+               |FINSI;
+          |FINSI;
+          |CIERRA #238;
+     |FINSI;
+     #0#4 = nFactor;
+|FPRC;
+
+|PROCESO TagCliCompra;
+     |DDEF aDef;
+     aDef = aDef + "tagm0021";
+     |CARGA_DEF aDef, referen@;
+     |SI FSalida = 0;
+          |ABRE #referen@;
+          |SELECT #3#referen@;
+          #referen@#2 = #0#0;
+          |LEE 000#referen@.=;
+          |SI FSalida = 0;
+               |PINTA 2212, #referen@#4;
+               |PINTA 2222, #referen@#5;
+               |PINTA 2232, #referen@#6;
+          |FINSI;
+          |CIERRA #referen@;
+          |DESCARGA_DEF #referen@;
+     |FINSI;
+|FPRC;
+
+|PROCESO AlmaAuto66; |TIPO 66;
+     |DDEF aDef;
+     aDef = aDef + "agifa029";
+     |CARGA_DEF aDef, referen@;
+     |SI FSalida = 0;
+          |ABRE #referen@;
+          #referen@#0 = #0#161;
+          |LEE 000#referen@.];
+          |CONSULTA_CLAVE #1#referen@;
+          |SI FSalida = 0;
+               #0#161 = #referen@#0;
+               |PINTA #0#161;
+          |SINO;
+               |ERROR;
+          |FINSI;
+          |CIERRA #referen@;
+          |DESCARGA_DEF #referen@;
+     |FINSI;
+|FPRC;
+
+|PROCESO AlmaAuto0; |TIPO 0;
+     |SI #0#161 = 0; |ACABA; |FINSI;
+     |DDEF aDef;
+     aDef = aDef + "agifa029";
+     |CARGA_DEF aDef, referen@;
+     |SI FSalida = 0;
+          |ABRE #referen@;
+          #referen@#0 = #0#161;
+          |LEE 000#referen@.=;
+          |SI FSalida ! 0;
+               |MENAV "0000No existe Almacen...";
+               |ERROR;
+          |FINSI;
+          |CIERRA #referen@;
+          |DESCARGA_DEF #referen@;
+     |FINSI;
+|FPRC;
+
+|PROCESO CodiPrv; |TIPO 0;
+     nModo = (FEntrada / 100) ! 0;
+     |SI nModo ! 4;
+          |MENAV "0000Opcion solo en consulta...";
+     |SINO;
+          |ABRE #14;
+          |LEE 000#14p;
+          |CONSULTA_CLAVE #1#14;
+          |SI FSalida = 0;
+               #0#0 = #14#1;
+               |LEE 000#0=;
+               |PINDA #0#0;
+          |FINSI;
+          |CIERRA #14;
+     |FINSI;
+|FPRC;
+
+|PROCESO TagArtVarios;   || Modulo 000654
+     |DDEF aDef;
+     aDef = aDef + "tagm0021";
+     |CARGA_DEF aDef, referen@;
+     |SI FSalida = 0;
+          |ATRI 0;
+          nNume1 = 0;
+          nNume2 = 0;
+          |ABRE #referen@;
+          |SELECT #3#referen@;
+          #referen@#2 = #0#0;
+          |LEE 000#referen@.];
+          |PARA; |SI FSalida = 0; |Y #referen@#2 = #0#0; |HACIENDO;
+               nNume1 = nNume1 + #referen@#11;
+               nNume2 = nNume2 + #referen@#12;
+               |LEE 000#referen@.s;
+          |SIGUE;
+          |CIERRA #referen@;
+          #referen@#11 = nNume1;
+          #referen@#12 = nNume2;
+          |PINTA 2101, "³ Pen.Rec:           Res.Vta:          ";
+          |PINTA 2111, #referen@#11;
+          |PINTA 2130, #referen@#12;
+          |ATRI I;
+          |DESCARGA_DEF #referen@;
+     |FINSI;
+|FPRC;
+
+|PROCESO ModiDesComp; |TIPO 0;
+     |SI #0#195 ! Contenido; eaConte2 = Contenido; |FINSI;
+|FPRC;
+
+|PROCESO Equivale;
+     |SI #agifa142#249 = "S";
+          |MENU aEquiva;
+          aEquiva2 = FSalida;
+          |SI aEquiva2 = 1;
+               eaArticulo = #0#0;
+               eaDes = #0#1;
+               |SUB_EJECUTA_NP "agifa292";
+          |FINSI;
+          |SI aEquiva2 = 2;
+               eaArticulo = #0#0;
+               eaDes = #0#1;
+               |SUB_EJECUTA_NP "dsz00082";
+          |FINSI;
+     |SINO;
+          eaArticulo = #0#0;
+          eaDes = #0#1;
+          |SUB_EJECUTA_NP "agifa292";
+     |FINSI;
+|FPRC;
+
+
+|PROCESO MecanograPinArt;
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "mecam001";
+     |CARGA_DEF aAlfa, referen@;
+     |SI FSalida = 0;
+          |DDEFECTO #referen@;
+          |ABRE #referen@;
+          #referen@#0 = #0#0;
+          |LEE 000#referen@.=;
+          |CIERRA #referen@;
+          |ATRI 0;
+          |PINTA 1805, "Unidades Paquete..:        Film S/N:    Control Fabricacion S/N: ";
+          |PINTA #referen@#1;
+          |PINTA #referen@#2;
+          |PINTA #referen@#3;
+          |ATRI I;
+          |DESCARGA_DEF #referen@;
+     |FINSI;
+|FPRC;
+
+|PROCESO Art207_0; |TIPO 0;
+     |SI FSalida = 0; |O FSalida = 3;
+          |HAZ EsMecanogra;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "mecam001";
+               |HAZ MecanograPinArt;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO PinPceArt;
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "pcegm012";
+     |CARGA_DEF aAlfa, referen@;
+     |SI FSalida = 0;
+          |DDEFECTO #referen@;
+          |ABRE #referen@;
+          #referen@#0 = #0#0;
+          |LEE 000#referen@.=;
+          |CIERRA #referen@;
+          |ATRI 0;
+          |PINTA 2103, "Pte. Servir segun pedidos:";
+          |PINTA 1403, "Nota Web...:";
+          |PINTA 1445, "Des:";
+          |ATRI I;
+          |PINTA 2129, #referen@#1;
+          |PINTA 1416, #referen@#3;
+          |PINTA 1450, #referen@#2;
+          |DESCARGA_DEF #referen@;
+     |FINSI;
+|FPRC;
+
+|PROCESO PCEGAccesorio;
+     nModo = (FEntrada / 100) ! 0;
+     |SI nModo ! 4;
+          |GRABA 020#0a;
+     |FINSI;
+     |LIBERA #0;
+     eaArticulo = #0#0;
+     |SUB_EJECUTA_NP "pcegz005;ACCESORIO";
+|FPRC;
+
+|PROCESO PCEGVerPedido;
+     nModo = (FEntrada / 100) ! 0;
+     |SI nModo ! 4;
+          |GRABA 020#0a;
+     |FINSI;
+     |LIBERA #0;
+     eaArticulo = #0#0;
+     |SUB_EJECUTA_NP "pcegz005;PEDIDO";
+|FPRC;
+
+|PROCESO BorraAuxPCEG;
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "pcegm012";
+     |CARGA_DEF aAlfa, referen@;
+     |SI FSalida = 0;
+          |ABRE #referen@;
+          #referen@#0 = #0#0;
+          |BORRA 020#referen@.c;
+          |CIERRA #referen@;
+          |DESCARGA_DEF #referen@;
+     |SINO;
+          |MENAV "0000Error al cargar 'pcegm012'";
+     |FINSI;
+|FPRC;
+
+|PROCESO PCEG_PinPVP6;
+     |C_V #0#155, 1, "N";
+     |C_V #0#152, 1, "N";
+     |PINTA 1337, "NETO.:";
+     |PINTA 1356, "                   ³";
+     nPorce = (100-((#0#149/#0#18)*100)) ! 2;
+     nMargen = (#0#18 - #0#149) ! 2;
+     aAlfa = "Margen:" + nMargen + "(" + nPorce + "%)";
+     |PINTA 1356, aAlfa;
+     #0#167 = nMargen
+     aAlfa = nPorce + "%";
+     #0#112 = aAlfa;
+|FPRC;
+
+|PROCESO PVP; |TIPO 0;
+     |HAZ ModiPre19;
+     |HAZ EsPCEGroup;
+     |SI FSalida = 0;
+          |HAZ PCEG_PinPVP6;
+     |FINSI;
+|FPRC;
+
+|PROCESO ModiPre19; |TIPO 0;
+     |SI #0Campo ! Contenido;
+          aModi = "S";
+     |FINSI;
+|FPRC;
+
+|PROCESO T0_14; |TIPO 14;
+     |HAZ EsPCEGroup;
+     |SI FSalida = 0;
+          |ATRI 0;
+          |HAZ PCEG_PinPVP6;
+          |ATRI I;
+     |FINSI;
+     |HAZ EsSebaLopez;
+     |SI FSalida = 0;
+          |HAZ PinSebaLopez;
+     |FINSI;
+     |HAZ EsTaller;
+     |SI FSalida = 0;
+          |HAZ PinTaller;
+     |FINSI;
+     |HAZ EsCoimasa;
+     |SI FSalida = 0;
+         |HAZ PinCoima;
+     |FINSI;
+|FPRC;
+
+|PROCESO PinSebaLopez;
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "sebalo03";
+     |CARGA_DEF aAlfa, referen@;
+     |SI FSalida = 0;
+          |DDEFECTO #referen@;
+          |ABRE #referen@;
+          #referen@#0 = #0#0;
+          |LEE 000#referen@.=;
+          |CIERRA #referen@;
+          |ATRI 0; |PINTA 1403, "Cod. Envase:"; |ATRI I;
+          |PINTA 1416, #referen@#1;
+          |PINTA 1420, #referen@#2;
+          |DESCARGA_DEF #referen@;
+     |FINSI;
+|FPRC;
+
+|PROCESO PinTaller;
+     |C_V #0#168, 1, "S";
+     |ATRI 0; |PINTA 1403, "Imp. Canon.:"; |ATRI I;
+     |PINTA 1416, #0#168;
+|FPRC;
+
+|PROCESO PinCoima;
+     |ATRI 0; |PINTA 1403, "Color .....:"; |ATRI I;
+
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "coima060";
+     |CARGA_DEF aAlfa, referen@;
+     |SI FSalida ! 0;
+          |MENAV "0000Error al cargar 'coima060'";
+          |ACABA;
+     |FINSI;
+
+     |ABRE #referen@;
+     #referen@#0 = #agifa019#0;
+     |LEE 000#referen@.=;
+     |SI FSalida ! 0;  |DDEFECTO #referen@;  |FINSI;
+     |CIERRA #referen@;
+
+     |PINTA 1416, #referen@#6;
+
+     |DESCARGA_DEF #referen@;
+|FPRC;
+
+|PROCESO EntraModulo; TIPO 0;
+     nSal = FSalida;
+     |SI FSalida = 0; |O FSalida = 3;
+          |HAZ EsTaller;
+          |SI FSalida = 0;
+               |C_P #0#168, 1, 1415;
+               |ENCAMPO #168#0;
+          |FINSI;
+          |HAZ EsPCEGroup;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "pcegm012";
+               |HAZ PinPceArt;
+          |FINSI;
+          |HAZ EsSebaLopez;
+          |SI FSalida = 0;
+               eaArticulo = #0#0;
+               |SUB_EJECUTA_NP "sebalo03";
+               |SI enError ! 0;  |ERROR; |ACABA; |FINSI;
+               |HAZ PinSebaLopez;
+          |FINSI;
+          |HAZ EsBerria;
+          |SI FSalida = 0;
+               eaAlfa = (#0#110 % 103) + (#0#111 % 103);
+               |SUB_EJECUTA_NP "berz0002";
+               |SI enError ! 0;  |ERROR; |ACABA; |FINSI;
+               #0#110 = eaAlfa % 103;
+               #0#111 = eaAlfa % 403;
+               |HAZ PinBerria;
+          |FINSI;
+     |FINSI;
+     FSalida = nSal;
+|FPRC;
+
+|PROCESO PintaAparecida;
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "aparm005";
+     |CARGA_DEF aAlfa, referen@;
+     |SI FSalida ! 0;
+          |MENAV "0000Error al cargar 'aparm005'";
+          |ACABA;
+     |FINSI;
+
+     |ABRE #referen@; |LEE 000#referen@.p; |CIERRA #referen@;
+     nPos1 = 2103;
+     nPos2 = 2203;
+     nCamDes = 3;
+     nCamLon = 4;
+     nPosArt = 100;
+     nPosDes = 100;
+     |PARA j = 1; |SI j [ 4; |HACIENDO j = j + 1;
+          |PARA i = 2; |SI i [ 5; |HACIENDO i = i + 1;
+               |SI j = #referen@#i#;
+                    nLon2 = i + 4;
+                    nLon2 = #referen@#nLon2#;
+                    nLon1 = 10 + 1 + #910#nCamLon#;
+                    |SI nLon2 > 0;
+                         nPos = nPosArt + #910#nCamLon#;
+                         aArti = #0#0 % nPos;
+
+                         nPos = nPosDes + nLon2;
+                         aDes = #0#1 % nPos;
+
+                         |ATRI R; |PINTA nPos1, #910#nCamDes#; |ATRI 0;
+                         nPos = nPos1 + 11;
+                         |ATRI I; |PINTA nPos, aArti; |ATRI 0;
+                         |ATRI N; |PINTA nPos2, aDes; |ATRI 0;
+                         |SI nLon1 > nLon2;
+                              nPos1 = nPos1 + nLon1 + 1;
+                              nPos2 = nPos2 + nLon1 + 1;
+                         |SINO;
+                              nPos1 = nPos1 + nLon2 + 1;
+                              nPos2 = nPos2 + nLon2 + 1;
+                         |FINSI;
+
+                         nPosArt = nPosArt + (100 * #910#nCamLon#);
+                         nPosDes = nPosDes + (100 * (nLon2+1));
+                         nCamDes = nCamDes + 4;
+                         nCamLon = nCamLon + 4;
+                    |FINSI;
+               |FINSI;
+          |SIGUE;
+     |SIGUE;
+     |DESCARGA_DEF #referen@;
+|FPRC;
+
+|PROCESO CreaArtTactil;
+     |DDEF aPath;
+     aAlfa = aPath + "agifa517";
+     |CARGA_DEF aAlfa, referen@;
+     |SI FSalida = 0;
+          |ABRE #referen@;
+          |LEE 000#referen@.p;
+          |CIERRA #referen@;
+          aAlfa = #referen@#27;
+          |DESCARGA_DEF #referen@;
+
+          |SI aAlfa ! "S"; |ACABA; |FINSI;
+
+          |DDEFECTO #239;
+          |ABRE #239;
+          #239#0 = #0#5;
+          |LEE 000#239=;
+          |CIERRA #239;
+
+          aAlfa = aPath + "dsm00255";
+          |CARGA_DEF aAlfa, referen@;
+          |SI FSalida = 0;
+               |ABRE #referen@;
+               #referen@#0 = #0#0;
+               |LEE 000#referen@.=;
+               |SI FSalida ! 0;
+                    #referen@#10 = #0#2;
+                    #referen@#11 = #0#3;
+                    |GRABA 020#referen@.n;
+                    |SI FSalida = 0;
+                         aAlfa = aPath + "dsm00256";
+                         |CARGA_DEF aAlfa, referen1@;
+                         |SI FSalida = 0;
+                              |ABRE #referen1@;
+                              #referen1@#0 = #0#0;
+                              #referen1@#1 = 1;
+                              #referen1@#2 = #0#5;
+                              #referen1@#3 = #239#1;
+                              #referen1@#5 = #0#18;
+                              #referen1@#6 = #0#19;
+                              #referen1@#7 = #0#20;
+                              #referen1@#5 = #0#147;
+                              #referen1@#5 = #0#148;
+                              #referen1@#5 = #0#149;
+                              |GRABA 000#referen1@.n;
+                              |CIERRA #referen1@;
+                              |DESCARGA_DEF #referen1@;
+                         |FINSI;
+                    |FINSI;
+                    |CIERRA #referen@;
+               |FINSI;
+               |DESCARGA_DEF #referen@;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO BotonApa;
+     |SI enBtnModoApa ! 4; |GRABA 020#0a; |FINSI;
+     |LEE 000#0=;
+     |SI FSalida ! 0; |ACABA; |FINSI;
+     enTiva = #0#30;
+     eaArticulo = #0#0;
+     |SUB_EJECUTA_NP "aparm009";
+     |SI eaArticulo ! ""; |Y enBtnModoApa ! 4;
+          #0#18 = pvp1; |PINTA #0#18;
+          #0#19 = pvp2; |PINTA #0#19;
+          #0#20 = pvp3; |PINTA #0#20;
+          #0#147 = pvp4; |PINTA #0#147;
+          #0#148 = pvp5; |PINTA #0#148;
+          #0#149 = pvp6; |PINTA #0#149;
+     |FINSI;
+     |SI enBtnModoApa ! 4; |GRABA 020#0a; |FINSI;
+|FPRC;
+
+|PROCESO DesAlma;
+     |DDEF aDef;
+     aDef = aDef + "agifa029";
+     |CARGA_DEF aDef, referen@;
+     |SI FSalida = 0;
+          |ABRE #referen@;
+          #referen@#0 = #1#1;
+          |LEE 000#referen@.=;
+          |SI FSalida = 0;
+               aDesAlma = #referen@#1;
+          |SINO;
+               aDesAlma = "";
+          |FINSI;
+          |CIERRA #referen@;
+          |DESCARGA_DEF #referen@;
+     |FINSI;
+|FPRC;
+
+|PROCESO IVA019_0; |TIPO 0;
+     enTiva = #0Campo;
+     efFiva = ~;
+     |HAZ SacaIVA;
+     |SI eaDiva = "";
+          |MENAV "0000No existe tipo iva para esta fecha...";
+          |ERROR; |ACABA;
+     |FINSI;
+|FPRC;
+
+|PROCESO IVA019_66; |TIPO 66;
+     enTiva = #0Campo;
+     efFiva = ~;
+     |HAZ ConsuIVA;
+     |SI eaDiva = "";
+          |ERROR;
+     |SINO;
+          #0Campo = enTiva; |PINTA #0Campo;
+     |FINSI;
+|FPRC;
+
+|PROCESO PinBerria;
+     |PINTA 1403, "Color......:";
+     |PINTA 1423, "Talla:";
+     |ATRI I;
+     |C_A #0#110, 1, 3;
+     |C_A #0#111, 1, 3;
+     |PINTA 1416, #0#110;
+     |PINTA 1429, #0#111;
+     |ATRI 0;
+|FPRC;
+
+|PROCESO GesenviaCop19;
+     |ABRE #553;
+     #553#0 = #0#125;
+     |LEE 000#553=;
+     |SI FSalida ! 0; |DDEFECTO #553; |FINSI;
+     |CIERRA #553;
+
+     |DBASS aPath;
+     aAlfa = aPath + "gesenvia/def/gestr000";
+     |CARGA_DEF aAlfa, referen@;
+     |SI FSalida = 0;
+          aAlfa = aPath + "gesenvia/fich/";
+          |PATH_DAT #referen@#aAlfa#;
+          |DFICE aAlfa; aEmp = aAlfa % -205;
+          |ABRE #referen@;
+          #referen@#0 = aEmp;
+          |LEE 000#referen@.=;
+          aAlfa = FSalida;
+          |CIERRA #referen@;
+          |DESCARGA_DEF #referen@;
+          |SI aAlfa = 0;
+               aAlfa = aPath + "gesenvia/def/gestr073";
+               |CARGA_DEF aAlfa, referen@;
+               |SI FSalida = 0;
+                    aAlfa = aPath + "gesenvia/fich/" + aEmp + "/";
+                    |PATH_DAT #referen@#aAlfa#;
+                    |ABRE #referen@;
+                    |SI nModo = 3;
+                         #referen@#0 = #0#0;
+                         |BORRA 000#referen@.c;
+                    |SINO;
+                         |DDEFECTO #referen@;
+                         #referen@#0 = #0#0;
+                         |LEE 101#referen@.=;
+                         |SI FSalida ! 0; |GRABA 020#referen@.b; |FINSI;
+                         #referen@#1 = #0#1;
+                         #referen@#2 = #0#30;
+                         #referen@#3 = 1;
+                         #referen@#5 = "N";
+                         #referen@#11 = #0#137;
+                         #referen@#12 = #553#2;   || Es Neumatico
+                         #referen@#11 = #0#137;
+                         |SI #553#2 = "S";
+                              |ABRE #63;
+                              #63#0 = #0#126;
+                              |LEE 000#63=;
+                              |SI FSalida ! 0; |DDEFECTO #63; |FINSI;
+                              |CIERRA #63;
+                              |ABRE #116;
+                              #116#0 = #0#200;
+                              |LEE 000#116=;
+                              |SI FSalida ! 0; |DDEFECTO #116; |FINSI;
+                              |CIERRA #116;
+                              |ABRE #10;
+                              #10#0 = #0#3;
+                              |LEE 000#10=;
+                              |SI FSalida ! 0; |DDEFECTO #10; |FINSI;
+                              |CIERRA #10;
+                              #referen@#14 = #63#1;
+                              #referen@#15 = #116#1;
+                              #referen@#16 = #10#1;
+                         |FINSI;
+                         |GRABA 020#referen@.a;
+                    |FINSI;
+                    |CIERRA #referen@;
+                    |DESCARGA_DEF #referen@;
+               |FINSI;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO LeeDivi;
+     |DDEF aAlfa
+     aAlfa = aAlfa + aDef;
+     |CARGA_DEF aAlfa, referen@;
+     |SI FSalida = 0;
+          |ABRE #referen@;
+          |SI aDef = "dsm00011";
+               #referen@#0 = eAlfa1;
+               |LEE 000#referen@.=;
+               |SI FSalida ! 0; |DDEFECTO #referen@; |FINSI;
+               aAlfa = #referen@#1;
+          |FINSI;
+          |SI aDef = "dsm00012";
+               #referen@#0 = eAlfa1;
+               #referen@#1 = eAlfa2;
+               |LEE 000#referen@.=;
+               |SI FSalida ! 0; |DDEFECTO #referen@; |FINSI;
+               aAlfa = #referen@#2;
+          |FINSI;
+          |SI aDef = "dsm00013";
+               #referen@#0 = eAlfa1;
+               #referen@#1 = eAlfa2;
+               #referen@#2 = eAlfa3;
+               |LEE 000#referen@.=;
+               |SI FSalida ! 0; |DDEFECTO #referen@; |FINSI;
+               aAlfa = #referen@#3;
+          |FINSI;
+          |SI aDef = "dsm00027";
+               #referen@#0 = eAlfa4;
+               |LEE 000#referen@.=;
+               |SI FSalida ! 0; |DDEFECTO #referen@; |FINSI;
+               aAlfa = #referen@#1;
+          |FINSI;
+          |CIERRA #referen@;
+          |DESCARGA_DEF #referen@;
+     |SINO;
+          aAlfa = "ERROR";
+     |FINSI;
+|FPRC;
+
+|PROCESO LeeDivi1;
+     |DDEF aAlfa
+     aAlfa = aAlfa + aDef;
+     |CARGA_DEF aAlfa, referen@;
+     |SI FSalida = 0;
+          |ABRE #referen@;
+          #referen@#0 = eAlfa1;
+          |LEE 000#referen@.=;
+          |SI FSalida ! 0; |DDEFECTO #referen@; |FINSI;
+          aAlfa = #referen@#1;
+          |DESCARGA_DEF #referen@;
+     |SINO;
+          aAlfa = "ERROR";
+     |FINSI;
+|FPRC;
+
+|PROCESO PinGestral19;
+     |ATRI N;
+     |PINTA 1203, "Dibujo.....:";
+     |PINTA 1303, "Color......:";
+     |PINTA 1120, "Medidas:";
+     |PINTA 1220, "Metrico:";
+     |ATRI I;
+|FPRC;
+
+|PROCESO PreAparecida;
+     |GRABA 000#0a;
+     |SI FSalida ! 0; |GRABA 020#0b; |FINSI;
+     |LIBERA #0;
+
+     enTiva = #0#30;
+     eaArticulo = #0#0;
+     pvp1 = #0#18;
+     pvp2 = #0#19;
+     pvp3 = #0#20;
+     pvp4 = #0#147;
+     pvp5 = #0#148;
+     pvp6 = #0#149;
+     |SUB_EJECUTA_NP aAlfa;
+     |LEE 121#0=;
+     |SI eaArticulo ! "";
+          #0#18 = pvp1; |PINTA #0#18;
+          #0#19 = pvp2; |PINTA #0#19;
+          #0#20 = pvp3; |PINTA #0#20;
+          #0#147 = pvp4; |PINTA #0#147;
+          #0#148 = pvp5; |PINTA #0#148;
+          #0#149 = pvp6; |PINTA #0#149;
+     |FINSI;
+|FPRC;

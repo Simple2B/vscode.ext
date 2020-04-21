@@ -1,0 +1,16 @@
+|FICHEROS;
+     agifa027 #27;
+|FIN;
+
+|PROCESO Pinta027; |TIPO 13;
+     |HAZ EsMalpesa;
+     |SI FSalida = 0;
+          |PINTA 0803, "³ Ordenes de Carga   ³ orden      ³";
+     |FINSI;
+     |HAZ EsTaller;
+     |SI FSalida = 0;
+          |BLANCO 1440 1679;
+          |PINTA 1540, "³ Garantias  talleres       ³ garantia ³";
+          |CUADRO 1440 1679;
+     |FINSI;
+|FPRC;

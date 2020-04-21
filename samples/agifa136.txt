@@ -1,0 +1,3251 @@
+|BUCLE MultiFactura; AQUI NO ENTRA NUNCA , no existe el def agenw017.mas.
+
+|FICHEROS;
+     agifa136 #0;   || Este def.
+     agifa134 #1;   || Facturas(C).
+     agifa059 #2;   || Facturas(L).
+     agifa024 #3;   || Clientes.
+     agifa010 #4;   || Albaranes(C).
+     agifa071 #5;   || Albaranes(L).
+     agifa091 #6;   || Formas de pago.
+     dsz99984 #11;
+     agifa104 #12;  || Pedidos(C).
+     agifa038 #13;  || Descripcion ampliada.
+     agifa025 #14;  || Comisionistas.
+     agifa048 #15;  || Escandallos(C).
+     agifa049 #16;  || Escandallos(L).
+     agifa133 #17;  || fichero de vencimientos de las facturas
+     agifa007 #40;  || Series.
+     agifa142 #41;  || Parametros generales.
+     agi00002 #50;  || Trabajos(C).
+     agi00003 #51;  || Trabajos(L).
+
+     agifa023 #60;  || Precios Clientes / Articulos.
+
+     agifm001 #80;  || Zonas Clientes.
+     tmp00136 #97;  || Temporal para la impresion en modo columnas.
+     agis0002 #98;  || Recibos adelantados.
+     agifa177 #99;  || Tipos de Recibos.
+     refer71@ #71;
+     dsm00053 #53;
+     &marhu355@ #100;
+     agifa321 #321;
+     agifa324 #324;
+     agi00101 #1000; ||Lotes
+     dsm00003 #1001; ||Direcciones de entrega
+
+     agifa071@;
+     malpe091@ #91;
+     malpe001@ #5000;
+     Referen@  #5001;
+     tempo134 #134;
+     tagm0056@;
+     dsm00047 #47;
+     diam0033@;
+     agifa019 #19;
+     dsm00109 #109;
+     bogem027@ #2027;
+     tlfm0001@ #101;
+     tlfm0002@ #102;
+
+     Ref0001@;
+     ||Ref0002@ #2000;  ||Da exceso de ficheros, voy a gastar bogem027@
+     ||es un cargadef.
+
+     dserpm10@;
+     dsw00098 #198; || Agrupar Arti
+
+     ||agifae02@ #1002;  ||Da exceso de fichero, esta todo en agif9136
+     ||agifa761 #761;    || ''
+|FIN;
+
+|INCLUYE i_varart;
+
+|VARIABLES;
+     nSwSanchez = 0;
+     aContador = "";
+     aPathGuarda = "";
+     aSerieF = "";
+     aNumeroF = "";
+     aImagenContador = "";
+     nGuardaPDFDiagram = 0;
+     aOrigen = "";
+     aDestino = "";
+
+     &eaEnvaPdte = "";
+     nSwSebaLopez = 0; || Modulo 004032
+     nError = 0;
+     &enPorIva = 0;
+     aBorra = "";
+
+     &eaDefERP = "";
+     &eaSerieDocERP = "";
+     &eaNumDocERP = "";
+     &eaDefEmpSerieFe = "";
+
+     &eaDaAgr = "";
+     &enCuentaFac = 0;
+     &eaTagloItem = "N";
+     nEmpresa = 0;
+     nHayConfEmp = 0;
+
+     &eaArtIdioma = "";
+     &eaCodArtIdioma = "";
+
+     nSwFergalsan = 0;
+
+     &enSw_tagz0023 = 0;
+     &enSwTagloma = 0;
+     &enSwInfoz004 = 0;
+     &enMenuArchi = 0;
+     &enHayDa = 0;
+     &enUltDa = 0;
+     &enErrorImp = 0;
+     &eaTempo1002 = "";
+     &enSwModoArchivo = 0;
+     &enNumFactura1002 = 0;
+     &eaSerieFactura1002 = "";
+
+     &eaObserv = "";
+     &enNumOb1 = 0;
+     &enNumOb2 = 0;
+     &enNumOb3 = 0;
+     &enNumOb4 = 0;
+     &enNumOb5 = 0;
+     &enNumOb6 = 0;
+     &enNumOb7 = 0;
+     &enNumOb8 = 0;
+     &enNumOb9 = 0;
+
+     ||FE2
+     &eaDefDatosPagoFe = "";
+     &eaDefAAPPFe = "";
+     nSwHayPDF = 0;
+     &eaFacturaPDFFe = "";
+     aFicheroPDF = "";
+     nSwGenerarPDF = 0;
+     nHandlePDF = 0;
+     {3}aPuntero = "";
+     aRDirBass    = "";
+     nSwImpPapel = 0;
+     nSwFacArchivo = 0;
+
+     nPrimeInforAlba = 0;
+     nSwInforAlba = 0;
+     &enSwInforpor = 0;
+     ||&eaMatri = ""; ya esta mas abajo
+     &eaCopAnt = 0;
+     &eaCopAct = 0;
+     aCli = "";
+     aMat = "";
+     aArt = "";
+     &eaSelFactuE = "";
+
+     aTmp198 = "";
+     &eaTipoCopia = "";
+     aEmp = "";
+     &eaErOb1 = ""; &eaErOb2 = ""; &eaErOb3 = ""; &eaErOb4 = "";
+     &eaErOb5 = ""; &eaErOb6 = ""; &eaErOb7 = ""; &eaErOb8 = "";
+     &eaErOb9 = ""; &eaErOb10 = ""; &eaErOb11 = ""; &eaErOb12 = "";
+     &eaErOb13 = ""; &eaErOb14 = ""; &eaErOb15 = "";
+
+     nSwImpresoraIni = 0;
+
+     nSwSematel = 0;
+     &eaIMEI      = "";
+     &eaABO       = "";
+     &eaICC       = "";
+     &enSwIMEI    = 0;
+
+     &eaSerAlbPCEG = "";
+     &enNumAlbPCEG = 0;
+     &eaExpePCEG = "";
+     nSwPCEGroup = 0;
+
+     nSalida = 0;
+     &eaAplicacion = "";
+     &eaDefFE = "";
+     &eaEmpresaFE = "";
+     &eaSerieFE = "";
+     &eaNumeroFE = "";
+     &eaDefLinFe = "";
+     &eaDefEmpFe = "";
+     &eaDefCliFe = "";
+     &eaDefIvaFe = "";
+     &eaCodCliFe = "";
+     &eaDefAlbFe = "";
+
+     nSwUnaFactura = 0; || Nos indica si es una unica factura o varias (se archivan independientes una a una)
+     &eaArCodCli = "";  || Codigo Cliente
+     &eaArNomCli = "";  || Nombre Cliente
+     &eaArCodCif = "";  || Cif
+     &eaArNomCif = "";  || Nombre Cif
+     &eaArCodTra = "";  || Codigo Trabajador
+     &eaArNomTra = "";  || Nombre Trabajador
+     &eaArCamPDF = "";  || Camino al PDF a archivar
+/*
+     &eaArSerMin = "";  || Serie minuta en caso de ser archivar desde minutacion
+     &eaArNumMin = "";  || Numero minuta en caso de ser archivar desde minutacion
+     &eaArFecMin = "";  || Fecha minuta en caso de ser archivar desde minutacion
+*/
+     &eaArTipoDoc = ""; || Tipo documento.  FD, FV, etc ...
+     &eaArSerDoc = "";  || Serie Docuemnto.
+     &enArNumDoc = 0;   || Numero Documento
+     &eaArFecDoc = "";  || Fecha Documento.
+
+     &eaSwEnvioCorreo = "";  ||Indica si se enivia por correo al emitir la minuta
+     &eaDirDesFE = "";  || Direccion destino para envio por correo
+     &eaFirmarFE = "";  || Indica si tenemos que firmar o no el documento
+     aOrig = "";
+     aDest = "";
+     aImpresora = "";
+     aAuxCrys = "";
+     nHandle = 0;
+     nHandRes = 0;
+     nCalc    = 0;
+     nCalc1   = 0;
+
+     nOpcion = 0;
+     nArchi = 0;
+     nSwFirma = 0;
+     &eaArGrpMin = "";  || Grupo archivo en caso de archivar desde minutacion
+     &eaArSbGMin = "";  || Subgrupo archivo en caso de archivar desde minutacion
+     &eaArTipMin = "";  || Tipo archivo en caso de archivar desde minutacion
+     {-1}aMenu  = "";
+         aMenu1 = "2400";
+         aMenu2 = "1";
+         aMenu3 = "";
+         aMenu4 = "APSC";
+         aMenu5 = "Archivar";
+         aMenu6 = "Papel";
+         aMenu7 = "S/Conf.Cli.";
+         aMenu8 = "Cancelar";
+
+     &enReferencia = 0;
+     &enAlbaran = 0;
+     aLon = "";
+     &enCliArt = 0;
+     nSwFriesa = 0;
+     nPrecio = 0;
+     nPrecioD = 0;
+     nSwDiagram = 0;
+     nTotal = 0;
+     nTotalD = 0;
+     aEsPostFormaso = "N";
+     aImpAgr = "";
+     &eaSerieTa = "";
+     &enCodigTa = 0;
+     nRecibo = 0;
+     &eaDefImpre = "";
+     &eaSerieDelega = "";
+
+     &enSwSeccion = 0;
+     &enSwEsAutoFac = 0;
+     &eaSerAutoFac = "";
+     &enNumAutoFac = 0;
+     &eaInforme    = "";
+
+     aMensaje = "";
+     &enSwAutoFactura = 0;
+     aInfCrystal    = "";
+     aCadena = "";
+     aLen = "";
+     nLen = 0;
+     nCampo = 0;
+     nPosi = 0;
+     aCaracter = "";
+
+     &eaDoc         = "";
+     nCopias        = 0;
+     &enEstaDentro = 0;
+     &enSwMalpesa     = 0;
+     nSwMarhuenda   = 0;
+     nSwGuerola     = 0;
+     nSwPackList    = 0;
+
+     aSerieMulti    = "";
+     aInforMulti    = "";
+     nEncuentra     = 0;
+     aPath          = "";
+     nCampos        = 0;
+     &eaDirEnt      = "";
+     &dtrab         = "";
+     &swt           = 0;
+     &eaLote        = "";
+     &eaProg        = "";
+     &Tempo         = "";
+     aTempo97       = "";
+     &nFactor       = 0;
+     &siExis        = 0;
+     &aCopia        = "";
+     &aDivisa       = "";
+     &aMoneda       = "";
+     &enSwDes       = 0;
+     &enEscan       = 0;
+     &enAcuenta     = 0;
+     nTota          = 0;
+     nTotaFac       = 0;
+     suma           = 0;
+     nVto           = 0;
+     nCam5          = 0;
+     nCam7          = 0;
+     nCam9          = 0;
+     nCam37         = 0;
+     nCam39         = 0;
+     nCam43         = 0;
+     nCam44         = 0;
+     nCam48         = 0;
+     nUni           = 0;
+     aAlfa          = "";
+     aAlfaOb1       = "";
+     aAlfaOb2       = "";
+     aArti          = "";
+     nPre           = 0;
+     nDt1           = 0;
+     nDt2           = 0;
+     &eaOrdenado    = "";
+     &eaImprime     = "";
+     &eaNoImpre     = "";
+     &impal =0;
+     &impor =0;
+     mes = "";
+     mesnum = 0;
+     &mesimp = "";
+     num = 0;
+     importe = 0;
+     resto = 0;
+     i = 0;
+     j = 0;
+     a = 0;
+     saltar = 0;
+     indtope = 0;
+     ind = 0;
+     informe1 = "agifa134";     ||Factura
+     informe2 = "agif1134";     ||Factura Resumida
+     informe3 = "agif2134";     ||Abono
+     informe4 = "agif3134";     ||Abono resumido
+     informe  = "";
+     &iva1    = 0;
+     &iva2    = 0;
+     &iva3    = 0;
+     &iva4    = 0;
+     &iva5    = 0;
+     &re1     = 0;
+     &re2     = 0;
+     &re3     = 0;
+     &re4     = 0;
+     &re5     = 0;
+     &fechae  = @;
+     &codigo="";
+     &descrip=""
+     &precio=0;
+     &dto=0;
+     &dto1=0;
+     &unid=0;
+     &imptot=0;
+     &tiva=0;
+     &linea=0;
+     vacio="";
+     lafecha = @;
+     yaesta  = 1;
+     k = 0;
+     em = 0;
+     num1 = 0;
+     fecha = "          ";
+     cafe = "";
+     diafe = "";
+     dianu = "";
+     redondeo = 0;
+     &f1 = @; &f2 = @; &f3 = @; &f4 = @; &f5 = @; &f6 = @; &f7 = @; &f8 = @;
+     &f9 = @; &f10 = @; &f11 = @; &f12 = @;
+     &i1 = 0; &i2 = 0; &i3 = 0; &i4 = 0; &i5 = 0; &i6 = 0; &i7 = 0; &i8 = 0;
+     &i9 = 0; &i10 = 0; &i11 = 0; &i12 = 0;
+     num2 = 0;
+     sw1 = 0;
+     &bl  = "                              ";
+     &ser_fac  = "";
+     &num_fac  = 0;
+     &reimp    = "N";
+     &n_copia   = 0;
+     trabajo   = "";
+     swcab = 0;
+     nlinea = 0;
+     &t_linea1 = 0;
+     &t_linea2 = 0;
+     swimp = 0;
+     alfa      = "";
+     alfa1     = "";
+     alfa2     = "";
+
+     aNume     = "";
+     aObse     = "";
+
+     fechaant  = "";
+     cliant    = "";
+     artant    = "";
+     artcant   = "";
+     usu       = "";
+     fichero   = "";
+     n         = 0;
+     n1        = 0;
+     aDef           = "";
+     campo     = 0;
+     &swi      = 0;
+     &xxx      = "";
+     &xx2      = "";
+     albaran   = "";
+     &t1       = "";
+     &t2       = "";
+     &t3       = "";
+     &t4       = "";
+     &t5       = "";
+     &t6       = "";
+     &t7       = "";
+     &t8       = "";
+     &t9       = "";
+     &t10      = "";
+     &tu       = 0;
+     &ti       = 0;
+/*
+     &EURO     = 0;
+     &EURODB   = 0;
+     &EURODV   = 0;
+     &decim_divisa = 0;
+*/
+     swEsEnPDF = 0;
+     aArchivoWeb = "";
+     nSwBogeven = 0;
+     nSwExtintor = 0;
+     &eaTmpExtintor = "";
+     aExtintorAgr = "N";
+
+     &enFacTlfn    = 0;
+     &eaNumFac     = "";
+     &enGrabaTempo = 0;
+     nSwAparecida = "";
+
+     || grupo para crystal
+     &enContaLin = 0;
+     &enGrupo = 0;
+     &enLineas = 0;
+     nDiv = 0;
+|FIN;
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄModulo 004159ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+|PROCESO Agrupador;
+     nSalida = 1;
+     |LEE 000#5p;
+     |PARA; |SI FSalida = 0; |HACIENDO;
+          |SI #5#2 = #agifa071@#2; |Y #5#51 = #agifa071@#51; |Y #agifa071@#51!0;
+               nSalida = 0; |SAL;
+          |FINSI;
+          |LEE 000#5s;
+     |SIGUE;
+     |SI nSalida = 0;
+          #5#6 = #5#6 + #agifa071@#6;   ||Precio
+          #5#7 = #5#7 + #agifa071@#7;   ||Impo
+          #5#9 = #5#9 + #agifa071@#9;   ||Total
+          #5#36 = #5#36 + #agifa071@#36;||Precio Div
+          #5#37 = #5#37 + #agifa071@#37;||Total Div
+          |GRABA 020#5a;
+     |SINO;
+          aAlfa = "|NC"; aAlfa = #5#aAlfa#;
+          nCampos = aAlfa; nCampos = nCampos - 1;
+          |PARA i = 0; |SI i [ nCampos; |HACIENDO i = i + 1;
+               #5i = #agifa071@#i#;
+          |SIGUE;
+          |GRABA 020#5n;
+     |FINSI;
+|FPRC;
+
+|DEFBUCLE Agrupador;
+     #agifa071@#1003;
+     ;
+     #4#52, #4#0, 001;
+     #4#52, #4#0, 999;
+     ;
+     NULL, Agrupador;
+|FIN;
+
+|PROCESO AgruArtiIni;
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "agifa071";
+     |CARGA_DEF aAlfa, agifa071@;
+     nSwSanchez = FSalida;
+     |SI FSalida ! 0; |ACABA; |FINSI;
+
+     aAlfa = Usuario; aAlfa = "5" + aAlfa;
+     |NOME_DAT #5 aAlfa;
+     |DELINDEX #5;
+
+     |ABRE #5;
+     |BUCLE Agrupador;
+     |CIERRA #5;
+|FPRC;
+
+|PROCESO AgruArtiFin;
+     |DESCARGA_DEF #agifa071@;
+     |DELINDEX #5;
+
+     |NOME_DAT #5#"agifa071"#;
+|FPRC;
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+
+
+/*
+ El proceso &Grupo se llama desde el informe, en este hay que definir
+ las variables: &enContaLin, &enGrupo y &enLineas
+ en la primera linea del inf en el F8 se asigna enLineas=10 (numero lineas por copia)
+ y en el detalle se hace la llamada a Grupo, este retorna enGrupo que se
+ asigna a una variable y se pinta en el inf, esta sera el campo a vincular el subinforme
+ ver jduro.inf/rpt.
+ Esto se ha realizado para el cliente 5541 comentarlo con Sergio
+*/
+|PROCESO &Grupo;
+     nDiv = enContaLin / enLineas;
+     enGrupo = nDiv ! 0;
+     |SI enGrupo > nDiv;
+          enGrupo = enGrupo - 1;
+     |FINSI;
+     enContaLin = enContaLin + 1;
+|FPRC;
+
+|INCLUYE i_pdfimp;
+
+|PROCESO &sacacuenta;|| sustituye los 3 ultimos digitos de eaCuenta por '***'
+     eaCuenta = #3#30;
+     |QBF eaCuenta;
+     aLon = eaCuenta % A0;
+     nPos = aLon;
+     |SI nPos [ 3;
+          eaCuenta = "***";
+     |SINO;
+          nPos = nPos - 3;
+          nPos = 100 + nPos;
+          eaCuenta = eaCuenta % nPos;
+          eaCuenta = eaCuenta + "***";
+     |FINSI;
+|FPRC;
+
+|PROCESO DiagramPrecio71; || Parche para cargar precio divisa
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "agifa071";
+     |CARGA_DEF aAlfa, agifa071@;
+     |SI FSalida = 0;
+          |ABRE #agifa071@;
+          #agifa071@#29 = #4#52;
+          #agifa071@#0 = #4#0;
+          #agifa071@#1 = 1;
+          |LEE 101#agifa071@.];
+          |PARA; |SI FSalida = 0; |Y #agifa071@#29 = #4#52; |Y #agifa071@#0 = #4#0; |HACIENDO;
+               |SI #agifa071@#36 = 0;
+                    #agifa071@#36 = #agifa071@#6;
+                    #agifa071@#37 = #agifa071@#9;
+                    |GRABA 020#agifa071@.a;
+               |FINSI;
+               |LIBERA #agifa071@;
+               |LEE 101#agifa071@.s;
+          |SIGUE;
+          |CIERRA #agifa071@;
+          |DESCARGA_DEF #agifa071@;
+     |FINSI;
+|FPRC;
+
+|PROCESO ExtintorAgr;
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "extm0013";
+     |CARGA_DEF aAlfa, bogem027@;
+     |SI FSalida = 0;
+          |ABRE #bogem027@;
+          |SELECT #4#bogem027@;
+          #bogem027@#14 = #4#52;
+          #bogem027@#15 = #4#0;
+          |LEE 000#bogem027@.=;
+          |SI FSalida = 0;
+               aExtintorAgr = "S";
+          |SINO;
+               aExtintorAgr = "N";
+          |FINSI;
+          |CIERRA #bogem027@;
+          |DESCARGA_DEF #bogem027@;
+     |FINSI;
+|FPRC;
+
+|PROCESO BogeReferencia;
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "bogem027";
+     |CARGA_DEF aAlfa, bogem027@;
+     |SI FSalida = 0;
+          |ABRE #bogem027@;
+          |SELECT #2#bogem027@;
+          #bogem027@#20 = #4#52;
+          #bogem027@#21 = #4#0;
+          |LEE 000#bogem027@.=;
+          |SI FSalida = 0;
+               enReferencia = #bogem027@#0;
+               enAlbaran = #bogem027@#19;
+          |SINO;
+               enReferencia = 0;
+               enAlbaran = 0;
+          |FINSI;
+          |CIERRA #bogem027@;
+          |DESCARGA_DEF #bogem027@;
+     |FINSI;
+|FPRC;
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄModulo 001254 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+|VARIABLES;
+     &eaTextoMalpe = "";
+{-1} MenuMalpe   = "";
+     MenuMalpe1  = "1021";
+     MenuMalpe2  = "1";
+     MenuMalpe3  = "3";
+     MenuMalpe4  = "Informe de Comprobacion  ";
+     MenuMalpe5  = "Envio a Clientes         ";
+     MenuMalpe6  = "Archivo                  ";
+|FIN;
+
+|PROCESO MalpeCopia;
+     |SI #0#6 = "S"; MenuMalpe3  = "3"; |SINO; MenuMalpe3  = "2"; |FINSI;
+     |PUSHV 0101 2380;
+     |CLS;
+     |MENUG MenuMalpe;
+     |POPV;
+     MenuMalpe2 = FSalida;
+|FPRC;
+
+|PROCESO AgrupadorMalpe;
+     |DDEFECTO #91;
+     #91#29 = #agifa071@#29;
+     #91#0 = #agifa071@#0;
+     #91#1 = #agifa071@#1;
+     |LEE 000#91=;
+     nEncuentra = 0;
+     |LEE 000#5p;
+     |PARA; |SI FSalida = 0; |HACIENDO;
+           |SI #5#2=#agifa071@#2; |Y #5#6=#agifa071@#6; |Y #5#8=#agifa071@#8;
+               nEncuentra = 1; |SAL;
+           |FINSI;
+           |LEE 000#5s;
+     |SIGUE;
+     |SI nEncuentra = 1;
+          #5#5 = #5#5 + #agifa071@#5;   ||Unidades
+          #5#7 = #5#7 + #agifa071@#7;   ||Impo
+          #5#9 = #5#9 + #agifa071@#9;   ||Total
+          #5#37 = #5#37 + #agifa071@#37;||Total Div
+          #5#35 = #5#35 + #91#62;       ||Palets = Unidades a Convertir
+          |GRABA 020#5a;
+     |SINO;
+          aAlfa = "|NC"; aAlfa = #5#aAlfa#;
+          nCampos = aAlfa; nCampos = nCampos - 1;
+          |PARA i = 0; |SI i [ nCampos; |HACIENDO i = i + 1;
+               #5i = #agifa071@#i#;
+          |SIGUE;
+          #5#35 = #91#62;     ||Palets = Unidades a Convertir
+          |GRABA 020#5n;
+     |FINSI;
+|FPRC;
+
+|DEFBUCLE AgrupadorMalpe;
+     #agifa071@#1003;
+     ;
+     #4#52, #4#0, 001;
+     #4#52, #4#0, 999;
+     ;
+     NULL, AgrupadorMalpe;
+|FIN;
+
+|PROCESO LinOrdArt;
+     |HAZ imprelin;
+|FPRC;
+
+|DEFBUCLE LinOrdArt;
+     #5#1;
+     ;
+     #4#52, #4#0, 001;
+     #4#52, #4#0, 999;
+     ;
+     NULL, NULL, NULL, NULL, NULL, LinOrdArt;
+     #5#2;
+|FIN;
+
+|PROCESO ImpreMalpesa;
+      enEstaDentro = 1; |||OJO NO QUITAR (ver dsz99956)
+
+     |DDEF aPath;
+     aAlfa = aPath + "agifa071";
+     |CARGA_DEF aAlfa, agifa071@
+     |SI FSalida ! 0;
+          |MENAV "0000ERROR al cargar agifa071";
+     |SINO;
+          aAlfa = aPath + "malpe091";
+          |CARGA_DEF aAlfa, malpe091@;
+          |SI FSalida ! 0;
+               |MENAV "0000ERROR al cargar malpe091";
+          |SINO;
+               aAlfa = Usuario; aAlfa = "5" + aAlfa;
+               |NOME_DAT #5 aAlfa; |DELINDEX #5;
+               |ABRE #5;
+               |ABRE #91;
+               |BUCLE AgrupadorMalpe;
+               |CIERRA #91;
+               |CIERRA #5;
+
+               |BUCLE LinOrdArt;
+
+               |DELINDEX #5;
+
+               |DESCARGA_DEF #malpe091@;
+          |FINSI;
+          |DESCARGA_DEF #agifa071@
+     |FINSI;
+     enEstaDentro = 0; ||OJO NO QUITAR (ver dsz99956)
+|FPRC;
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+|PROCESO TagPostFormado;
+     |ABRE #19;
+     #19#0 = #5#2;
+     |LEE 000#19=;
+     |CIERRA #19;
+     aEsPostFormaso = "N";
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "tagm0056";
+     |CARGA_DEF aAlfa, tagm0056@;
+     |SI FSalida = 0;
+          |ABRE #tagm0056@;
+          |SI #5#12 ! 0; || Con Pedido
+               #tagm0056@#0 = "PV";
+               #tagm0056@#1 = #5#31;
+               #tagm0056@#2 = #5#12;
+               #tagm0056@#3 = #5#21;
+               |LEE 000#tagm0056@.=;
+               |SI FSalida = 0;
+                    descrip = #5#4;
+                    nTotal = #5#9;
+                    nTotalD = #5#37;
+                    |SALVA_FICHA #5;
+                    |SELECT #4#5;
+                    #5#31 = #tagm0056@#1;
+                    #5#12 = #tagm0056@#2;
+                    #5#21 = #tagm0056@#5;
+                    |LEE 000#5=;
+                    |SI FSalida = 0;
+                         nTotal = nTotal + #5#9;
+                         nTotalD = nTotalD + #5#37;
+                         nPrecio = #5#6;
+                         nPrecioD = #5#36;
+                    |FINSI;
+                    |SELECT #1#5;
+                    |REPON_FICHA #5;
+                    |SI #19#194 = 2;
+                         nPrecio = nPrecio + (#5#6 * #5#48 / #5#5);
+                         nPrecioD = nPrecioD + (#5#36 * #5#48 / #5#5);
+                    |SINO;
+                         nPrecio = nPrecio + #5#6;
+                         nPrecioD = nPrecioD + #5#36;
+                    |FINSI;
+                    #5#4 = descrip;
+                    #5#6 = nPrecio;
+                    #5#36 = nPrecioD;
+                    #5#9 = nTotal;
+                    #5#37 = nTotalD;
+                    precio = #5#6;
+               |SINO;
+                    |SELECT #2#tagm0056@;
+                    #tagm0056@#5 = #5#21;
+                    |LEE 000#tagm0056@.=;
+                    |SI FSalida = 0;
+                         aEsPostFormaso = "S";
+                    |FINSI;
+               |FINSI;
+          |SINO;         || Normal (sin pedido)
+               #tagm0056@#0 = "AV";
+               #tagm0056@#1 = #5#29;
+               #tagm0056@#2 = #5#0;
+               #tagm0056@#3 = #5#1;
+               |LEE 000#tagm0056@.=;
+               |SI FSalida = 0;
+                    descrip = #5#4;
+                    nTotal = #5#9;
+                    nTotalD = #5#37;
+                    |SALVA_FICHA #5;
+                    #5#1 = #tagm0056@#5;
+                    |LEE 000#5=;
+                    |SI FSalida = 0;
+                         nTotal = nTotal + #5#9;
+                         nTotalD = nTotalD + #5#37;
+                         nPrecio = #5#6;
+                         nPrecioD = #5#36;
+                    |FINSI;
+                    |REPON_FICHA #5;
+                    |SI #19#194 = 2;
+                         nPrecio = nPrecio + (#5#6 * #5#48 / #5#5);
+                         nPrecioD = nPrecioD + (#5#36 * #5#48 / #5#5);
+                    |SINO;
+                         nPrecio = nPrecio + #5#6;
+                         nPrecioD = nPrecioD + #5#36;
+                    |FINSI;
+                    #5#4 = descrip;
+                    #5#6 = nPrecio;
+                    #5#36 = nPrecioD;
+                    #5#9 = nTotal;
+                    #5#37 = nTotalD;
+                    precio = #5#6;
+               |SINO;
+                    |SELECT #2#tagm0056@;
+                    #tagm0056@#5 = #5#1;
+                    |LEE 000#tagm0056@.=;
+                    |SI FSalida = 0;
+                         aEsPostFormaso = "S";
+                    |FINSI;
+               |FINSI;
+          |FINSI;
+          |CIERRA #tagm0056@;
+          |DESCARGA_DEF #tagm0056@;
+     |FINSI;
+|FPRC;
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+|PROCESO ConverCliArt;
+     |ABRE #109;
+     |SELECT #2#109;
+     |DDEFECTO #109;
+     #109#0 = #4#3;
+     #109#2 = #5#2;
+     |LEE 000#109=;
+     |SI FSalida = 0;
+          enCliArt = 1;
+     |SINO;
+          enCliArt = 0;
+          #109#3 = #109#2;    || pongo el original sino esta, asi no es
+          #109#4 = #5#4;      ||/necesario condicionar la linea en el inf
+     |FINSI;
+     |CIERRA #109;
+|FPRC;
+
+|PROCESO LeeLote;
+     eaLote = "";
+     |ABRE #1000;
+     #1000#0 = #5#29;
+     #1000#1 = #5#0;
+     #1000#8 = #5#1;
+     #1000#5 = "";
+     |LEE 000#1000];
+     |SI #1000#0 = #5#29; |Y #1000#1 = #5#0; |Y #1000#8 = #5#1;
+          eaLote = #1000#5;
+     |FINSI;
+     |CIERRA #1000;
+|FPRC;
+
+|PROCESO &leevenci;
+     |ABRE #6;
+     #6#0 = #1#11;
+     |LEE 000#6=;
+     |CIERRA #6;
+     aDivisa = #1#58;
+     |HAZ HallaFactor;
+     |PDEFECTO #0, 13, 37;
+     #0#47 = 0;
+     #0#48 = "01.01.0000";
+     i1 = 0; i2 = 0; i3 = 0; i4 = 0; i5 = 0; i6 = 0; i7 = 0; i8 = 0;
+     i9 = 0; i10 = 0; i11 = 0; i12 = 0;
+     sw1 = 0;
+     |ABRE #17;
+     #17#0 = #1#0;
+     #17#4 = #1#49;
+     #17#1 = 1;
+     |LEE 000#17];
+     |PARA; |SI FSalida = 0; |Y #17#0 = #1#0;|Y #17#4 = #1#49; |HACIENDO;
+          |SI #6#70 ! 0; || Fianza Retenida, es el ultimo recibo
+               |SALVA_FICHA #17;
+               |LEE 000#17s;
+               |SI FSalida ! 0; |O #17#0 ! #1#0; |O #17#4 ! #1#49;
+                    |REPON_FICHA #17;
+                    #0#47 = #17#2 * nFactor;
+                    #0#48 = #17#3;
+                    |SAL;
+               |FINSI;
+               |REPON_FICHA #17;
+          |FINSI;
+          sw1 = sw1 + 1;
+          |SI sw1 = 1;f1 = #17#3;i1 = #17#2;|FINSI;
+          |SI sw1 = 2;f2 = #17#3;i2 = #17#2;|FINSI;
+          |SI sw1 = 3;f3 = #17#3;i3 = #17#2;|FINSI;
+          |SI sw1 = 4;f4 = #17#3;i4 = #17#2;|FINSI;
+          |SI sw1 = 5;f5 = #17#3;i5 = #17#2;|FINSI;
+          |SI sw1 = 6;f6 = #17#3;i6 = #17#2;|FINSI;
+          |SI sw1 = 7;f7 = #17#3;i7 = #17#2;|FINSI;
+          |SI sw1 = 8;f8 = #17#3;i8 = #17#2;|FINSI;
+          |SI sw1 = 9;f9 = #17#3;i9 = #17#2;|FINSI;
+          |SI sw1 = 10;f10 = #17#3;i10 = #17#2;|FINSI;
+          |SI sw1 = 11;f11 = #17#3;i11 = #17#2;|FINSI;
+          |SI sw1 = 12;f12 = #17#3;i12 = #17#2;|FINSI;
+
+          |SI sw1 = 1;#0#14 = #17#3;#0#13 = #17#2 * nFactor;|FINSI;
+          |SI sw1 = 2;#0#16 = #17#3;#0#15 = #17#2 * nFactor;|FINSI;
+          |SI sw1 = 3;#0#18 = #17#3;#0#17 = #17#2 * nFactor;|FINSI;
+          |SI sw1 = 4;#0#20 = #17#3;#0#19 = #17#2 * nFactor;|FINSI;
+          |SI sw1 = 5;#0#22 = #17#3;#0#21 = #17#2 * nFactor;|FINSI;
+          |SI sw1 = 6;#0#24 = #17#3;#0#23 = #17#2 * nFactor;|FINSI;
+          |SI sw1 = 7;#0#26 = #17#3;#0#25 = #17#2 * nFactor;|FINSI;
+          |SI sw1 = 8;#0#28 = #17#3;#0#27 = #17#2 * nFactor;|FINSI;
+          |SI sw1 = 9;#0#30 = #17#3;#0#29 = #17#2 * nFactor;|FINSI;
+          |SI sw1 =10;#0#32 = #17#3;#0#31 = #17#2 * nFactor;|FINSI;
+          |SI sw1 =11;#0#34 = #17#3;#0#33 = #17#2 * nFactor;|FINSI;
+          |SI sw1 =12;#0#36 = #17#3;#0#35 = #17#2 * nFactor;|FINSI;
+          |LEE 000#17s;
+     |SIGUE;
+     nTota = #0#13+#0#15+#0#17+#0#19+#0#21+#0#23+#0#25+#0#27+#0#29+#0#31+#0#33+#0#35;
+     nTotaFac = #1#101 - #0#47; ||| - #1#32;
+     |SI nTota ! nTotaFac;
+          |SI #321#9 ! aDivisa;
+               nTota = nTota - #1#101;
+               sw1 = (sw1 * 2) + 11;
+               #0sw1 = #0sw1 - nTota;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|PROCESO meses;
+     mes = #1#1 % 402; mesnum = mes;
+     |SI mesnum =  1;  mesimp = "Enero     ";  |FINSI;
+     |SI mesnum =  2;  mesimp = "Febrero   ";  |FINSI;
+     |SI mesnum =  3;  mesimp = "Marzo     ";  |FINSI;
+     |SI mesnum =  4;  mesimp = "Abril     ";  |FINSI;
+     |SI mesnum =  5;  mesimp = "Mayo      ";  |FINSI;
+     |SI mesnum =  6;  mesimp = "Junio     ";  |FINSI;
+     |SI mesnum =  7;  mesimp = "Julio     ";  |FINSI;
+     |SI mesnum =  8;  mesimp = "Agosto    ";  |FINSI;
+     |SI mesnum =  9;  mesimp = "Septiembre";  |FINSI;
+     |SI mesnum = 10;  mesimp = "Octubre   ";  |FINSI;
+     |SI mesnum = 11;  mesimp = "Noviembre ";  |FINSI;
+     |SI mesnum = 12;  mesimp = "Diciembre ";  |FINSI;
+|FPRC;
+
+|PROCESO imprime;
+     #agifa071#29 = #97#0;
+     #agifa071#0  = #97#1;
+     #agifa071#1  = #97#2;
+     |LEE 000#agifa071.=;
+     unid = #agifa071#5;
+     |PRINT; swi = 0;
+|FPRC;
+
+|DEFBUCLE lc3;   || ARTICULO,CLIENTE,FECHA.
+     #97#1;
+     ;
+     "                    ";
+     "zzzzzzzzzzzzzzzzzzzz";
+     ;
+     NULL,imprime;
+|FIN;
+
+|PROCESO terminaciones;
+     || COGE LA TERMINACION DEL ARTICULO.....................................
+     n = ((#41#44 + 1) * 100) + 13;
+     n1 = #41#44 + 100;
+     alfa = #5#2;
+     alfa = alfa % n;
+     |QBF alfa;
+     |HAZ titulos;
+     || RELLENA EL TEMPORAL PARA EL INFORME POR TERMINACIONES................
+     campo = ind + 5;
+     #97#4 = #5#2;      || ARTICULO.
+     |LEE 101#97=;
+     |SI FSalida = 0;
+          #97campo = #97campo + #5#5;
+          #97#17 = #97#17 + #5#5;
+/*
+          #97#17 = #97#6 + #97#7 + #97#8 + #97#9 + #97#10 + #97#11 + #97#12;
+          #97#17 = #97#17 + #97#13 + #97#14 + #97#15;  || TOTAL UNIDADES.
+*/
+          #97#18 = #97#18 + #5#9;       || TOTAL IMPORTE.
+          #97#19 = #5#8;                || DTO1.LINEA.
+          |GRABA 021#97a;
+     |SINO;
+          |DDEFECTO #97;
+          #97#0  = #5#29;
+          #97#1  = #5#0;
+          #97#2  = #5#1;
+          #97#16 = #5#2;                || COD.ARTICULO COMPLETO.
+          #97#4 = #5#2;                 || ARTICULO.
+/*
+          #97campo = #5#5;              || UNIDADES.
+          #97#17 = #97#6 + #97#7 + #97#8 + #97#9 + #97#10 + #97#11 + #97#12;
+          #97#17 = #97#17 + #97#13 + #97#14 + #97#15;  || TOTAL UNIDADES.
+*/
+          #97#17 = #5#5;
+          #97#18 = #5#9;                || TOTAL IMPORTE.
+          #97#19 = #5#8;                || DTO1.LINEA.
+          #97#20 = #5#6;                || PRECIO.
+          |GRABA 021#97n;
+     |FINSI;
+|FPRC;
+
+|DEFBUCLE leealb;
+     #5#1;
+     ;
+     #2#15,#2#2,001;
+     #2#15,#2#2,999;
+     ;
+     NULL,terminaciones;
+|FIN;
+
+|PROCESO columnas;
+     swi = 1;
+     |HAZ CreaTempo; aTempo97 = Tempo;
+     |NOME_DAT #97 aTempo97; |DELINDEX #97;
+
+     |ABRE #97;
+     |BUCLE leealb;
+     |BUCLE lc3;
+     |CIERRA #97;
+
+     |DELINDEX #97; Tempo = aTempo97; |HAZ BoraTempo;
+|FPRC;
+
+|PROCESO ultimo;
+     nlinea  = #51#1;
+|FPRC;
+
+|PROCESO i_trabajo;
+     swimp = 1;
+     |SI nlinea  = #51#1;t_linea2 = #4#15;|FINSI;
+     dtrab = #51#2;
+     swt = 1;
+     |PRINT;
+     swt = 0;
+|FPRC;
+
+|PROCESO imp_trabajos;
+     nlinea = 0;
+     t_linea1 = 0;
+     t_linea2 = 0;
+     |ABRE #50;
+     |SELECT #4#50;
+     #50#2 = #2#15;
+     #50#3 = #2#2;
+     |LEE 000#50=;
+     |SI FSalida = 0;
+         |BUCLELIN 2ultimo#50;
+     |FINSI;
+     |SELECT #1#50;
+     |CIERRA #50;
+
+     |ABRE #50;
+     |SELECT #4#50;
+     #50#2 = #2#15;
+     #50#3 = #2#2;
+     |LEE 000#50=;
+     |SI FSalida = 0;
+         |BUCLELIN 2i_trabajo#50;
+     |FINSI;
+     |SELECT #1#50;
+     |CIERRA #50;
+|FPRC;
+
+|PROCESO dsm00047;
+     unid = #5#5 * #47#5;
+     |PRINT;
+|FPRC;
+
+|DEFBUCLE dsm00047;
+     #47#1;
+     ;
+     #5#29, #5#0, #5#1, 001;
+     #5#29, #5#0, #5#1, 999;
+     ;
+     NULL, dsm00047;
+|FIN;
+
+|CALCULO escanlinea;
+    unid = #16#4 * #5#5;
+    descrip = #16#3;
+    codigo = #16#2;
+    dto = 0;
+    precio = 0;
+    imptot = 0;
+    tiva = 0;
+    linea = 1;
+
+     eaArti = #16#2;
+     |HAZ IdiomaArticulo;
+     |SI eaAlfa ! "";
+          #16#3 = eaAlfa;
+          descrip = eaAlfa;
+     |FINSI;
+
+     |PRINT;
+|FCAL;
+
+|CALCULO xx;
+     indtope = 0
+     |PARA ind=6;|SI ind>0;|HACIENDO ind=ind-1;
+          descrip=#13ind;
+          |QBF descrip;
+          |SI descrip ! vacio;
+               indtope=ind+1;
+               ind=0
+          |FINSI;
+     |SIGUE;
+     |PARA ind = 1; |SI ind < indtope; |HACIENDO ind = ind + 1;
+           descrip = #13ind;
+           linea=0;
+           |PRINT;
+     |SIGUE;
+|FCAL;
+
+|CALCULO impdesam;
+     #13#0 = #5#27;
+     |ABRE #13;
+     |LEE 000#13=;
+     |SI FSalida = 0; |HAZ xx; |FINSI;
+     |LIBERA #13;
+     |CIERRA #13;
+|FCAL;
+
+|PROCESO hazreci;
+     |ABRE #6;
+     #6#0 = #1#11;
+     |LEE 000#6=;
+     |CIERRA #6;
+
+     |SI #6#76 = "N"; |ACABA; |FINSI; ||No hace recibos
+
+     |ABRE #17;
+     |ABRE #98;
+     |ABRE #99;
+
+     nVto = 0;
+     #17#0 = #1#0;
+     #17#4 = #1#49;
+     #17#1 = 0;
+     |LEE 000#17];
+     |PARA ; |SI FSalida = 0; |Y #17#0 = #1#0;|Y #17#4 = #1#49; |HACIENDO;
+          nVto = nVto + 1;
+          |LEE 000#17s;
+     |SIGUE;
+
+     |HAZ AbreRecVenta;
+     nRecibo = 0;
+     #17#0 = #1#0;
+     #17#4 = #1#49;
+     #17#1 = 0;
+     |LEE 000#17];
+     |PARA ; |SI FSalida = 0; |Y #17#0 = #1#0;|Y #17#4 = #1#49; |HACIENDO;
+          nRecibo = nRecibo + 1;
+          |SI #17#5 = "S";
+               |DDEFECTO #98;
+               #98#30 = "A";       || busca como albaran
+               #98#20 = #17#6;     || Serie pedido.
+               #98#17 = #17#7;     || Numero pedido.
+               #98#18 = #17#8;     || Numero recibo.
+               |LEE 000#98=;
+               |SI FSalida ! 0;
+                    #98#30 = "P";       || busca como pedido
+                    |LEE 000#98=;
+               |FINSI;
+          |FINSI;
+          |DDEFECTO #11;
+          #11#17 = #1#49;
+          #11#0 = #1#0;
+          #11#1 = #17#1;           || Linea;
+          #11#2 = #1#2;            || cliente
+          #11#3 = #1#3;            || nombre del cliente
+          #11#4 = #1#9;            || Banco
+          #11#5 = "S";             || domiciliado
+          #11#6 = "N";             || aceptado
+          #11#7 = #1#1;            || fecha de emision
+          #11#8 = #17#3;           || Fecha de vencimiento
+          #11#23 = nVto;
+          #11#9 = #17#2;             || Importe
+          |SI #17#5 = "S";
+              #11#10 = #98#10;
+              #11#11 = #98#11;
+          |SINO;
+              #11#10 = "N";            || Impreso
+              #11#11 = "N";            || Contabilizado
+          |FINSI;
+          |SI #41#63 = "S";     ||  COGE LA CTA.CONTABLE DEL TIPO DE RECIBO.
+              #99#0 = #6#69;
+              |LEE 000#99=;
+              |SI FSalida = 0;
+                   #11#12 = #99#3;     || NUMERO CTA.CONTABLE.
+              |SINO;
+                   #11#12 = #1#12;     || NUMERO CTA.CONTABLE.
+              |FINSI;
+          |SINO;
+              #11#12 = #1#12;     || NUMERO CTA.CONTABLE.
+          |FINSI;
+          #11#13 = #98#13;
+          #11#16 = #98#16;
+          #11#22 = "Cobrado";
+          #11#24 = #1#11;          || Forma de Pago
+          #11#25 = #6#1;           || Descripcion de la forma de Pago
+          #11#14 = "N";            || Impagado
+          #11#15 = #3#161;         || A aceptar
+          |SI #17#5 = "S";
+              #11#21 = #98#22;         || Tipo de Recibo (entr.a cta.)
+          |SINO;
+              #11#21 = #6#69;          || Tipo de Recibo (forma de pago)
+          |FINSI;
+          |SI nRecibo = nVto; |Y #6#70 ! 0;
+              #11#21 = #6#73;          || Tipo de Recibo (Fianza Retenida)
+          |FINSI;
+          #11#24 = #6#0;
+          #11#25 = #6#1;
+          eaProg = "agifa134";
+          ||HAZ CreaRecVenta;
+          |HAZ RecVenta;
+          |LEE 000#17s;
+     |SIGUE;
+
+     |HAZ CierraRecVenta;
+
+     |CIERRA #11;
+     |CIERRA #17;
+     |CIERRA #98;
+     |CIERRA #99;
+|FPRC;
+
+|PROCESO miralinea;
+     #4#0  = #2#2;
+     #4#52 = #2#15;
+     |LEE 000#4=;
+     |ERROR;
+|FPRC;
+
+|PROCESO mirainf;
+     |BUCLELIN 0miralinea#1;
+
+     |SI nSwGuerola = 0;|Y #0#41 ! "        ";
+          informe = #0#41; |QBF informe;
+          |ACABA;
+     |FINSI;
+
+     |ABRE #40;
+     #40#26 = #1#49;
+     |LEE 000#40=;
+     |SI FSalida = 0;
+          |SI #4#43 = "N";    ||No es abono
+               |SI #3#42 = AS;
+                   informe = #40#9;
+               |SINO;
+                   informe = #40#8;
+               |FINSI;
+          |SINO;
+               |SI #3#42 = AS;
+                   informe = #40#18;
+               |SINO;
+                   informe = #40#17;
+               |FINSI;
+          |FINSI;
+     |SINO;
+          |SI #4#43 = "N";    ||No es abono
+               |SI #3#42 = AS;
+                   informe = informe2;
+               |SINO;
+                   informe = informe1;
+               |FINSI;
+          |SINO;
+               |SI #3#42 = AS;
+                   informe = informe4;
+               |SINO;
+                   informe = informe3;
+               |FINSI;
+          |FINSI;
+     |FINSI;
+     |CIERRA #40;
+     |QBF informe;
+
+|FPRC;
+
+
+________/ R.AGUERA 15-06-98 __/ IMPRIMIR FACTURA EN MODO COLUMNAS.
+________/ CODIGO ARTICULO = LONGITUD INICIAL ARTICULO (PARAMETROS GENERALES).
+________/ CODIGO COLUMNAS = RESTO CODIGO ARTICULO.
+
+__________________________________/ RELLENA LOS TITULOS DE LAS TERMINACIONES.
+|PROCESO titulos;
+|| R.AGUERA 18-08-98 CON ESTA RUTINA ORDENA LOS COLORES DEL 01 AL 10, Y ESTAN
+||                   OBLIGADAS LAS TERMINACIONES A SER 01,02,03... 10.
+
+|| NO PODIA SER OTRO PARA ESTA       P O R Q U E R I A
+     ind = 0;
+     |SI alfa = "01";
+          t1 = alfa;
+          ind = 1;
+     |SINO;
+          |SI alfa = "02";
+               t2 = alfa;
+               ind = 2;
+          |SINO;
+               |SI alfa = "03";
+                    t3 = alfa;
+                    ind = 3;
+               |SINO;
+                    |SI alfa = "04";
+                         t4 = alfa;
+                         ind = 4;
+                    |SINO;
+                         |SI alfa = "05";
+                              t5 = alfa;
+                              ind = 5;
+                         |SINO;
+                              |SI alfa = "06";
+                                   t6 = alfa;
+                                   ind = 6;
+                              |SINO;
+                                   |SI alfa = "07";
+                                        t7 = alfa;
+                                        ind = 7;
+                                   |SINO;
+                                        |SI alfa = "08";
+                                             t8 = alfa;
+                                             ind = 8;
+                                        |SINO;
+                                             |SI alfa = "09";
+                                                  t9 = alfa;
+                                                  ind = 9;
+                                             |SINO;
+                                                  |SI alfa = "10";
+                                                       t10 = alfa;
+                                                       ind = 10;
+                                                  |FINSI;
+                                             |FINSI;
+                                        |FINSI;
+                                   |FINSI;
+                              |FINSI;
+                         |FINSI;
+                    |FINSI;
+               |FINSI;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|CALCULO facimpr2;
+     |SI #1#45 = AN;
+          |DBASS aAlfaOb1;
+          aAlfaOb1 = aAlfaOb1 + "dscarter/fich/result" + Usuario + ".sec";
+          |FBORRA aAlfaOb1;
+
+          ||nNume = #1#101 - #1#32;     || segun tiquet 1928/264
+          nNume = #1#101;
+          |SI #41#146 ! "N"; |O nNume ! 0;
+               |HAZ hazreci;
+          |FINSI;
+          |HAZ TmpGraDoc;
+
+          |LEE 121#1=;
+          |SI FSalida = 0;
+               #1#45 = AS;
+               |GRABA 020#1a;
+               |LIBERA #1;
+          |FINSI;
+
+          eaObserv = "";
+          enNumOb1 = 0; enNumOb2 = 0; enNumOb3 = 0;
+          enNumOb4 = 0; enNumOb5 = 0; enNumOb6 = 0;
+          enNumOb7 = 0; enNumOb8 = 0; enNumOb9 = 0;
+
+          |DBASS aAlfaOb1;
+          aAlfaOb2 = aAlfaOb1 + "dscarter/fich/result" + Usuario + ".sec";
+          |XABRE "", aAlfaOb2, nHandRes;
+          |SI FSalida ] 0;
+             |XLEE nHandRes, 254, aAlfaOb1;
+             |PARA; |SI FSalida > 0; |HACIENDO;
+                aNume = ""; aObse = "";
+                aAlfaOb2 = aAlfaOb1 - "#";
+                |SI FSalida ! 0;
+                   nCalc = (FSalida / 100) ! 0;
+                   aAlfaOb2 = aAlfaOb2 - "#";
+                   |SI FSalida ! 0;
+                      nCalc1 = (FSalida / 100) ! 0;
+                      nCalc = (nCalc * 100) + (nCalc1 - nCalc);
+                      aNume  = aAlfaOb2 % nCalc;
+                      aAlfaOb2 = "#" + aNume + "#";
+                      aAlfaOb1 = aAlfaOb1 - aAlfaOb2;
+                   |FINSI;
+                |FINSI;
+                aObse = aAlfaOb1; |QBF aObse;
+                |SI eaObserv ! "";
+                   eaObserv = eaObserv + ", ";
+                |FINSI;
+                eaObserv = eaObserv + aObse;
+                |SI aNume ! 0; |Y enNumOb9 = 0;
+                   |SI enNumOb1 = 0; enNumOb1 = aNume; |SINO;
+                      |SI enNumOb2 = 0; enNumOb2 = aNume; |SINO;
+                         |SI enNumOb3 = 0; enNumOb3 = aNume; |SINO;
+                            |SI enNumOb4 = 0; enNumOb4 = aNume; |SINO;
+                               |SI enNumOb5 = 0; enNumOb5 = aNume; |SINO;
+                                  |SI enNumOb6 = 0; enNumOb6 = aNume; |SINO;
+                                     |SI enNumOb7 = 0; enNumOb7 = aNume; |SINO;
+                                        |SI enNumOb8 = 0; enNumOb8 = aNume; |SINO;
+                                           |SI enNumOb9 = 0; enNumOb9 = aNume; |FINSI;
+                                        |FINSI;
+                                     |FINSI;
+                                  |FINSI;
+                               |FINSI;
+                            |FINSI;
+                         |FINSI;
+                      |FINSI;
+                   |FINSI;
+                |FINSI;
+                |XLEE nHandRes, 254, aAlfaOb1;
+             |SIGUE;
+             |XCIERRA nHandRes;
+          |FINSI;
+
+          |DBASS aAlfaOb1;
+          aAlfaOb1 = aAlfaOb1 + "dscarter/fich/result" + Usuario + ".sec";
+          |FBORRA aAlfaOb1;
+     |SINO;
+          |HAZ RecogeAbonos;
+     |FINSI;
+
+     |PIEINF; enContaLin = 0;
+     |HAZ TmpGraDoc;
+     eaSerieTa = ""; enCodigTa = "";
+     impor = 0;
+     impal = 0;
+|FCAL;
+
+|PROCESO dsm00053;
+     |SI enSwInforpor = 0;
+          aAlfa = eaDaAgr + " " + #53#5; |QBF aAlfa;
+          aLon = aAlfa % A0;
+          |SI aLon ] 50
+               enSwDA = 1;
+               |PRINT;
+               enSwDA = 0;
+               eaDaAgr = #53#5; |QBF eaDaAgr;
+          |SINO;
+               eaDaAgr = eaDaAgr + " " + #53#5; |QBF eaDaAgr;
+          |FINSI;
+     |SINO;              || la estandar
+          enUltDa = 0;
+          enSwDes = 1;
+          enSwDA = 1;
+
+          |SALVA_FICHA #53;
+          |LEE 000#53s;
+          |SI FSalida ! 0; |O "A" ! #53#0; |O #5#29 ! #53#1;
+                    |O #5#0 ! #53#2; |O #5#1 ! #53#3;
+               enUltDa = 1;
+          |FINSI;
+          |REPON_FICHA #53;
+
+          |PRINT;
+          enSwDA = 0;
+          enSwDes = 0;
+     |FINSI;
+|FPRC;
+
+|DEFBUCLE dsm00053;
+     #53#1;
+     ;
+     "A", #5#29, #5#0, #5#1, 0001;
+     "A", #5#29, #5#0, #5#1, 9999;
+     ;
+     NULL, dsm00053;
+|FIN;
+
+|PROCESO TieneDA;
+     enHayDa = 0;
+     |ABRE #53;
+     #53#0 = "A";
+     #53#1 = #5#29;
+     #53#2 = #5#0;
+     #53#3 = #5#1;
+     |LEE 000#53];
+     |SI FSalida = 0; |Y "A" = #53#0; |Y #5#29 = #53#1;
+               |Y #5#0 = #53#2; |Y #5#1 = #53#3;
+          enHayDa = 1;
+     |FINSI;
+     |CIERRA #53;
+|FPRC;
+
+|CALCULO imprelin;
+     ||ARA39  IVA
+     enTiva = #agifa071#11;
+     efFiva = #agifa010#1;
+     |HAZ SacaIVA;
+     enPorIva = enIva;
+
+     |SI #5#5 = 0; |Y #0#38 = "N"; |ACABA; |FINSI;
+     |SI #5#36 = 0; |Y #0#39 = "N"; |ACABA; |FINSI;
+
+     |SI enSwAutoFactura = 1;
+     |SINO;
+          enSwEsAutoFac = 0;
+     |FINSI;
+
+     #12#0  = #5#12;
+     #12#25 = #5#31;
+     |LEE 000#12=;
+
+     codigo  = #5#2;
+     descrip = #5#4;
+     |SI codigo = "9999999999999";||Puesto para Ciagan;
+         impal = impal + #5#9;
+         codigo = "";
+     |FINSI;
+     |SI codigo = "9999999999998";
+         impor = impor + #5#9;
+         codigo = "";
+     |FINSI;
+     enArtImp = #5#2; |QBF enArtImp;
+     descrip = #5#4;
+     dto    = #5#8;
+     dto1   = #5#33;
+     precio = #5#6;
+     unid   = #5#5;
+     imptot = #5#9;
+     tiva   = #5#11;
+     linea  = 1
+
+     |HAZ ConverCliArt;
+
+     |HAZ InforAlbaLectura;
+
+     || Aqui pone como impresa la factura en el albaran;
+     |SI swcab = 0;
+          |LEE 121#4=;
+          |SI FSalida = 0;
+               #4#10 = "S";
+               |GRABA 020#4a;
+               |LIBERA #4;
+          |FINSI;
+          swcab = 1;
+     |FINSI;
+
+     |SI nSwAparecida = 0;
+          eaArticulo = #5#2;
+          |HAZ ImpAparecida;
+     |FINSI;
+
+     eaArti = #5#2;
+     |HAZ IdiomaArticulo;
+     |SI  eaAlfa ! "";
+          #5#4 = eaAlfa;
+          descrip = eaAlfa;
+     |FINSI;
+
+     |SI #41#70 = "S";
+          |SI albaran ! #2#2;
+               albaran = #2#2;
+               |HAZ columnas;
+          |FINSI;
+     |SINO;
+          ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ Modulo 000654
+          |SI enSwTagloma = 0;
+               |SI eaSerieTa ! #2#15; |O enCodigTa ! #2#2;
+                    eaSerieTa = #2#15;
+                    enCodigTa = #2#2;
+                    eaTipo = "A";
+                    |HAZ TagloImpBlock;
+               |FINSI;
+               aAlfa = #5#13;
+               |SI aAlfa = "FMB"; |ACABA; |FINSI; || Familia Block
+               |HAZ ImpUniFami;
+               |HAZ TagPostFormado;
+               |SI aEsPostFormaso = "S"; |ACABA; |FINSI;
+          |FINSI;
+          ||ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+          |SI nSwFriesa = 0;  || Modulo
+               |HAZ FriImpFac;
+          |SINO;              || Estandar
+               |HAZ TieneDA;
+               |HAZ EsCoimasa;
+               |SI FSalida = 0;
+                    eaCodArtIdioma = #agifa071#2;
+                    eaArtIdioma = "";
+                    |HAZ IdiomaPedidoCoimasa;
+                    |SI eaArtIdioma ! "";
+                         descrip = eaArtIdioma;
+                    |FINSI;
+               |FINSI;
+               |PRINT;
+               |BUCLE dsm00053;
+               |SI eaDaAgr ! ""; |Y enSwInforpor = 0;
+                    enSwDA = 1;
+                    |PRINT;
+                    enSwDA = 0;
+                    eaDaAgr = "";
+               |FINSI;
+          |FINSI;
+
+          |SI nSwSematel = 0;
+               |HAZ ImpreIMEI;
+          |FINSI;
+     |FINSI;
+
+     |HAZ impdesam;
+     |SI #41#16 = "S";
+          eaArticulo = #5#2;
+          |HAZ EsEscandallo;
+          |SI FSalida = 0;
+               |HAZ EsKit;
+               |SI FSalida = 0;
+                    enEscan = 2;
+                    |BUCLE dsm00047;
+               |SINO;
+                    enEscan = 1;
+                    |BUCLELIN 0escanlinea#15;
+               |FINSI;
+               enEscan = 0;
+          |FINSI;
+     |FINSI;
+|FCAL;
+
+|PROCESO ImpreLinAgr;
+     |SALVA_DATOS #refer71@;
+     |REPON_DATOS #5;
+     |HAZ imprelin;
+     |DDEFECTO  #refer71@;
+|FPRC;
+
+|PROCESO AgrupaArti;
+     |SI aArti = "";
+          aArti = #5#2; nDt1 = #5#8; nDt2 = #5#33; nPre = #5#6;
+     |FINSI;
+     |SI aArti ! #5#2; |O nDt1 ! #5#8; |O nDt2 ! #5#33; |O nPre ! #5#6;
+          aArti = #5#2;
+          nDt1 = #5#8;
+          nDt2 = #5#33;
+          nPre = #5#6;
+          |SALVA_DATOS #5;
+          |HAZ ImpreLinAgr;
+          |REPON_DATOS #5;
+     |FINSI;
+     nCam5 = #refer71@#5;
+     nCam7 = #refer71@#7;
+     nCam9 = #refer71@#9;
+     nCam37 = #refer71@#37;
+     nCam39 = #refer71@#39;
+     nCam43 = #refer71@#43;
+     nCam44 = #refer71@#44;
+     nCam48 = #refer71@#48;
+     |SALVA_DATOS #5;
+     |REPON_DATOS #refer71@;
+     #refer71@#5 = #refer71@#5 + nCam5;
+     #refer71@#7 = #refer71@#7 + nCam7;
+     #refer71@#9 = #refer71@#9 + nCam9;
+     #refer71@#37 = #refer71@#37 + nCam37;
+     #refer71@#39 = #refer71@#39 + nCam39;
+     #refer71@#43 = #refer71@#43 + nCam43;
+     #refer71@#44 = #refer71@#44 + nCam44;
+     #refer71@#48 = #refer71@#48 + nCam48;
+|FPRC;
+
+|DEFBUCLE AgrupaArti;
+     #5#1;
+     ;
+     #4#52, #4#0, 001;
+     #4#52, #4#0, 999;
+     ;
+     NULL, NULL, NULL, NULL, NULL, AgrupaArti;
+     #5#2, #5#8, #5#33;
+|FIN;
+
+|PROCESO Marhuenda;
+     #5#29 = #100#0;
+     #5#0 = #100#1;
+     #5#1 = #100#2;
+     |LEE 020#5=;
+
+     |ABRE #60;
+     |DDEFECTO #60;
+     #60#0 = #1#3; ||Cod.Cliente.
+     #60#1 = #5#2; ||Cod.Articulo.
+     |LEE 000#60=;
+     |SI FSalida = 0;
+          siExis = 1;
+     |SINO;
+          siExis = 0;
+     |FINSI;
+     |CIERRA #60;
+
+     |HAZ imprelin;
+|FPRC;
+
+|DEFBUCLE Marhuenda;
+     #100#2004;
+     ;
+     "          ", #4#52, #4#0, 001;
+     "zzzzzzzzzz", #4#52, #4#0, 999;
+     ;
+     NULL, Marhuenda;
+|FIN;
+
+|PROCESO ImpAgrupa;
+     #5#29 = #4#52;
+     #5#0 = #4#0;
+     #5#1 = #198#6;
+     |LEE 020#5=;
+
+     #5#7 = #198#7;
+     #5#9 = #198#8
+     #5#37 = #198#9;
+     #5#39 = #198#10;
+     #5#5 = #198#11;
+     #5#48 = #198#12;
+     |HAZ imprelin;
+|FPRC;
+
+|DEFBUCLE ImpAgrupa;
+     #198#1;
+     ;
+     INICIO;
+     FINAL;
+     ;
+     NULL, ImpAgrupa;
+|FIN;
+
+|PROCESO Agrupa;
+     |DDEFECTO #19;
+     #19#0 = #5#2;
+     |LEE 000#19=;
+
+     |DDEFECTO #198;
+     #198#0 = #5#2;
+     #198#1 = #5#49;
+     |SI #19#215 = "S"; |O aExtintorAgr = "S";
+          #198#2 = 0;
+     |SINO;
+          #198#2 = #5#1;
+     |FINSI;
+     #198#3 = #5#6;
+     #198#4 = #5#8;
+     #198#5 = #5#33;
+     |LEE 000#198=;
+     |SI FSalida ! 0; |GRABA 020#198b; |FINSI;
+     #198#6 = #5#1;
+     #198#7 = #198#7 + #5#7;
+     #198#8 = #198#8 + #5#9;
+     #198#9 = #198#9 + #5#37;
+     #198#10 = #198#10 + #5#39;
+     #198#11 = #198#11 + #5#5;
+     #198#12 = #198#12 + #5#48;
+     |GRABA 020#198a;
+     |LIBERA #198;
+|FPRC;
+
+|CALCULO facimprl;|TIPO 0;
+     |SI nSwInforAlba = 0; |Y nPrimeInforAlba = 0;
+          aAlfa = "ialbm028;" + #4#52 + #1#49 + (("000000" + #1#0 )% -106);
+          |SUB_EJECUTA_NP aAlfa;
+          nPrimeInforAlba = 1;
+     |FINSI;
+
+     |DDEFECTO #4;
+     #4#0 = #2#2;
+     #4#52= #2#15;
+     |LEE 000#4=;
+
+     aDivisa = #agifa010#68;
+     aMoneda = #agifa010#70;
+     |HAZ Divisas010;
+
+     |SI enSwMalpesa = 0;
+          |HAZ MalpeRegraPrecio;
+     |FINSI;
+
+     |HAZ meses;
+
+     |SI nSwDiagram = 0;
+          |HAZ DiagramPrecio71;
+          |HAZ FacDetalle;
+          |SI FSalida = 0;
+               |ERROR;
+               |ACABA;
+          |FINSI;
+     |FINSI;
+     |SI nSwBogeven = 0;
+          |HAZ BogeReferencia;
+     |FINSI;
+     |SI nSwPCEGroup = 0;
+          |HAZ AlbPCEG;
+     |FINSI;
+     |SI nSwExtintor = 0;
+          |HAZ ExtintorAgr;
+     |FINSI;
+
+     |ABRE #12;
+
+     #4#0 = #2#2;
+     #4#52= #2#15;
+     swcab = 0;
+     |LEE 000#4=;
+     |SI FSalida = 0;
+          |SI #3#42 = AS;
+               |SI trabajo = "S";
+                    swimp = 0;
+                    |HAZ imp_trabajos;
+                    |SI swimp = 0;
+                         t_linea1 = #4#15;
+                         |PRINT;
+                    |FINSI;
+               |SINO;
+                    |PRINT;
+               |FINSI;
+          |SINO;
+               |SI enSwMalpesa = 0;
+                    |HAZ ImpreMalpesa;
+               |SINO;
+                    |SI #41#142 = "S";
+                         |DDEF aAlfa; aAlfa = aAlfa + "agifa071";
+                         |CARGA_DEF aAlfa, refer71@;
+                         |SI aAlfa ! 0;
+                              aAlfa = "0000No puedo cargar " + aAlfa;
+                              |MENAV aAlfa;
+                         |SINO;
+                              |DDEFECTO #refer71@;
+                              aArti = "";
+                              |BUCLE AgrupaArti;
+                              |HAZ ImpreLinAgr;
+                              |DESCARGA_DEF #refer71@;
+                         |FINSI;
+                    |SINO;
+                         |SI nSwMarhuenda = 0;
+                              |ABRE #5;
+                              |BUCLE Marhuenda;
+                              |CIERRA #5;
+                         |SINO;
+                              |DELINDEX #198;
+                              |ABRE #198;
+                              |ABRE #19;
+
+                              |SI nSwSanchez = 0; |HAZ AgruArtiIni; |FINSI;
+
+                              |BUCLELIN 2 Agrupa #4;
+
+                              |SI nSwSanchez = 0; |HAZ AgruArtiFin; |FINSI;
+
+                              |CIERRA #19;
+                              |CIERRA #198;
+
+                              |ABRE #5;
+                              |BUCLE ImpAgrupa;
+                              |CIERRA #5;
+
+                              |DELINDEX #198;
+                         |FINSI;
+                    |FINSI;
+               |FINSI;
+               |SI trabajo = "S";
+                    |HAZ imp_trabajos;
+               |FINSI;
+          |FINSI;
+     |FINSI;
+
+     enDirEnt = #agifa010#84;
+     |SI enSwMalpesa = 0;
+        |DDEF aPath; |QBF aPath;
+        aAlfa = aPath + "malpe001.mas";
+        |CARGA_DEF aAlfa, malpe001@;
+        |SI FSalida = 0;
+           |ABRE #malpe001@;
+           #malpe001@#0 = #agifa010#3;
+           #malpe001@#1 = #agifa010#84;
+           |LEE 000#malpe001@.=;
+           |SI FSalida ! 0; |DDEFECTO #malpe001@; |FINSI;
+           |CIERRA #malpe001@;
+           eaDirEnt = #malpe001@#2;
+           |DESCARGA_DEF #malpe001@;         ||   FALTABA!!!
+        |FINSI;
+     |SINO;
+        |ABRE #dsm00003;
+        #dsm00003#0 = #agifa010#3;
+        #dsm00003#1 = #agifa010#84;
+        |LEE 000#dsm00003.=;
+        |SI FSalida ! 0; |DDEFECTO #dsm00003; |FINSI;
+        |CIERRA #dsm00003;
+        eaDirEnt = #dsm00003#10;
+     |FINSI;
+     |CIERRA #12;
+|FCAL;
+
+|DEFBUCLE facimprl_2;
+     #2#1;
+     15,2;
+     #1#49,#1#0,001,"     ",000001;
+     #1#49,#1#0,999,"zzzzz",999999;
+     ;
+     NULL, NULL, NULL, NULL, NULL, facimprl;
+     #2#15,#2#2;
+|FIN;
+
+|PROCESO EmulaImpresa;
+     ||Tiquet. 2969/3438
+     ||SOLO SI NO ESTA YA IMPRESA.
+     ||Dejar la factura como impresa
+     ||Crear Recibos
+     ||y demas procesos que se hacen al imprimir factura
+     |SI #1#45 = AN;
+          ||nNume = #1#101 - #1#32;     || segun tiquet 1928/264
+          nNume = #1#101;
+          |SI #41#146 ! "N"; |O nNume ! 0;
+               |HAZ hazreci;
+          |FINSI;
+          |HAZ TmpGraDoc;
+
+          |LEE 121#1=;
+          |SI FSalida = 0;
+               #1#45 = AS;
+               |GRABA 020#1a;
+               |LIBERA #1;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|CALCULO agifa134;
+     |SI enSwInfoz004 = 1;
+          |LEE 140#1=;     ||bloqueando sin errores ni reintentos
+          |SI FSalida ! 0; |ACABA; |FINSI;
+     |SINO;
+          |LEE 121#1=;     ||la estandar
+     |FINSI;
+
+     nPrimeInforAlba = 0;
+     |DDEFECTO #11;
+     #6#0 = #1#11;
+     |LEE 000#6=;
+     |SI #6#69 < #0#44; |O #6#69 > #0#45; ||Tipo Recibo
+          |ACABA;
+     |FINSI;
+
+     |SI nSwDiagram = 0;
+          |HAZ DiagraImp;
+          |SI FSalida ! 0; |ACABA; |FINSI;
+     |FINSI;
+
+     |SI nArchi = 1; |Y nOpcion = 3; |Y nSwGenerarPDF = 1;
+          #3#0 = #agifa134#2;
+          |LEE 000#3=;
+          |SI FSalida ! 0;
+               |DDEFECTO #3;
+          |FINSI;
+          |SI #3#212 = "S";
+               nSwFacArchivo = nSwFacArchivo + 1;
+               enSwModoArchivo = 1;
+          |SINO;
+               nSwImpPapel = nSwImpPapel + 1;
+               enSwModoArchivo = 0;
+          |FINSI;
+          eaSerieFactura1002 = #1#49;
+          enNumFactura1002 = #1#0;
+          |HAZ GrabaTempo1002;
+     |SINO;
+          |HAZ NucleoAgifa134;
+     |FINSI;
+     |LIBERA #1;
+|FCAL;
+
+|PROCESO Informe_Inforpor;
+    |SI enSwInforpor = 0; |O enSwInfoz004 = 1;
+          |SI enSwInfoz004 = 1; || Inforpor, cuando llama infoz004 cambia la 1 letra del inf por una 'a'
+               informe = "a" + (informe % 2);
+          |SINO;               ||  o si la impresora es PDF, Correo PDF o Crytal
+               aAlfa = Impresora % 104;
+               |SI aAlfa = "PDF;"; informe = "a" + (informe % 2); |FINSI;
+               aAlfa = Impresora % 107;
+               |SI aAlfa = "Correo;"; informe = "a" + (informe % 2); |FINSI;
+               aAlfa = Impresora % 113;
+               |SI aAlfa = "CrystalReport"; informe = "a" + (informe % 2); |FINSI;
+         |FINSI;
+    |FINSI;
+|FPRC;
+
+|PROCESO MiniNucleoAgifa134;
+     |SI enSwTagloma = 0;
+          |HAZ TagloSerItem;
+          |SI FSalida = 0; |Y eaTagloItem ! "N";
+               |HAZ TagloTmpItem; |ACABA;
+          |FINSI;
+     |FINSI;
+     |SI nSwSebaLopez = 0;
+          eaCliente = #1#2;
+          |HAZ SebaLopezEnvaPdte;
+     |FINSI;
+
+     eaSerLog = #1#49;
+     eaNumLog = (A\("000000" + #1#0) % -106);
+     eaTipLog = "FV";
+     |HAZ ImprimeLog;
+
+/*
+     EURODB = decim_divisa;
+     |SI EURODB = 2;
+          EURO = 166.386;
+          EURODV = 0;
+     |SINO;
+          EURO = 1 / 166.386;
+          EURODV = 2;
+     |FINSI;
+*/
+
+     #0#40 = #agifa134#101;   || para poder imprimir el importe en letras
+
+     #3#0 = #1#2;
+     |LEE 000#3=;
+     |SI 0 ! FSalida;|DDEFECTO #3;|FINSI;
+
+/*
+          |HAZ Esgllama;
+          |SI FSalida = 0;
+                aAlfa = #3#1; |HAZ QuitaRarosGllama; #3#1 = aAlfa;
+                aAlfa = #3#2; |HAZ QuitaRarosGllama; #3#2 = aAlfa;
+                aAlfa = #3#8; |HAZ QuitaRarosGllama; #3#8 = aAlfa;
+                aAlfa = #3#9; |HAZ QuitaRarosGllama; #3#9 = aAlfa;
+                aAlfa = #3#10; |HAZ QuitaRarosGllama; #3#10 = aAlfa;
+                aAlfa = #3#14; |HAZ QuitaRarosGllama; #3#14 = aAlfa;
+                aAlfa = #3#183; |HAZ QuitaRarosGllama; #3#183 = aAlfa;
+                aAlfa = #1#3; |HAZ QuitaRarosGllama; #1#3 = aAlfa;
+          |FINSI;
+*/
+     |DDEFECTO #80;
+     |ABRE #80;
+     #80#0 = #3#3; ||Zona Cliente.
+     |LEE 000#80=;
+     |CIERRA #80;
+
+     |ABRE #13;
+     |DDEFECTO #13;
+     #13#0 = #1#7;
+     |LEE 000#13=;
+     |CIERRA #13;
+     |HAZ mirainf;
+     iva1 = #1#39; re1 = #1#40;
+     iva2 = #1#41; re2 = #1#42;
+     iva3 = #1#43; re3 = #1#44;
+     iva4 = #1#50; re4 = #1#51;
+     iva5 = #1#52; re5 = #1#53;
+     aAlfa = Impresora % 113;
+
+     |SI eaNoImpre = "";
+          |SI aAlfa ! "CrystalReport";
+               |HAZ Informe_Inforpor;
+               |INFOR informe;
+          |SINO;
+               |SI aInfCrystal = informe;
+                    FSalida = 0;
+               |SINO;
+                    |SI aInfCrystal ! "";
+                         |FININF;
+                    |FINSI;
+                    |HAZ Informe_Inforpor;
+                    |INFOR informe;
+               |FINSI;
+          |FINSI;
+     |SINO;
+          FSalida = 0;
+     |FINSI;
+     |SI FSalida ! 0;
+          aAlfa = "0000NO existe informe [" + informe + "]";
+          |MENAV aAlfa;
+          |SI nSwGuerola = 0; |ERROR10; |FINSI;
+     |SINO;
+          |SI nSwPackList = 0;
+               eaDoc = "FV" + #1#49 + #1#0;
+               |HAZ PackListVar;
+          |FINSI;
+
+          aCopia = "";
+          |SI #6#0 ! #1#11;
+               |ABRE #6;
+               #6#0 = #1#11;
+               |LEE 000#6=;
+               |SI 0 ! FSalida;|DDEFECTO #6;|FINSI;
+               |CIERRA #6;
+          |FINSI;
+
+          |SI nSwMarhuenda  = 0; |HAZ OrdenaMarhu; |FINSI;
+
+          aMoneda = #agifa134#60;
+          aDivisa = #agifa134#58;
+          |HAZ Divisas134;
+
+          |HAZ ObsDerp;
+
+          eaTipoCopia = "ORIGINAL";
+
+          |SI eaOrdenado = "N";
+               |BUCLELIN 0 facimprl #1;
+          |SINO;
+               |BUCLE facimprl_2;
+          |FINSI;
+
+          |HAZ facimpr2;
+
+          nCopias = #3#44;
+          |SI enSwMalpesa = 0; |Y MenuMalpe2 > 0;
+               |SI MenuMalpe2 = 1; nCopias = 0; |FINSI;
+               |SI MenuMalpe2 = 2; nCopias = #3#44; |FINSI;
+               |SI MenuMalpe2 = 3; nCopias = 0; |FINSI;
+          |FINSI;
+
+          |PARA n_copia = 0; |SI n_copia < nCopias; |HACIENDO n_copia = n_copia + 1;
+               eaTipoCopia = "COPIA";
+
+               suma = n_copia + 1;
+               aCopia = "COPIA: " + suma;
+
+               |SI enSwMalpesa = 0;
+                    |SI MenuMalpe2 = 1; eaTextoMalpe = "Factura de Comprobacion"; |FINSI;
+                    |SI MenuMalpe2 = 2; |Y n_copia = 0; eaTextoMalpe = "ORIGINAL"; |FINSI;
+                    |SI MenuMalpe2 = 2; |Y n_copia ! 0; eaTextoMalpe = "COPIA"; |FINSI;
+                    |SI MenuMalpe2 = 3; eaTextoMalpe = "COPIA PARA ARCHIVO"; |FINSI;
+               |FINSI;
+
+               |SI eaOrdenado = "N";
+                    |BUCLELIN 0 facimprl #1;
+               |SINO;
+                    |BUCLE facimprl_2;
+               |FINSI;
+               |PIEINF; enContaLin = 0;
+               eaSerieTa = ""; enCodigTa = "";
+
+/*
+               |SI Impresora ! "CrystalReport";
+                    |FININF;
+               |SINO;
+                    |SI aInfCrystal ! informe;
+                         aInfCrystal = informe;
+                    |FINSI;
+               |FINSI;
+               aMoneda = #agifa134#60;
+               aDivisa = #agifa134#58;
+               |HAZ Divisas134;
+*/
+               impal =0;
+               impor =0;
+          |SIGUE;
+          |SI eaNoImpre = ""; |FININF; |FINSI;
+
+          |SI enSwInforpor = 0; |Y enSwInfoz004 = 1;
+               |HAZ GraInforpor;
+          |FINSI;
+
+          || para quitar
+          |DBASS aAlfa; |QBF aAlfa;
+          aAlfa = aAlfa + "dsman9/def/manm0151.mas";
+          |XABRE "E", aAlfa, nHandle;
+          |SI FSalida ] 0;
+              nSwDiagram = 0;
+          |FINSI;
+
+          |SI nSwDiagram = 0;   |Y enGrabaTempo = 0;
+              eaSerFac = #1#49;
+              eaNumFac = ("000000" + #1#0) % -106;
+              ||SUB_EJECUTA "diaz0023;GRABATEMPO";
+          |FINSI;
+          |SI nSwFergalsan = 0;
+               eaDefERP = "agifa134";
+               eaSerieDocERP = #agifa134#49;
+               eaNumDocERP = (("0000000" + #agifa134#0) % -106);
+
+               aAlfa = "fergaz04";
+               |SUB_EJECUTA_NP aAlfa;
+          |FINSI;
+     |FINSI;
+|FPRC;
+
+|CALCULO NucleoAgifa134;
+     |SI nGuardaPDFDiagram = 1;
+          |HAZ GuardaPDFFactura;
+          |HAZ EmulaImpresa;
+          |ACABA;
+     |SINO;
+          |SI nArchi = 1;
+               |SI nOpcion = 1;
+                    |HAZ FirmaFactura;
+                    |HAZ EmulaImpresa;
+                    |ACABA;
+               |FINSI;
+          |FINSI;
+
+          |SI nArchi = 1;
+               |SI nOpcion = 3;
+                    #3#0 = #agifa134#2;
+                    |LEE 000#3=;
+                    |SI FSalida ! 0;
+                         |DDEFECTO #3;
+                    |FINSI;
+                    |SI #3#212 = "S";
+                         |HAZ FirmaFactura;
+                         |HAZ EmulaImpresa;
+                         |ACABA;
+                    |FINSI;
+               |FINSI;
+          |FINSI;
+     |FINSI;
+
+     |HAZ MiniNucleoAgifa134;
+|FCAL;
+
+|PROCESO GuardaPDFFactura;
+     aSerieF = #agifa134#49; |QBF aSerieF;
+     aNumeroF = #agifa134#0; |QBF aNumeroF;
+
+     aContador = "00000";
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "diam0200";
+     |CARGA_DEF aAlfa, diam0033@;
+     |SI FSalida = 0;
+          |ABRE #diam0033@;
+          #diam0033@#0 = #agifa134#49;
+          #diam0033@#1 = #agifa134#0;
+          |LEE 000#diam0033@.=;
+          |SI FSalida = 0;
+               aContador = ("00000" + #diam0033@#2) % -105;
+          |FINSI;
+          |CIERRA #diam0033@;
+          |DESCARGA_DEF #diam0033@;
+     |FINSI;
+
+     aPathGuarda = "c:\documentos\dscomer9\facturas\";
+     |RMKDIR aPathGuarda;
+     aFicheroPDF = aPathGuarda + aContador + "_" + aSerieF + "_" + aNumeroF;
+     |QBF aFicheroPDF;
+     aFicheroPDF = aFicheroPDF + ".pdf";
+
+     aBorra = aFicheroPDF;
+     |RFBORRA aBorra;
+
+     aAlfa = "CrystalReport;" + aFicheroPDF;
+     Impresora = aAlfa;
+     |IMPRE -1;
+     |SI FSalida = 0;
+          |HAZ MiniNucleoAgifa134;
+          |XABRE "CE", aFicheroPDF, nHandlePDF;
+          |SI FSalida < 0;
+               nSwHayPDF = 0;
+          |SINO;
+               nSwHayPDF = 1;
+          |FINSI;
+     |FINSI;
+     |FINIMP;
+|FPRC;
+
+|PROCESO FirmaFactura;
+     |SI nSwGenerarPDF = 1;
+          |ESPECIFICA "RBASS", aPuntero; aRDirBass = aPuntero; |QBF aRDirBass;
+          aFicheroPDF = aRDirBass + "crystal/facturae" + Usuario;
+          |QBF aFicheroPDF;
+          aFicheroPDF = aFicheroPDF + ".pdf";
+
+          aBorra = aFicheroPDF;
+          |RFBORRA aBorra;
+
+          aAlfa = "CrystalReport;" + aFicheroPDF;
+          Impresora = aAlfa;
+          |IMPRE -1;
+          |SI FSalida = 0;
+               |HAZ MiniNucleoAgifa134;
+               |XABRE "CE", aFicheroPDF, nHandlePDF;
+               |SI FSalida < 0;
+                    nSwHayPDF = 0;
+               |SINO;
+                    nSwHayPDF = 1;
+               |FINSI;
+          |FINSI;
+          |FINIMP;
+     |FINSI;
+
+     ||ARA
+     eaArCodCli = #agifa134#2;  || Codigo Cliente
+     eaArNomCli = #agifa134#3;  || Nombre Cliente
+
+     #3#0 = #agifa134#2;
+     |LEE 000#3=;
+     |SI FSalida ! 0;
+          |DDEFECTO #3;
+     |FINSI;
+
+     eaArCodCif = #3#15;  || Cif
+     eaArNomCif = #agifa134#3;  || Nombre Cif
+
+     eaArTipoDoc = "FV";
+     eaArSerDoc = #agifa134#49;
+     enArNumDoc = #agifa134#0;
+     eaArFecDoc = #agifa134#1;
+
+     eaDirDesFE = #3#197;
+     eaFirmarFE = #3#212;
+     eaSwEnvioCorreo = #3#213;
+     eaAplicacion = "dscomer9";
+     eaDefFE = "agifa134";
+     eaEmpresaFE = ("00000" + #48#0) % -105;
+     eaSerieFE = #agifa134#49;
+     eaNumeroFE = #agifa134#0;
+     eaDefLinFe = "agifa059";
+     eaDefEmpFe = "agifa280";
+     eaDefCliFe = "agifa024";
+     eaDefIvaFe = "agifa066";
+     eaCodCliFe = #agifa134#2;
+     eaDefAlbFe = "agifa071";
+     eaDefAAPPFe = "agifa281";
+     eaDefDatosPagoFe = "agifa133";
+     eaDefEmpSerieFe = "agifa284";
+
+     |SI nSwHayPDF = 1;
+          eaFacturaPDFFe = aFicheroPDF;
+     |FINSI;
+
+     |SUB_EJECUTA ":dsarchi/dsarz011.tab";
+|FPRC;
+
+|PROCESO DiagramCheq;
+     |HAZ DiagramRecal;
+     |SI FSalida ! 0; nError = 1; |ERROR10; |FINSI;
+|FPRC;
+
+|DEFBUCLE DiagramCheq;
+     #1#1;
+     2,1,45,31,11, 7;
+     #0#9, #0#2 , #0#0 , #0#4 , #0#6 ,  #0#7, #0#42, #0#49;
+     #0#10,#0#3 , #0#1 , #0#5 , #0#6 ,  #0#8, #0#43, #0#50;
+     ;
+     NULL, DiagramCheq;
+|FIN;
+
+|DEFBUCLE agifa134;
+     #1#1;
+     2,1,45,31,11, 7;
+     #0#9, #0#2 , #0#0 , #0#4 , #0#6 ,  #0#7, #0#42, #0#49;
+     #0#10,#0#3 , #0#1 , #0#5 , #0#6 ,  #0#8, #0#43, #0#50;
+     ;
+     NULL, agifa134;
+|FIN;
+
+|DEFBUCLE agifa134_1;
+     #1#1;
+     45;
+     #0#9, #0#2 , reimp;
+     #0#10,#0#3 , reimp;
+     ;
+     NULL, agifa134;
+|FIN;
+
+|CALCULO agifa134_2;
+     |DDEFECTO #11;
+     #6#0 = #1#11;
+     |LEE 000#6=;
+     |SI #6#69 < #0#44; |O #6#69 > #0#45; ||Tipo Recibo
+          |ACABA;
+     |FINSI;
+/*
+     EURODB = decim_divisa;
+     |SI EURODB = 2;
+          EURO = 166.386;
+          EURODV = 0;
+     |SINO;
+          EURO = 1 / 166.386;
+          EURODV = 2;
+     |FINSI;
+*/
+     #0#40 = #agifa134#101;   || para poder imprimir el importe en letras
+
+     #3#0 = #1#2;
+     |LEE 000#3=;
+     |SI 0 ! FSalida;|DDEFECTO #3;|FINSI;
+
+     |DDEFECTO #80;
+     |ABRE #80;
+     #80#0 = #3#3; ||Zona Cliente.
+     |LEE 000#80=;
+     |CIERRA #80;
+
+     |ABRE #13;
+     |DDEFECTO #13;
+     #13#0 = #1#7;
+     |LEE 000#13=;
+     |CIERRA #13;
+
+     iva1 = #1#39; re1 = #1#40;
+     iva2 = #1#41; re2 = #1#42;
+     iva3 = #1#43; re3 = #1#44;
+     iva4 = #1#50; re4 = #1#51;
+     iva5 = #1#52; re5 = #1#53;
+     aAlfa = Impresora % 113;
+     |SI nSwPackList = 0;
+          eaDoc = "FV" + #1#49 + #1#0;
+          |HAZ PackListVar;
+     |FINSI;
+
+     aCopia = "";
+     |SI #6#0 ! #1#11;
+          |ABRE #6;
+          #6#0 = #1#11;
+          |LEE 000#6=;
+          |SI 0 ! FSalida;|DDEFECTO #6;|FINSI;
+          |CIERRA #6;
+     |FINSI;
+
+     |SI nSwMarhuenda  = 0; |HAZ OrdenaMarhu; |FINSI;
+
+     |SI eaOrdenado = "N";
+          |BUCLELIN 0 facimprl #1;
+     |SINO;
+          |BUCLE facimprl_2;
+     |FINSI;
+
+     |HAZ facimpr2;
+
+     aMoneda = #agifa134#60;
+     aDivisa = #agifa134#58;
+     |HAZ Divisas134;
+
+     nCopias = #3#44;
+     |SI enSwMalpesa = 0; |Y MenuMalpe2 > 0;
+          |SI MenuMalpe2 = 1; nCopias = 0; |FINSI;
+          |SI MenuMalpe2 = 2; nCopias = #3#44; |FINSI;
+          |SI MenuMalpe2 = 3; nCopias = 0; |FINSI;
+     |FINSI;
+
+     |PARA n_copia = 0; |SI n_copia < nCopias; |HACIENDO n_copia = n_copia + 1;
+
+          suma = n_copia + 1;
+          aCopia = "COPIA: " + suma;
+
+          |SI enSwMalpesa = 0;
+               |SI MenuMalpe2 = 1; eaTextoMalpe = "Factura de Comprobacion"; |FINSI;
+               |SI MenuMalpe2 = 2; |Y n_copia = 0; eaTextoMalpe = "ORIGINAL"; |FINSI;
+               |SI MenuMalpe2 = 2; |Y n_copia ! 0; eaTextoMalpe = "COPIA"; |FINSI;
+               |SI MenuMalpe2 = 3; eaTextoMalpe = "COPIA PARA ARCHIVO"; |FINSI;
+          |FINSI;
+
+          |SI eaOrdenado = "N";
+               |BUCLELIN 0 facimprl #1;
+          |SINO;
+               |BUCLE facimprl_2;
+          |FINSI;
+          |PIEINF; enContaLin = 0;
+          aMoneda = #agifa134#60;
+          aDivisa = #agifa134#58;
+          |HAZ Divisas134;
+          impal =0;
+          impor =0;
+     |SIGUE;
+
+     |HAZ TmpGraDoc;
+
+     |LEE 121#1=;
+     |SI FSalida = 0;
+          #1#45 = AS;
+          |GRABA 020#1a;
+          |LIBERA #1;
+     |FINSI;
+|FCAL;
+
+|DEFBUCLE agifa134_2;
+     #1#1;
+     45;
+     #0#9, #0#2 , "N";
+     #0#10,#0#3 , "N";
+     ;
+     NULL, agifa134_2;
+|FIN;
+
+|PROCESO tempo134;
+     |ABRE #1;
+     #1#49 = #134#0;
+     #1#0 = #134#1;
+     |LEE 000#1=;
+     |SI FSalida = 0;
+          |HAZ agifa134;
+     |FINSI;
+     |CIERRA #1;
+|FPRC;
+
+|DEFBUCLE tempo134;
+     #134#1;
+     ;
+     INICIO;
+     FINAL;
+     ;
+     NULL, tempo134;
+|FIN;
+
+|PROCESO MultiFactura;
+   |SI aSerieMulti ! #Referen@#1;
+      |ABRE #40;
+      #40#26 = #Referen@#1;
+      |LEE 000#40=;
+      |SI FSalida = 0;
+          informe = #40#8;
+      |SINO;
+          informe = informe1;
+      |FINSI;
+      |CIERRA #40;
+      |QBF informe;
+      |SI aInforMulti ! informe;
+         |FININF;
+         aInforMulti = informe;
+         |INFOR informe;
+      |SINO;
+         FSalida = 0;
+      |FINSI;
+      |SI FSalida ! 0;
+         aAlfa = "0000NO existe informe [" + informe + "]";
+         |MENAV aAlfa;
+         aSerieMulti = "¤¤¤¤¤"; aInforMulti = ""; |ACABA;
+      |FINSI;
+      aSerieMulti = #Referen@#1;
+   |FINSI;
+
+   #0#9  = #Referen@#1;
+   #0#10 = #Referen@#1;
+   #0#2 = #Referen@#2;
+   #0#3 = #Referen@#2;
+   #0#6 = "N";
+
+   |ABRE #6;
+   |ABRE #5;
+   |ABRE #4;
+   |ABRE #3;
+   FSalida = 1;
+   eaSerieDelega = ser_fac;
+   |BUCLE agifa134_2;
+   |CIERRA #3;
+   |CIERRA #4;
+   |CIERRA #5;
+   |CIERRA #6;
+|FPRC;
+
+|DEFBUCLE MultiFactura;
+#Referen@#2002;
+;
+"     ", 0000001;
+"zzzzz", 9999999;
+;
+NULL,MultiFactura;
+|FIN;
+
+|PROCESO FormatoPapel;
+     nOpcion = 2;
+     |HAZ NucleoAgifa134;
+|FPRC;
+
+|PROCESO FormatoFacturae;
+     nOpcion = 1;
+     |HAZ NucleoAgifa134;
+|FPRC;
+
+|PROCESO Factura1002;
+     |ABRE #1;
+     |DDEFECTO #1;
+     #1#49 = eaSerieFactura1002;
+     #1#0 = enNumFactura1002;
+     |LEE 000#1=;
+
+     nPrimeInforAlba = 0;
+     |SI nSwDiagram = 0;
+          |HAZ DiagraImp;
+          |SI FSalida ! 0; |ACABA; |FINSI;
+     |FINSI;
+
+     ||SI es nSwModoArchivo = 0.  Imprimir la factura
+     ||SINO ... facturaE ... (si es PDF, primero creo el pdf y luego Facturae)
+
+     #3#0 = #1#2;
+     |LEE 000#3=;
+     |SI 0 ! FSalida;|DDEFECTO #3;|FINSI;
+
+     |SI enSwModoArchivo = 0;
+          |HAZ FormatoPapel;
+     |SINO;
+          |HAZ FormatoFacturae;
+     |FINSI;
+
+     |LIBERA #1;
+     |CIERRA #1;
+|FPRC;
+
+|PROGRAMA;
+     enContaLin = 0;
+     |HAZ SacaIVA;
+     |SI PARAMETRO ! "";
+        |SI PARAMETRO ! "MULTI";
+           aArchivoWeb = PARAMETRO;
+           |QBF aArchivoWeb;
+           swEsEnPDF = 1;               || SOLO LO USA MALPESA
+        |FINSI;
+     |SINO;
+          swEsEnPDF = 0;
+     |FINSI;
+
+     |HAZ MiraLogos; || Copia Logos para el Crystal
+
+     |HAZ EsRodacal;
+     |SI FSalida = 0; |CORRE "rodw0002"; |FINSI;
+
+     |HAZ EsAlbadis;
+     |SI FSalida = 0;
+          |DDEF aAlfa; aAlfa = aAlfa + "albad043";
+          |CARGA_DEF aAlfa, Referen@;
+          |SI FSalida = 0;
+               |ABRE #Referen@; |LEE 000#Referen@.p; |CIERRA #Referen@;
+               aImpAgr = #Referen@#1;
+               |DESCARGA_DEF #Referen@;
+          |FINSI;
+          |SI aImpAgr = "S"; |CORRE "albad034"; |FINSI;
+     |FINSI;
+
+     |HAZ EsInforAlba; nSwInforAlba = FSalida;
+     |HAZ EsDiagram; nSwDiagram = FSalida;
+     |HAZ EsMarhuenda; nSwMarhuenda = FSalida;
+     |HAZ EsGuerola; nSwGuerola = FSalida;
+     |HAZ EsMalpesa; enSwMalpesa = FSalida;
+     |HAZ EsPackList; nSwPackList = FSalida;
+     |HAZ EsBaeza;
+     |SI FSalida = 0; |Y eaDefImpre = "";
+          eaDefImpre = "Crystal Reports";
+     |FINSI;
+     |HAZ EsFriesa; nSwFriesa = FSalida;
+     |HAZ EsPCEGroup; nSwPCEGroup = FSalida;
+     |HAZ EsSematel; nSwSematel = FSalida;
+     |HAZ EsInforpor; enSwInforpor = FSalida;
+     |HAZ EsTagloma; enSwTagloma = FSalida;
+     |HAZ EsBogeven; nSwBogeven = FSalida;
+     |HAZ EsExtintor; nSwExtintor = FSalida;
+     |HAZ EsAparecida; nSwAparecida = 0;
+     |HAZ EsFergalsan; nSwFergalsan = FSalida;
+     |HAZ EsSebaLopez; nSwSebaLopez = FSalida;
+     |HAZ EsSanchez; nSwSanchez = FSalida;
+
+     |HAZ CreaTempo; aTmp198 = Tempo; |NOME_DAT #198 Tempo; |DELINDEX #198;
+     |HAZ TmpIniDoc;
+
+     |ABRE #41; |LEE 000#41p; |CIERRA #41;
+     trabajo = #41#132;
+
+     |SI nSwMarhuenda = 0;|HAZ IniMarhu; |FINSI;
+
+     ||FE
+     nArchi = 0;
+     nSwFirma = 0;
+     |HAZ EsArchi;
+     |SI FSalida = 0;
+        |DBASS aAlfa; |QBF aAlfa;
+        aAlfa = aAlfa + "dsarchi/def/dsarm001.mas";
+        |CARGA_DEF aAlfa, Ref0001@;
+        |SI FSalida = 0;
+
+             ||Configuracion de Factura_E por empresa
+             nHayConfEmp = 0;
+             |DBASS aAlfa; |QBF aAlfa;
+             aAlfa = aAlfa + "dsarchi/def/dsarm057.mas";
+             |CARGA_DEF aAlfa, bogem027@;
+             |SI FSalida = 0;
+                  |DBASS aAlfa; |QBF aAlfa;
+                  aAlfa = aAlfa + "dsarchi/fich/"; |PATH_DAT #2027 aAlfa;
+                  nEmpresa = #48#0;
+                  |ABRE #bogem027@;
+                  #bogem027@#0 = nEmpresa;
+                  |LEE 000#bogem027@.=;
+                  |SI FSalida = 0;
+                       nHayConfEmp = 1;
+                       |SI #bogem027@#6 = "S";
+                           nSwGenerarPDF = 1;
+                       |SINO;
+                           nSwGenerarPDF = 0;
+                       |FINSI;
+                  |FINSI;
+                  |CIERRA #bogem027@; |DESCARGA_DEF #bogem027@;
+             |FINSI;
+
+           |DBASS aAlfa; |QBF aAlfa;
+           aAlfa = aAlfa + "dsarchi/fich/"; |PATH_DAT #Ref0001@#aAlfa#;
+           |ABRE #Ref0001@;
+           |DDEFECTO #Ref0001@;
+           |LEE 000#Ref0001@.p;
+           |SI FSalida ! 0; |DDEFECTO #Ref0001@; |FINSI;
+
+           |SI #Ref0001@#31 = "S";
+              nArchi = 1;
+              eaArGrpMin = #Ref0001@#34;
+              eaArSbGMin = #Ref0001@#35;
+              eaArTipMin = #Ref0001@#36;
+              |SI #Ref0001@#32 = "S";
+                   nSwFirma = 1;
+              |FINSI;
+           |SINO;
+              eaArGrpMin = "";
+              eaArSbGMin = "";
+              eaArTipMin = "";
+           |FINSI;
+           |SI nHayConfEmp = 0;
+                |SI #Ref0001@#164 = "S";
+                    nSwGenerarPDF = 1;
+                |SINO;
+                    nSwGenerarPDF = 0;
+                |FINSI;
+           |FINSI;
+           |CIERRA #Ref0001@; |DESCARGA_DEF #Ref0001@;
+        |FINSI;
+     |FINSI;
+
+     |SI ser_fac = ""; |Y num_fac = 0; |Y eaFichero = "";
+          #0#11 = #41#141;
+          |SI swEsEnPDF = 0;
+               |CLS;
+               |CABEZA "Imp.Facturas";
+               |DDEFECTO #0;
+               |PINPA #0#0;
+               |SI nSwGuerola = 0;
+                    |C_V #0#41, 1, "S";
+                    |PINTA 2216, "Informe para impresion......................";
+               |FINSI;
+               |SI nSwDiagram = 0;
+                    |C_V #0#51, 1, "S";
+                    |PINTA 2216, "Guardado como PDF (contador) .....................:";
+               |FINSI;
+               |PINDA #0#0;
+               |ENDATOS #1#0;
+               nSalida = FSalida;
+               |SI nSalida = 0;
+                    |SI enSwTagloma = 0; |HAZ TagloItemDoc; |FINSI;
+               |FINSI;
+
+               |SI nSwDiagram = 0; |Y #agifa136#51 = "S";
+                    nGuardaPDFDiagram = 1;
+               |SINO;
+                    nGuardaPDFDiagram = 0;
+               |FINSI;
+
+               |SI nGuardaPDFDiagram = 1;
+                    nSalida = 0;
+               |SINO;
+                    |SI nArchi = 1; |Y nSalida = 0;
+                         |HAZ LeeSelImpFactuE;
+                         aMenu2 = eaSelFactuE;
+
+                         nOpcion = 0;
+                         |MENU aMenu;
+                         |SI FSalida < 1; |O FSalida > 3;
+                              nSalida = -1;
+                              |ACABA;
+                         |SINO;
+                              nOpcion = FSalida;
+                              eaSelFactuE = nOpcion;
+                              |HAZ GrabaSelImpFactuE;
+                         |FINSI;
+                    |FINSI;
+               |FINSI;
+               FSalida = nSalida;
+          |SINO;
+               |HAZ ImpresionPDF_Antes;
+               enSwMalpesa = 1;     || para que no saque el menu de impresion
+          |FINSI;
+          eaOrdenado = #0#11;
+     |SINO;
+        |SI nArchi = 1;
+              nOpcion = 0;
+
+              |HAZ LeeSelImpFactuE;
+              aMenu2 = eaSelFactuE;
+
+              |SI nSwDiagram = 0;   |Y enGrabaTempo = 1;
+                  enMenuArchi = 2;
+              |FINSI;
+
+              |SI enMenuArchi = 0;
+                    |MENU aMenu;
+                    |SI FSalida < 1; |O FSalida > 3;
+                         nOpcion = -1;
+                         |ACABA;
+                    |SINO;
+                         nOpcion = FSalida;
+                    |FINSI;
+              |SINO;
+                    nOpcion = enMenuArchi;
+              |FINSI;
+
+              |SI nOpcion ! -1;
+                    eaSelFactuE = nOpcion;
+                    |HAZ GrabaSelImpFactuE;
+              |FINSI;
+
+              |SI nOpcion = 3;          ||AMBOS.
+                    |SI num_fac ! 0;    ||Si solo hay una factura y esta se ha de firma
+                                        ||entonces, es como si directamente selecciono "archivar"
+                         |ABRE #1;
+                         #1#49 = ser_fac;
+                         #1#0 = num_fac;
+                         |LEE 000#1=;
+                         |SI FSalida = 0;
+                              |ABRE #3;
+                              #3#0 = #1#2;
+                              |LEE 000#3=;
+                              |SI FSalida ! 0;
+                                   |DDEFECTO #3;
+                              |FINSI;
+                              |SI #3#212 = "S";
+                                   nOpcion = 1;
+                              |FINSI;
+                              ||ARA55
+                              |CIERRA #3;
+                         |FINSI;
+                         |CIERRA #1;
+                    |FINSI;
+              |FINSI;
+        |FINSI;
+        |SI PARAMETRO ! "MULTI";
+           #0#9 = ser_fac;
+           #0#10 = ser_fac;
+           #0#2 = num_fac;
+           #0#3 = num_fac;
+           #0#6 = reimp;
+           |SI enSwTagloma = 0; |HAZ TagloItemDoc; |FINSI;
+           FSalida = 0;
+        |SINO;
+          |SI nGuardaPDFDiagram = 1;
+               FSalida = 0;
+          |SINO;
+                |SI eaImprime ! "";
+                    |SI nArchi = 1; |Y nOpcion = 1;
+                         ||No pide impresora. SOLO ARCHIVO
+                         FSalida = 0;
+                    |SINO;
+                         Impresora = eaImprime;
+                         |IMPRE -1;
+                    |FINSI;
+                |SINO;
+                    |SI nArchi = 1; |Y nOpcion = 1;
+                         ||No pide impresora. SOLO ARCHIVO
+                         FSalida = 0;
+                    |SINO;
+                         |SI enSwTagloma = 0;
+                              FSalida = 0;
+                              |SI eaTagloItem = "N"; |O enCuentaFac > 0;
+                                   |IMPRE 2;
+                              |FINSI;
+                         |SINO;
+                              |IMPRE 2; || La estandar
+                         |FINSI;
+                   |FINSI;
+                |FINSI;
+           |FINSI;
+           enErrorImp = FSalida;
+           |SI FSalida = 0;
+              |DBASE aAlfa; |QBF aAlfa;
+              aAlfa = aAlfa + "def/agenw017.mas";
+              |CARGA_DEF aAlfa, Referen@;
+              |SI FSalida = 0;
+                 aAlfa = "im" + Usuario; |NOME_DAT #Referen@#aAlfa#;
+                 aSerieMulti = "¤¤¤¤¤"; aInforMulti = "";
+                 |BUCLE MultiFactura;
+                 |DESCARGA_DEF #Referen@;
+                 |FININF; |FINIMP;
+                 FSalida = 1;
+              |FINSI;
+           |FINSI;
+        |FINSI;
+     |FINSI;
+     |SI FSalida = 0;
+          |ABRE #6;
+          |ABRE #5;
+          |ABRE #4;
+          |ABRE #3;
+          FSalida = 1;
+          |SI enSwMalpesa = 0; |HAZ MalpeCopia; FSalida = MenuMalpe2; |FINSI;
+          |SI FSalida ! 0;
+               |SI swEsEnPDF = 1;
+                    enSwMalpesa = 0;   || vuelve a ser Malpesa
+                    aArchivoWeb = aDirOri + aArchivoWeb;
+                    aAlfa = PARAMETRO;
+                    |QBF aAlfa;
+                    aArchivoWeb = "C:\ds\crystal\" + aAlfa - "txt" + "pdf";
+                    eaImprime = "CrystalReport;" + aArchivoWeb;
+               |FINSI;
+               |SI eaNoImpre = "";
+                  |SI eaImprime ! "";
+                      Impresora = eaImprime;
+                      |SI nGuardaPDFDiagram = 1;
+                           FSalida = 0;
+                      |SINO;
+                           |SI nArchi = 1; |Y nOpcion = 1;
+                                ||No pide impresora. SOLO ARCHIVO
+                                FSalida = 0;
+                           |SINO;
+                                |IMPRE -1;
+                           |FINSI;
+                      |FINSI;
+                  |SINO;
+                      |SI eaDefImpre ! ""; Impresora = eaDefImpre; |FINSI;
+                      |SI nGuardaPDFDiagram = 1;
+                           FSalida = 0;
+                      |SINO;
+                           |SI nArchi = 1; |Y nOpcion = 1;
+                                ||No pide impresora. SOLO ARCHIVO
+                                FSalida = 0;
+                           |SINO;
+                                |SI enSwTagloma = 0;
+                                   FSalida = 0;
+                                   |SI eaTagloItem = "N"; |O enCuentaFac > 0;
+                                        |IMPRE 2;
+                                   |FINSI;
+                                |SINO;
+                                   |IMPRE 2; || La estandar
+                                |FINSI;
+                           |FINSI;
+                      |FINSI;
+                  |FINSI;
+                  enErrorImp = FSalida;
+                  |SI 0 = FSalida;
+                       ||FE2. DARCHI + Segun Cliente + PDF's
+                       |SI nArchi = 1; |Y nOpcion = 3; |Y nSwGenerarPDF = 1;
+                            |HAZ CreaTempo1002;
+
+                            nSwImpPapel = 0;
+                            nSwFacArchivo = 0;
+                       |FINSI;
+                       |SI ser_fac = ""; |Y num_fac = 0;
+                            |SI eaFichero = "";
+                                 |SI nSwDiagram = 0; |BUCLE DiagramCheq; |FINSI;
+                                 |SI nError = 0; |BUCLE agifa134; |FINSI;
+                            |SINO;
+                                 |HAZ Divisas134;
+                                 |NOME_DAT #134 eaFichero;
+                                 |BUCLE tempo134;
+                            |FINSI;
+                       |SINO;
+                            |BUCLE agifa134_1; || (*)
+                       |FINSI;
+
+                       ||FE2. DARCHI + Segun Cliente + PDF's
+                       |SI nArchi = 1; |Y nOpcion = 3; |Y nSwGenerarPDF = 1;
+                            |SI nSwImpPapel > 0;
+                                 enSwModoArchivo = 0;
+                                 |PARA; |SI; |HACIENDO;
+                                      enNumFactura1002 = -1;
+                                      eaSerieFactura1002 = "";
+                                      |HAZ LeeTempo1002;
+                                      |SI enNumFactura1002 = -1;
+                                           |SAL;
+                                      |SINO;
+                                           |HAZ Factura1002;
+                                      |FINSI;
+                                 |SIGUE;
+                            |FINSI;
+                            |SI nSwFacArchivo > 0;
+                                 |SI nSwImpPapel > 0;
+                                      |FINIMP;
+                                 |FINSI;
+                                 enSwModoArchivo = 1;
+                                 |PARA; |SI; |HACIENDO;
+                                      enNumFactura1002 = -1;
+                                      eaSerieFactura1002 = "";
+                                      |HAZ LeeTempo1002;
+                                      |SI enNumFactura1002 = -1;
+                                           |SAL;
+                                      |SINO;
+                                           |HAZ Factura1002;
+                                      |FINSI;
+                                 |SIGUE;
+                            |FINSI;
+                            |HAZ MataTempo1002;
+                       |FINSI;
+                       |SI enSwTagloma = 0; |Y enSw_tagz0023 = 0;
+                            |SI eaTagloItem = "N"; |O enCuentaFac > 0;
+                                 |FINIMP;
+                            |FINSI;
+                       |SINO;
+                            |FINIMP; || La estandar
+                       |FINSI;
+                  |FINSI;
+               |SINO;
+                  ||FE2. DARCHI + Segun Cliente + PDF's
+                  |SI nArchi = 1; |Y nOpcion = 3; |Y nSwGenerarPDF = 1;
+                       |HAZ CreaTempo1002;
+
+                       nSwImpPapel = 0;
+                       nSwFacArchivo = 0;
+                  |FINSI;
+
+                  |SI ser_fac = ""; |Y num_fac = 0;
+                     |SI eaFichero = "";
+                        |SI nSwDiagram = 0; |BUCLE DiagramCheq; |FINSI;
+                        |SI nError = 0; |BUCLE agifa134; |FINSI;
+                     |SINO;
+                        |HAZ Divisas134;
+                        |NOME_DAT #134 eaFichero;
+                        |BUCLE tempo134;
+                     |FINSI;
+                  |SINO;
+                     |BUCLE agifa134_1;
+                  |FINSI;
+                  ||FE2. DARCHI + Segun Cliente + PDF's
+                  |SI nArchi = 1; |Y nOpcion = 3; |Y nSwGenerarPDF = 1;
+                       |SI nSwImpPapel > 0;
+                            enSwModoArchivo = 0;
+                            |PARA; |SI; |HACIENDO;
+                                 enNumFactura1002 = -1;
+                                 eaSerieFactura1002 = "";
+                                 |HAZ LeeTempo1002;
+                                 |SI enNumFactura1002 = -1;
+                                      |SAL;
+                                 |SINO;
+                                      |HAZ Factura1002;
+                                 |FINSI;
+                            |SIGUE;
+                       |FINSI;
+                       |SI nSwFacArchivo > 0;
+                            |SI nSwImpPapel > 0;
+                                 |FINIMP;
+                            |FINSI;
+                            enSwModoArchivo = 1;
+                            |PARA; |SI; |HACIENDO;
+                                 enNumFactura1002 = -1;
+                                 eaSerieFactura1002 = "";
+                                 |HAZ LeeTempo1002;
+                                 |SI enNumFactura1002 = -1;
+                                      |SAL;
+                                 |SINO;
+                                      |HAZ Factura1002;
+                                 |FINSI;
+                            |SIGUE;
+                       |FINSI;
+                       |HAZ MataTempo1002;
+                   |FINSI;
+               |FINSI;
+          |FINSI;
+          |CIERRA #3;
+          |CIERRA #4;
+          |CIERRA #5;
+          |CIERRA #6;
+     |FINSI;
+
+     |SI nSwMarhuenda = 0; |HAZ FinMarhu; |FINSI;
+
+     Tempo = aTmp198; |HAZ BoraTempo; |DELINDEX #198;
+     |HAZ TmpFinDoc;
+
+     |SI nSwDiagram = 0;   |Y enGrabaTempo = 0;
+         ||SUB_EJECUTA "diaz0023;GRABADSMAN9";
+     |FINSI;
+|FPRO;
+
+|PROCESO QuitaRarosGllama;
+     |QBF aAlfa;
+     aCadena = "";
+     aLen    = aAlfa % 0;
+     nLen    = aLen;
+     |PARA nCampo = 1;  |SI nCampo [ nLen;  |HACIENDO nCampo = nCampo + 1;
+           nPosi = (100 * nCampo) + 1;
+           aCaracter = aAlfa % nPosi;
+           |SI aCaracter = "¥";  aCaracter = &209; |FINSI;
+           |SI aCaracter = "¤";  aCaracter = &241; |FINSI;
+           |SI aCaracter = " ";  aCaracter = &225; |FINSI;
+           |SI aCaracter = "‚";  aCaracter = &233; |FINSI;
+           |SI aCaracter = "¡";  aCaracter = &237; |FINSI;
+           |SI aCaracter = "¢";  aCaracter = &243; |FINSI;
+           |SI aCaracter = "£";  aCaracter = &250; |FINSI;
+           |SI aCaracter = "§";  aCaracter = &176; |FINSI;
+           |SI aCaracter = "¦";  aCaracter = &170; |FINSI;
+           aCadena = aCadena + aCaracter;
+     |SIGUE;
+     aAlfa = aCadena;
+|FPRC;
+
+|PROCESO DiagraImp;
+     ||Copiar la imagen si existe en diam0200.
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "diam0200";
+     |CARGA_DEF aAlfa, diam0033@;
+     |SI FSalida = 0;
+          aDestino = "c:\documentos\dscomer9\contador.bmp";
+          |RFBORRA aDestino;
+          |ABRE #diam0033@;
+          #diam0033@#0 = #1#49;
+          #diam0033@#1 = #1#0;
+          |LEE 000#diam0033@.=;
+          |SI FSalida = 0;
+               aImagenContador = ("00000" + #diam0033@#2) % -105 + ".bmp";
+               aOrigen = "c:\documentos\dscomer9\imagenes\" + aImagenContador;
+               aDestino = "c:\documentos\dscomer9\contador.bmp";
+               |RCOPIA_FICHERO aOrigen, aDestino;
+          |FINSI;
+          |CIERRA #diam0033@;
+          |DESCARGA_DEF #diam0033@;
+     |FINSI;
+
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "diam0033";
+     |CARGA_DEF aAlfa, diam0033@;
+     |SI FSalida = 0;
+          |ABRE #diam0033@;
+          #diam0033@#0 = #1#49;
+          #diam0033@#1 = #1#0;
+          |LEE 000#diam0033@.=;
+          |SI FSalida ! 0;
+               aAlfa = "0";
+          |SINO;
+               |SI #diam0033@#6 = "S";
+                    aAlfa = "0";
+               |SINO;
+                    aAlfa = "1";
+               |FINSI;
+          |FINSI;
+          |CIERRA #diam0033@;
+          |DESCARGA_DEF #diam0033@;
+     |FINSI;
+     FSalida = aAlfa;
+|FPRC;
+
+|PROCESO AlbPCEG;
+     eaSerAlbPCEG = "";
+     enNumAlbPCEG = 0;
+     eaExpePCEG = "";
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "pcegm016";
+     |CARGA_DEF aAlfa, Referen@;
+     |SI FSalida = 0;
+          |ABRE #Referen@;
+          #Referen@#0 = #2#15;
+          #Referen@#1 = #2#2;
+          |LEE 000#Referen@.=;
+          |SI FSalida = 0;
+               eaSerAlbPCEG = #Referen@#2;
+               enNumAlbPCEG = #Referen@#3;
+          |FINSI;
+          |CIERRA #Referen@;
+          |DESCARGA_DEF #Referen@;
+
+          |SI enNumAlbPCEG ! 0;
+               |DDEF aAlfa;
+               aAlfa = aAlfa + "pcegm023";
+               |CARGA_DEF aAlfa, Referen@;
+               |SI FSalida = 0;
+                    |ABRE #Referen@;
+                    #Referen@#0 = "AV";
+                    #Referen@#1 = eaSerAlbPCEG;
+                    #Referen@#2 = enNumAlbPCEG;
+                    |LEE 000#Referen@.=;
+                    |SI FSalida = 0;
+                         eaExpePCEG = #Referen@#36;
+                    |FINSI;
+                    |CIERRA #Referen@;
+                    |DESCARGA_DEF #Referen@;
+               |FINSI;
+          |FINSI;
+
+     |FINSI;
+|FPRC;
+
+|PROCESO ImpreIMEI;
+     |DDEF aPath;
+     aAlfa = aPath + "tlfm0001";
+     |CARGA_DEF aAlfa, tlfm0001@;
+     |SI FSalida ! 0;
+          |MENAV "0000Error al cargar 'tlfm0001'";
+     |SINO;
+          aAlfa = aPath + "tlfm0002"
+          |CARGA_DEF aAlfa, tlfm0002@;
+          |SI FSalida ! 0;
+               |MENAV "0000Error al cargar 'tlfm0002'";
+          |SINO;
+               eaIMEI = ""; eaABO = ""; eaICC = "";
+               enSwIMEI = 0;
+               |ABRE #101; |SELECT #5#101;
+               |ABRE #102; |SELECT #5#102;
+               #101#25 = #5#29;
+               #101#26 = #5#0;
+               #101#27 = #5#1;
+               |LEE 000#101=;
+               |SI FSalida = 0;
+                    eaIMEI = #101#0;
+               |FINSI;
+               #102#25 = #5#29;
+               #102#26 = #5#0;
+               #102#27 = #5#1;
+               |LEE 000#102=;
+               |SI FSalida = 0;
+                    eaABO = #102#3;
+                    eaICC = #102#4;
+               |FINSI;
+               |CIERRA #101;
+               |CIERRA #102;
+               |SI eaIMEI ! ""; |O eaABO ! ""; |O eaICC ! "";
+                    enSwIMEI = 1;
+                    |PRINT;
+               |FINSI;
+               enSwIMEI = 0;
+               |DESCARGA_DEF #tlfm0002@;
+          |FINSI;
+          |DESCARGA_DEF #tlfm0001@;
+     |FINSI;
+|FPRC;
+
+|PROCESO ObsDerp;
+     |DFICE aEmp;
+     aEmp = aEmp % -205;
+     |DBASS aAlfa;
+     aAlfa = aAlfa + "dserp/def/dserpm10";
+     |CARGA_DEF aAlfa, dserpm10@;
+     |SI FSalida = 0;
+          |DBASS aAlfa;
+          aAlfa = aAlfa + "dserp/fich/";
+          |PATH_DAT #dserpm10@#aAlfa#;
+
+          aAlfa = #1#49 + #1#0;
+          |DDEFECTO #dserpm10@;
+          |ABRE #dserpm10@;
+          #dserpm10@#19 = "dscomer9";
+          #dserpm10@#18 = aEmp;
+          #dserpm10@#0 = "agifa134";
+          #dserpm10@#1 = aAlfa;
+          |LEE 000#dserpm10@.=;
+          || #dserpm10@#2 esta vacio
+          eaErOb1 = #dserpm10@#3;
+          eaErOb2 = #dserpm10@#4;
+          eaErOb3 = #dserpm10@#5;
+          eaErOb4 = #dserpm10@#6;
+          eaErOb5 = #dserpm10@#7;
+          eaErOb6 = #dserpm10@#8;
+          eaErOb7 = #dserpm10@#9;
+          eaErOb8 = #dserpm10@#10;
+          eaErOb9 = #dserpm10@#11;
+          eaErOb10 = #dserpm10@#12;
+          eaErOb11 = #dserpm10@#13;
+          eaErOb12 = #dserpm10@#14;
+          eaErOb13 = #dserpm10@#15;
+          eaErOb14 = #dserpm10@#16;
+          eaErOb15 = #dserpm10@#17;
+          |CIERRA #dserpm10@;
+          |DESCARGA_DEF #dserpm10@;
+     |FINSI;
+|FPRC;
+
+|PROCESO InforAlbaLectura;
+     eaMatri = "";
+     eaCopAnt = 0;
+     eaCopAct = 0;
+     |DDEF aAlfa;
+     aAlfa = aAlfa + "ialbm005";
+     |CARGA_DEF aAlfa, Ref0001@;
+     |SI FSalida = 0;
+          |ABRE #Ref0001@;
+          |SELECT #2#Ref0001@;
+          #Ref0001@#5 = #4#52;
+          #Ref0001@#6 = #4#0;
+          |LEE 000#Ref0001@.=;
+          |SI FSalida = 0;
+               eaMatri = #Ref0001@#1;
+               eaCopAct = #Ref0001@#4;
+               |SELECT #1#Ref0001@;
+               |LEE 000#Ref0001@.=;
+               aCli = #Ref0001@#0;
+               aMat = #Ref0001@#1;
+               aArt = #Ref0001@#2;
+               |LEE 000#Ref0001@.a;
+               |SI FSalida = 0; |Y aCli = #Ref0001@#0; |Y aMat = #Ref0001@#1; |Y aArt = #Ref0001@#2;
+                    eaCopAnt = #Ref0001@#4;
+               |FINSI;
+          |FINSI;
+          |CIERRA #Ref0001@;
+          |DESCARGA_DEF #Ref0001@;
+     |FINSI;
+|FPRC;
