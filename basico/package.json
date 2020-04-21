@@ -15,18 +15,44 @@
     "categories": [
         "Programming Languages"
     ],
+    "activationEvents": [
+        "onLanguage:basico"
+    ],
+    "main": "./out/extension.js",
     "contributes": {
-        "languages": [{
-            "id": "basico",
-            "aliases": ["BASICO", "basico", "cal"],
-            "extensions": [".cal"],
-            "filenames": [],
-            "configuration": "./basico/language.json"
-        }],
-        "grammars": [{
-            "language": "basico",
-            "scopeName": "source.cal",
-            "path": "./basico/syntax.json"
-        }]
+        "languages": [
+            {
+                "id": "basico",
+                "aliases": [
+                    "BASICO",
+                    "basico",
+                    "cal"
+                ],
+                "extensions": [
+                    ".cal"
+                ],
+                "filenames": [],
+                "configuration": "./basico/language.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "basico",
+                "scopeName": "source.cal",
+                "path": "./basico/syntax.json"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "lint": "tslint -p ./",
+        "watch": "tsc -watch -p ./"
+    },
+    "devDependencies": {
+        "@types/node": "^12.12.0",
+        "@types/vscode": "^1.34.0",
+        "tslint": "^5.19.0",
+        "typescript": "^3.8.3"
     }
 }
