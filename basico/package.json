@@ -1,8 +1,14 @@
 {
     "name": "basico",
     "displayName": "BASICO",
-    "description": "BASICO language extension for vscode",
+    "description": "BASICO language extension for VSCode",
     "version": "0.0.1",
+    "publisher": "Simple2B",
+    "repository": {
+        "url": "https://github.com/Simple2B/vscode.ext.git",
+        "directory": "basico",
+        "type": "git"
+    },
     "engines": {
         "vscode": "^1.44.0"
     },
@@ -12,14 +18,15 @@
     "contributes": {
         "languages": [{
             "id": "basico",
-            "aliases": ["BASICO", "basico"],
+            "aliases": ["BASICO", "basico", "cal"],
             "extensions": [".cal"],
-            "configuration": "./language-configuration.json"
+            "filenames": [],
+            "configuration": "./basico/language.json"
         }],
         "grammars": [{
             "language": "basico",
             "scopeName": "source.cal",
-            "path": "./syntaxes/basico.tmLanguage.json"
+            "path": "./basico/syntax.json"
         }]
     }
 }
