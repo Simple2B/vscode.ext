@@ -9,3 +9,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.0.1]
 ### Added
 - Keywords
+
+## [0.0.3]
+### Added hover information
+- PROCESO
+- HAZ
+- FINSI
+- BLANCO
+- PINTA

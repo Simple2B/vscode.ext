@@ -29,13 +29,13 @@ Users appreciate release notes as you update your extension.
 
  - Keywords syntax highlighting
 
-### 1.0.1
-
-Place holder.
-
-### 1.1.0
-
-Place holder.
+### 0.0.4
+Added hover information
+- PROCESO
+- HAZ
+- FINSI
+- BLANCO
+- PINTA
 
 -----------------------------------------------------------------------------------------------------------
 
