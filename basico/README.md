@@ -37,6 +37,9 @@ Added hover information
 - BLANCO
 - PINTA
 
+### 0.0.5
+Added hover info for all documented keywords
+
 -----------------------------------------------------------------------------------------------------------
 
 **Enjoy!**

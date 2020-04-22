@@ -17,3 +17,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - FINSI
 - BLANCO
 - PINTA
+
+## [0.0.5]
+### Added hover information from PDF doc
