@@ -14,6 +14,14 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "hover_update.py",
+            "type": "python",
+            "request": "launch",
+            "program": "hover_update.py",
+            "cwd": "${workspaceFolder}/src",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Extension",
             "type": "extensionHost",
             "request": "launch",
