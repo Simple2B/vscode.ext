@@ -4,6 +4,7 @@
     "description": "BASICO language extension for VSCode",
     "version": "0.0.1",
     "publisher": "Simple2B",
+    "license": "SEE LICENSE IN LICENSE",
     "repository": {
         "url": "https://github.com/Simple2B/vscode.ext.git",
         "directory": "basico",
