@@ -2,10 +2,10 @@
     "name": "basico",
     "displayName": "BASICO",
     "description": "BASICO language extension for VSCode",
-    "version": "0.0.5",
+    "version": "0.0.7",
     "publisher": "Simple2B",
     "license": "SEE LICENSE IN LICENSE",
-    "icon": "basico/logo-diagram-blanco.png",
+    "icon": "images/logo.png",
     "galleryBanner": {
         "color": "#C80000",
         "theme": "dark"

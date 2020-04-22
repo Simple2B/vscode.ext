@@ -40,6 +40,9 @@ Added hover information
 ### 0.0.5
 Added hover info for all documented keywords
 
+### 0.0.6
+Icon added
+
 -----------------------------------------------------------------------------------------------------------
 
 **Enjoy!**
