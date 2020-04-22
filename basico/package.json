@@ -19,7 +19,8 @@
         "vscode": "^1.44.0"
     },
     "categories": [
-        "Programming Languages"
+        "Programming Languages",
+        "Snippets"
     ],
     "activationEvents": [
         "onLanguage:basico"
@@ -47,7 +48,13 @@
                 "scopeName": "source.cal",
                 "path": "./basico/syntax.json"
             }
-        ]
+        ],
+        "snippets": [
+			{
+				"language": "basico",
+				"path": "./basico/snippets.json"
+			}
+		]
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

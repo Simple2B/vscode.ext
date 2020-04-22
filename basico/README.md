@@ -43,6 +43,13 @@ Added hover info for all documented keywords
 ### 0.0.6
 Icon added
 
+### 0.0.7
+Support snippets:
+- var
+- fich
+- cam
+- prog
+
 -----------------------------------------------------------------------------------------------------------
 
 **Enjoy!**

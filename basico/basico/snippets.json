@@ -1,0 +1,39 @@
+{
+	"Variables": {
+        "prefix": "var",
+        "body": [
+            "|VARIABLES;",
+            "\t$1 = \"$2\";",
+            "|FIN;"
+        ],
+        "description": "El grupo variables, sólo es necesario ponerlo si realmente vamos a utilizar alguna variable en nuestro programa"
+    },
+    "Ficheros": {
+        "prefix": "fich",
+        "body": [
+            "|FICHEROS;",
+            "\tttma0001 #0; || Provincias",
+            "\t$1",
+            "|FIN;"
+        ],
+        "description": "Este grupo tenemos que incluirlo siempre, en él indicaremos los ficheros que vamos a utilizar en el programa, como mínimo el fichero en que nos encontramos"
+    },
+    "Campos": {
+        "prefix": "cam",
+        "body": [
+            "|CAMPOS;",
+            "\t$1",
+            "|FIN;"
+        ],
+        "description": "El grupo campos, sólo es necesario ponerlo si realmente vamos a utilizar alguna variable en nuestro programa"
+    },
+    "Programa": {
+        "prefix": "prog",
+        "body": [
+            "|PROGRAMA;",
+            "\t$1",
+            "|FPRO;"
+        ],
+        "description": "El comienzo del código del programa se indica con la sentencia PROGRAMA. Todo lo que haya entre ésta y FPRO son instrucciones que se ejecutarán secuencialmente. El programa acabará cuando se encuentre ésta última"
+    }
+}
