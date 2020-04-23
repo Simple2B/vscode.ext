@@ -37,7 +37,7 @@
 			"patterns": [
 				{
 					"name": "constant.character.escape.basico",
-					"match": "\\\\."
+					"match": "."
 				}
 			]
 		}

@@ -2,7 +2,7 @@
     "name": "basico",
     "displayName": "BASICO",
     "description": "BASICO language extension for VSCode",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "publisher": "Simple2B",
     "license": "SEE LICENSE IN LICENSE",
     "icon": "images/logo.png",
