@@ -54,6 +54,9 @@ Support snippets:
 Highlight commented code
 Folding
 
+### 0.0.10
+Fixed bag with slash in string
+Fixed package size
 -----------------------------------------------------------------------------------------------------------
 
 **Enjoy!**
