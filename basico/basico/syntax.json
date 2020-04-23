@@ -1,13 +1,25 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "BASICO",
+	"name": "basico",
+	"scopeName": "source.cal",
 	"patterns": [
 		{
 			"include": "#keywords"
 		},
 		{
 			"include": "#strings"
-		}
+		},
+        {
+            "begin": "\\/\\*.*$",
+            "comment": "string",
+            "end": "\\*\\/",
+            "name": "comment.block.source.cal"
+		},
+		{
+            "comment": "string",
+            "match": "\\|\\|.*$",
+            "name": "comment.line.source.cal"
+        }
 	],
 	"repository": {
 		"keywords": {
@@ -29,6 +41,5 @@
 				}
 			]
 		}
-	},
-	"scopeName": "source.cal"
+	}
 }
