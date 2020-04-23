@@ -1,30 +1,47 @@
 {
     "comments": {
-        // symbol used for single line comment. Remove this entry if your language does not support line comments
-        "lineComment": "//",
-        // symbols used for start and end a block comment. Remove this entry if your language does not support block comments
+        "lineComment": "||",
         "blockComment": [ "/*", "*/" ]
     },
-    // symbols used as brackets
     "brackets": [
         ["{", "}"],
-        ["[", "]"],
         ["(", ")"]
     ],
-    // symbols that are auto closed when typing
     "autoClosingPairs": [
-        ["{", "}"],
-        ["[", "]"],
-        ["(", ")"],
-        ["\"", "\""],
-        ["'", "'"]
+        { "open": "{", "close": "}" },
+		{ "open": "(", "close": ")" },
+		{ "open": "'", "close": "'", "notIn": ["string", "comment"] },
+		{ "open": "\"", "close": "\"", "notIn": ["string"] },
+		{ "open": "`", "close": "`", "notIn": ["string", "comment"] },
+		{ "open": "/**", "close": " */", "notIn": ["string"] }
+
     ],
-    // symbols that can be used to surround a selection
     "surroundingPairs": [
         ["{", "}"],
-        ["[", "]"],
         ["(", ")"],
-        ["\"", "\""],
-        ["'", "'"]
-    ]
+        ["\"", "\""]
+    ],
+	"folding": {
+		"proceso": {
+			"start": "^\\s*#?\\|PROCESO\\b\\s\\w+\\s*;",
+			"end": "^\\s*#?\\|FPRC\\s*;"
+        },
+        "ficheros": {
+            "start": "^\\s*#?\\|FICHEROS\\b\\s\\w+\\s*;",
+			"end": "^\\s*#?\\|FIN\\s*;"
+        },
+        "campos": {
+            "start": "^\\s*#?\\|CAMPOS\\b\\s\\w+\\s*;",
+			"end": "^\\s*#?\\|FIN\\s*;"
+        },
+        "variables": {
+            "start": "^\\s*#?\\|VARIABLES\\b\\s\\w+\\s*;",
+			"end": "^\\s*#?\\|FIN\\s*;"
+        },
+        "wordPattern": "(-?\\d*\\.\\d\\w*)|\\|{0,1}([^\\`\\~\\!\\@\\#\\%\\^\\&\\*\\(\\)\\-\\=\\+\\[\\{\\]\\}\\\\\\;\\:\\'\\\\\\|\"\\,\\.\\<\\>\\/\\?\\s]+)",
+        "indentationRules": {
+            "increaseIndentPattern": "(^((?!\\|\\|).)*\\|PROCESO\\s+.+;((\\s*)|(\\s*(\\|\\|).*))$)|(^((?!\\|\\|).)*\\|SI\\s+((?!FINSI).)*;((\\s*)|(\\s*(\\|\\|).*))$)|(^((?!\\|\\|).)*\\|SINO\\s*;((\\s*)|(\\s*(\\|\\|).*))$)|(^((?!\\|\\|).)*\\|FICHEROS\\s*;((\\s*)|(\\s*(\\|\\|).*))$)|(^((?!\\|\\|).)*\\|CAMPOS\\s*;((\\s*)|(\\s*(\\|\\|).*))$)|(^((?!\\|\\|).)*\\|VARIABLES\\s*;((\\s*)|(\\s*(\\|\\|).*))$)|(^((?!\\|\\|).)*\\|DEFBUCLE\\s+.+;((\\s*)|(\\s*(\\|\\|).*))$)|(^((?!\\|\\|).)*\\|RUTINA\\s+.+;((\\s*)|(\\s*(\\|\\|).*))$)",
+            "decreaseIndentPattern": "(^\\s*\\|FINSI\\s*;((\\s*)|(\\s*(\\|\\|).*))$)|(^((?!\\|\\|).)*\\|FPRC\\s*;((\\s*)|(\\s*(\\|\\|).*))$)|(^((?!\\|\\|).)*\\|FRUT\\s*;((\\s*)|(\\s*(\\|\\|).*))$)|(^((?!\\|\\|).)*\\|FIN\\s*;((\\s*)|(\\s*(\\|\\|).*))$)|(^((?!\\|\\|).)*\\|SINO\\s*;((\\s*)|(\\s*(\\|\\|).*))$)"
+        }
+	}
 }
