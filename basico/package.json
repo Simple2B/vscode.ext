@@ -50,11 +50,11 @@
             }
         ],
         "snippets": [
-			{
-				"language": "basico",
-				"path": "./basico/snippets.json"
-			}
-		]
+            {
+                "language": "basico",
+                "path": "./basico/snippets.json"
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
