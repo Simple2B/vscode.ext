@@ -28,3 +28,4 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.0.11]
 ### fixed online comment /*...*/
 ### fixed ESPECIFICA hover info
+### fixed increase/decrease indent patterns
