@@ -57,6 +57,9 @@ Folding
 ### 0.0.10
 Fixed bag with slash in string
 Fixed package size
+
+### 0.0.12
+Fixed issues after review
 -----------------------------------------------------------------------------------------------------------
 
 **Enjoy!**

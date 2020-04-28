@@ -29,3 +29,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### fixed online comment /*...*/
 ### fixed ESPECIFICA hover info
 ### fixed increase/decrease indent patterns
+
+## [0.0.12]
+### added keywords |Y,|O, |CONTROL_SIMPLE, |FIN_CONTROL_WINDOWS, |ESTADO_CONTROL, |C_A
+
