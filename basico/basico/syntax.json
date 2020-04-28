@@ -10,7 +10,7 @@
 			"include": "#strings"
 		},
         {
-            "begin": "\\/\\*.*$",
+            "begin": "\\/\\*",
             "comment": "string",
             "end": "\\*\\/",
             "name": "comment.block.source.cal"
