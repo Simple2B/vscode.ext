@@ -2,7 +2,8 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 // import hover information
-import * as hoverInfo from './hover_info.json';
+import * as hoverInfoKeywords from './hover_info.json';
+import * as hoverInfoReserved from './hover_info_reserved.json';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -28,12 +29,20 @@ export function activate(context: vscode.ExtensionContext) {
 		provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): vscode.ProviderResult<vscode.Hover> {
             const range = document.getWordRangeAtPosition(position);
             const word = document.getText(range);
-            let hover = null;
-            hoverInfo.forEach(element => {
-                if (element.name == word) {
-                    hover = new vscode.Hover({ language: 'basico', value: element.value.join('\n') });
+			let hover = null;
+			for (let i = 0; i < hoverInfoKeywords.length; i++) {
+				const element = hoverInfoKeywords[i];
+				if (`|${element.name}` == word) {
+                    return new vscode.Hover({ language: 'basico', value: element.value.join('\n') });
                 }
-            });
+			}
+			for (let i = 0; i < hoverInfoReserved.length; i++) {
+				const element = hoverInfoReserved[i];
+				if (element.name == word) {
+                    return new vscode.Hover({ language: 'basico', value: element.value.join('\n') });
+                }
+			}
+
             return hover;
         }
 	});
